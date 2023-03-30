@@ -1,0 +1,99 @@
+$primary-color: #216bb4;
+@mixin desktop {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+nav {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 70px;
+  width: 100%;
+  background-color: $primary-color;
+  display: flex;
+  align-items: center;
+
+  .nav-center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: auto;
+    img {
+      height: 50px;
+    }
+    h2 {
+      color: white;
+      font-size: 1rem;
+    }
+  }
+
+  .nav-actions {
+    display: flex;
+    overflow: hidden;
+    height: 0px;
+    transition: all 0.3s ease-in-out;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    @include desktop {
+      height: fit-content;
+      flex-direction: row;
+      position: relative;
+      top: 0px;
+      align-items: center;
+      justify-content: center;
+      width: 60%;
+      background: transparent;
+      box-shadow: none;
+    }
+    .nav-action {
+      border: 1px solid #216bb4;
+      background: #3e8edf;
+      padding: 10px;
+      width: 100%;
+      height: 40px;
+      @include desktop {
+        border: none;
+        background: transparent;
+        width: auto;
+        height: auto;
+        list-style: none;
+      }
+    }
+    a {
+      color: white;
+      text-decoration: none;
+      &:hover {
+        color: rgba(255, 0, 0, 0.521);
+      }
+    }
+  }
+
+  .nav-actions-visible {
+    height: 160px;
+  }
+
+  .nav-toggler {
+    width: 40px;
+    height: 40px;
+    display: block;
+    position: relative;
+    margin-right: 40px;
+    background: url("../../public/img/menu.png");
+    background-size: contain;
+    cursor: pointer;
+    border: none;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    @include desktop {
+      display: none;
+    }
+  }
+}
