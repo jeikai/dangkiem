@@ -1,0 +1,44 @@
+.recent {
+  max-width: 900px;
+  margin: auto;
+  position: relative;
+  top: 60px;
+  display: flex;
+  flex-direction: column;
+  .recent-header {
+    display: flex;
+    align-items: center;
+    img {
+      width: 2rem;
+      height: 2rem;
+      margin-right: 10px;
+    }
+    h3 {
+      font-size: 2rem;
+    }
+  }
+  .recent-table {
+    border-collapse: collapse;
+    width: 100%;
+    td,
+    th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    tr {
+      &:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      &:hover {
+        background-color: #ddd;
+      }
+    }
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: rgb(33, 35, 135);
+      color: white;
+    }
+  }
+}
