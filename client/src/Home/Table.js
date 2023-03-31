@@ -23,7 +23,7 @@ function Table(prop) {
   console.log(prop);
 
   return (
-    <table className="recent-table">
+    <table className="table">
       <thead>
         <tr>
           <th>STT</th>

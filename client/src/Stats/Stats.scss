@@ -1,0 +1,40 @@
+$primary-color: #216bb4;
+.stats {
+  position: relative;
+  top: 60px;
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  .stats-header {
+    display: flex;
+    align-items: center;
+    h1 {
+      font-size: 2rem;
+    }
+  }
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+    td,
+    th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    tr {
+      &:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      &:hover {
+        background-color: #ddd;
+      }
+    }
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: $primary-color;
+      color: white;
+    }
+  }
+}

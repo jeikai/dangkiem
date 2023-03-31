@@ -2,31 +2,9 @@ import React from "react";
 import "./Home.scss";
 import Navbar from "../Navbar/Navbar";
 import Table from "./Table";
+import data from "../data.js";
 
 export default function () {
-  let data = [
-    {
-      plateNumber: 123,
-      owner: "trung",
-      time: "2022",
-    },
-    {
-      plateNumber: 123,
-      owner: "trung",
-      time: "2022",
-    },
-    {
-      plateNumber: 123,
-      owner: "trung",
-      time: "2022",
-    },
-    {
-      plateNumber: 123,
-      owner: "trung",
-      time: "2022",
-    },
-  ];
-
   return (
     <div>
       <Navbar />
