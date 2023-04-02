@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import "./Navbar.scss";
 
 export default function Navbar() {
@@ -12,7 +13,7 @@ export default function Navbar() {
   return (
     <nav>
       <div className="nav-center">
-        <img src="/img/logo-small.png" />
+        <img src="/img/logo.png" />
         <h2>Tên trung tâm đăng kiểm</h2>
       </div>
 
@@ -20,24 +21,27 @@ export default function Navbar() {
         className={`nav-actions ${showNavActions ? "nav-actions-visible" : ""}`}
       >
         <li className="nav-action">
-          <a href="#" className="nav-action-form">
-            Biểu mẫu
-          </a>
+          <NavLink to={'/'} end className="nav-action-form">
+            <i class="fa-sharp fa-solid fa-rectangle-list"></i>
+            <span>Biểu mẫu</span>
+          </NavLink>
         </li>
         <li className="nav-action">
-          <a href="#" className="nav-action-stats">
-            Thống kê
-          </a>
+          <NavLink to={'/'} end className="nav-action-form">
+            <i class="fa-solid fa-chart-column"></i>
+            <span>Thống kê</span>
+          </NavLink>
         </li>
         <li className="nav-action">
-          <a href="#" className="nav-action-log">
-            Lịch sử
-          </a>
+          <NavLink to={'/status'} end className="nav-action-form">
+            <i class="fa-solid fa-file"></i>
+            <span>Lịch sử</span>
+          </NavLink>
         </li>
         <li className="nav-action">
-          <a href="#" className="nav-action-signout">
-            Đăng xuất
-          </a>
+          <NavLink to={'/login'} end className="nav-action-form">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </NavLink>
         </li>
       </ul>
 

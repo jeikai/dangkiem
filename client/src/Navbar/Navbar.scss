@@ -12,7 +12,7 @@ nav {
   left: 0px;
   height: 70px;
   width: 100%;
-  background-color: $primary-color;
+  background-color: transparent;
   display: flex;
   align-items: center;
 
@@ -50,7 +50,7 @@ nav {
       position: relative;
       top: 0px;
       align-items: center;
-      justify-content: center;
+      justify-content: right;
       width: 60%;
       background: transparent;
       box-shadow: none;

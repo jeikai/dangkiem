@@ -3,19 +3,21 @@ import { useState } from 'react';
 import Login from './Login/Login'
 import Navbar from './Navbar/Navbar'
 import Home from './Home/Home';
+import Stats from './Stats/Stats'
 function App() {
   const [login, setLogin] = useState({
     user: localStorage.getItem('user')
   })
   return (
     <>
-      {/* <Routes>
+      <Routes>
         <Route exact path='/' element={<Login/>}></Route>
-      </Routes> */}
-      <Navbar/>
+      </Routes>
+      {/* <Navbar/>
       <Routes>
         <Route exact path='/' element={<Home/>}></Route>
-      </Routes>
+        <Route path='/status' element={<Stats/>}></Route>
+      </Routes> */}
     </>
   );
 }
