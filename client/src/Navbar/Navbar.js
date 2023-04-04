@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Navbar.scss";
 
 export default function Navbar() {
@@ -21,27 +21,27 @@ export default function Navbar() {
         className={`nav-actions ${showNavActions ? "nav-actions-visible" : ""}`}
       >
         <li className="nav-action">
-          <NavLink to={'/'} end className="nav-action-form">
+          <Link to={"/form"} end className="nav-action-form">
             <i class="fa-sharp fa-solid fa-rectangle-list"></i>
             <span>Biểu mẫu</span>
-          </NavLink>
+          </Link>
         </li>
         <li className="nav-action">
-          <NavLink to={'/'} end className="nav-action-form">
+          <Link to={"/stats"} end className="nav-action-form">
             <i class="fa-solid fa-chart-column"></i>
             <span>Thống kê</span>
-          </NavLink>
+          </Link>
         </li>
         <li className="nav-action">
-          <NavLink to={'/status'} end className="nav-action-form">
+          <Link to={"/"} end className="nav-action-form">
             <i class="fa-solid fa-file"></i>
             <span>Lịch sử</span>
-          </NavLink>
+          </Link>
         </li>
         <li className="nav-action">
-          <NavLink to={'/login'} end className="nav-action-form">
+          <Link to={"/login"} end className="nav-action-form">
             <i class="fa-solid fa-right-from-bracket"></i>
-          </NavLink>
+          </Link>
         </li>
       </ul>
 

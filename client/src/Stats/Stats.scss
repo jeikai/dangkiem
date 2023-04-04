@@ -9,9 +9,8 @@ $primary-color: #216bb4;
   .stats-header {
     display: flex;
     align-items: center;
-    h1 {
-      font-size: 2rem;
-    }
+    font-size: 2rem;
+    margin: 50px;
   }
   .table {
     border-collapse: collapse;

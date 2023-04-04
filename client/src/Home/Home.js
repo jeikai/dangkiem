@@ -9,7 +9,7 @@ export default function () {
       <div className="recent">
         <div className="recent-header">
           <img src="/img/recent-icon.png" />
-          <h3>Đăng kiểm gần đây</h3>
+          <h1>Đăng kiểm gần đây</h1>
         </div>
         <Table className="recent-table" data={data} />
       </div>

@@ -5,7 +5,6 @@ import Navbar from "../Navbar/Navbar";
 export default function Form() {
   return (
     <div>
-      <Navbar />
       <div className="form-container">
         <h1>Điền vào Biểu mẫu</h1>
         <form>
