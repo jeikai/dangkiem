@@ -19,6 +19,7 @@ export default function Navbar() {
 
       <ul
         className={`nav-actions ${showNavActions ? "nav-actions-visible" : ""}`}
+        onMouseLeave={toggleNavActions}
       >
         <li className="nav-action">
           <Link to={"/form"} end className="nav-action-form">
@@ -41,6 +42,7 @@ export default function Navbar() {
         <li className="nav-action">
           <Link to={"/login"} end className="nav-action-form">
             <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Đăng xuất</span>
           </Link>
         </li>
       </ul>

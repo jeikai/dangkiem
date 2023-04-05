@@ -2,5 +2,8 @@
   "devDependencies": {
     "sass": "^1.60.0",
     "sass-loader": "^13.2.2"
+  },
+  "dependencies": {
+    "react-transition-group": "^4.4.5"
   }
 }

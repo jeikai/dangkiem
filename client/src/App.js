@@ -1,5 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import "./App.css";
 import Login from "./Login/Login";
 import Navbar from "./Navbar/Navbar";
 import Home from "./Home/Home";
@@ -9,15 +12,22 @@ function App() {
   const [login, setLogin] = useState({
     user: localStorage.getItem("user"),
   });
+
+  const location = useLocation();
+
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/stats" element={<Stats />} />
-        <Route path="form" element={<Form />} />
-      </Routes>
+      <TransitionGroup>
+        <CSSTransition key={location.key} classNames="fade" timeout={500}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/stats" element={<Stats />} />
+            <Route path="form" element={<Form />} />
+          </Routes>
+        </CSSTransition>
+      </TransitionGroup>
     </>
   );
 }

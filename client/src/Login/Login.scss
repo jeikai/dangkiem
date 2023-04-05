@@ -52,6 +52,12 @@ $primary-color: #3090f0;
 //   }
 // }
 section {
+  background-image: url("../../public/img/background1.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;

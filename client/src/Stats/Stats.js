@@ -5,9 +5,9 @@ import data from "../data";
 
 export default function () {
   return (
-    <div>
-      <div className="stats">
-        <h1 className="stats-header">Xe chưa hết hạn:</h1>
+    <div className="stats">
+      <h1 className="stats-header">Xe chưa hết hạn:</h1>
+      <div className="table-container">
         <Table className="stats-table" data={data} />
       </div>
     </div>
