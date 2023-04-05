@@ -10,14 +10,14 @@ function App() {
   })
   return (
     <>
-      {/* <Routes>
+      <Routes>
         <Route exact path='/' element={<Login/>}></Route>
-      </Routes> */}
-      <Navbar/>
+      </Routes>
+      {/* <Navbar/>
       <Routes>
         <Route exact path='/' element={<Home/>}></Route>
         <Route path='/status' element={<Stats/>}></Route>
-      </Routes>
+      </Routes> */}
     </>
   );
 }
