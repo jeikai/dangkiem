@@ -12,7 +12,7 @@ nav {
   left: 0px;
   height: 70px;
   width: 100%;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.648);
   display: flex;
   align-items: center;
 
@@ -32,54 +32,67 @@ nav {
 
   .nav-actions {
     display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
     height: 0px;
     transition: all 0.3s ease-in-out;
     flex-direction: column;
-    align-items: flex-start;
     position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    padding: 0px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    top: 80px;
+    right: 50px;
+    width: 200px;
+    background: rgba(10, 10, 10, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
     @include desktop {
-      height: fit-content;
+      background: transparent;
+      backdrop-filter: blur(0px);
+      height: 60px;
       flex-direction: row;
       position: relative;
       top: 0px;
       align-items: center;
       justify-content: right;
-      width: 60%;
-      background: transparent;
-      box-shadow: none;
+      width: fit-content;
     }
     .nav-action {
-      border: 1px solid #216bb4;
-      background: #3e8edf;
-      padding: 10px;
+      list-style: none;
       width: 100%;
+      padding: 10px;
       height: 40px;
+      transition: all 0.3s ease-in-out;
+      scale: 1;
+      &:hover {
+        transition: all 0.3s ease-in-out;
+        scale: 1.2;
+      }
       @include desktop {
-        border: none;
-        background: transparent;
-        width: auto;
-        height: auto;
-        list-style: none;
+        width: fit-content;
       }
     }
+
+    span {
+      display: inline-block;
+    }
+    i {
+      margin-right: 15px;
+    }
+
     a {
       color: white;
       text-decoration: none;
       &:hover {
-        color: rgba(255, 0, 0, 0.521);
+        color: rgba(236, 228, 228, 0.644);
       }
     }
   }
 
   .nav-actions-visible {
     height: 160px;
+    @include desktop {
+      height: 60px;
+    }
   }
 
   .nav-toggler {
@@ -92,7 +105,7 @@ nav {
     background-size: contain;
     cursor: pointer;
     border: none;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.644);
     @include desktop {
       display: none;
     }
