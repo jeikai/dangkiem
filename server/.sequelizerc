@@ -1,7 +1,15 @@
 const path = require('path');
 module.exports = {
+
+  // kết nối tới database
   'config': path.resolve('./src/config', 'config.json'),
+
+  // tạo bảng trong database -> tạo bảng bẳng terminal
   'migrations-path': path.resolve('./src', 'migrations'),
+
+  // tự động tạo thư mục bên trong src
   'models-path': path.resolve('./src', 'models'),
+
+  //tạo dữ liệu fake
   'seeders-path': path.resolve('./src', 'seeders')
 }
