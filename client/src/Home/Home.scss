@@ -7,22 +7,26 @@
   padding-top: 60px;
   display: flex;
   flex-direction: column;
+
   .recent-header {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 50px;
+
     img {
       width: 2rem;
       height: 2rem;
       margin-right: 10px;
     }
+
     h1 {
       font-size: 3rem;
       color: white;
       font-weight: bold;
     }
   }
+
   .table-container {
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255, 255, 255, 0.5);
@@ -32,25 +36,33 @@
     overflow: hidden;
     max-width: 900px;
     align-self: center;
+
     .table {
       border-collapse: collapse;
       width: 100%;
+
       td,
       th {
         border: 1px solid rgba(242, 242, 242, 0.8);
         padding: 8px;
       }
+
       tr {
+        color: white;
+
         &:nth-child(even) {
-          background-color: rgba(208, 203, 203, 0.8);
+          background-color: rgba(208, 203, 203, 0.263);
         }
+
         &:nth-child(odd) {
-          background-color: rgba(194, 180, 180, 0.8);
+          background-color: rgba(194, 180, 180, 0.171);
         }
+
         &:hover {
-          background-color: rgba(242, 242, 242, 0.8);
+          background-color: rgba(242, 242, 242, 0.418);
         }
       }
+
       th {
         padding-top: 12px;
         padding-bottom: 12px;
