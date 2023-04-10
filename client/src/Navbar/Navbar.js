@@ -22,25 +22,25 @@ export default function Navbar() {
         onMouseLeave={toggleNavActions}
       >
         <li className="nav-action">
+          <Link to={"/"} end className="nav-action-home">
+            <i class="fa-solid fa-file"></i>
+            <span>Lịch sử</span>
+          </Link>
+        </li>
+        <li className="nav-action">
           <Link to={"/form"} end className="nav-action-form">
             <i class="fa-sharp fa-solid fa-rectangle-list"></i>
             <span>Biểu mẫu</span>
           </Link>
         </li>
         <li className="nav-action">
-          <Link to={"/stats"} end className="nav-action-form">
+          <Link to={"/stats"} end className="nav-action-stats">
             <i class="fa-solid fa-chart-column"></i>
             <span>Thống kê</span>
           </Link>
         </li>
         <li className="nav-action">
-          <Link to={"/"} end className="nav-action-form">
-            <i class="fa-solid fa-file"></i>
-            <span>Lịch sử</span>
-          </Link>
-        </li>
-        <li className="nav-action">
-          <Link to={"/login"} end className="nav-action-form">
+          <Link to={"/login"} end className="nav-action-logout">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Đăng xuất</span>
           </Link>
