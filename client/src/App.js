@@ -19,7 +19,7 @@ function App() {
     <>
       <Navbar />
       <TransitionGroup>
-        <CSSTransition key={location.key} classNames="fade" timeout={500}>
+        <CSSTransition key={location.key} classNames="sliding" timeout={500}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
