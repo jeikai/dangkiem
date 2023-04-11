@@ -17,7 +17,7 @@ export default function Login() {
 
           <div className="inputbox">
             <i class="fa-solid fa-lock"></i>
-            <input type="password" name="password" id="password" ></input>
+            <input type="password" name="password" id="password"></input>
             <label for="password">Mật khẩu</label>
           </div>
           <button type="button" id="login-button">

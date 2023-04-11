@@ -1,4 +1,5 @@
 $primary-color: #216bb4;
+
 @mixin desktop {
   @media (min-width: 768px) {
     @content;
@@ -21,19 +22,26 @@ nav {
     flex-direction: row;
     align-items: center;
     margin-right: auto;
+
     img {
-      height: 50px;
+      height: 30px;
+      clip-path: ellipse(50% 50% at 50% 50%);
+      margin: 10px;
+      align-self: center;
     }
+
     h2 {
       color: white;
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
   }
 
   .nav-actions {
+    margin: 0;
+    padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    // justify-content: center;
+    // align-items: center;
     overflow: hidden;
     height: 0px;
     transition: all 0.3s ease-in-out;
@@ -45,6 +53,7 @@ nav {
     background: rgba(10, 10, 10, 0.5);
     backdrop-filter: blur(10px);
     border-radius: 10px;
+
     @include desktop {
       background: transparent;
       backdrop-filter: blur(0px);
@@ -56,25 +65,32 @@ nav {
       justify-content: right;
       width: fit-content;
     }
+
     .nav-action {
       list-style: none;
       width: 100%;
       padding: 10px;
       height: 40px;
       transition: all 0.3s ease-in-out;
-      scale: 1;
+      scale: 0.9;
+      border-radius: 10px;
+
       &:hover {
         transition: all 0.3s ease-in-out;
-        scale: 1.2;
+        scale: 1;
+        background-color: rgba(236, 228, 228, 0.237);
+
       }
+
       @include desktop {
-        width: fit-content;
+        width: auto;
       }
     }
 
     span {
       display: inline-block;
     }
+
     i {
       margin-right: 15px;
     }
@@ -82,6 +98,7 @@ nav {
     a {
       color: white;
       text-decoration: none;
+
       &:hover {
         color: rgba(236, 228, 228, 0.644);
       }
@@ -90,6 +107,7 @@ nav {
 
   .nav-actions-visible {
     height: 160px;
+
     @include desktop {
       height: 60px;
     }
@@ -106,6 +124,7 @@ nav {
     cursor: pointer;
     border: none;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.644);
+
     @include desktop {
       display: none;
     }
