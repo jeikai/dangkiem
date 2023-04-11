@@ -1,0 +1,1 @@
+export const loginRoute = "localhost:8080/api/login";
