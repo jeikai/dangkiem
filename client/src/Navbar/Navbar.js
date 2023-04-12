@@ -4,7 +4,9 @@ import "./Navbar.scss";
 
 export default function Navbar() {
   const [showNavActions, setShowNavActions] = React.useState(false);
-
+  const logout = () => {
+    localStorage.clear();
+  }
   function toggleNavActions() {
     console.log("Toggle nav actions");
     setShowNavActions(!showNavActions);
@@ -40,7 +42,7 @@ export default function Navbar() {
           </Link>
         </li>
         <li className="nav-action">
-          <Link to={"/login"} end className="nav-action-logout">
+          <Link onClick={() => logout()} to={"/login"} end className="nav-action-logout">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Đăng xuất</span>
           </Link>

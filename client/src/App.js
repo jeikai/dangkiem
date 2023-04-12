@@ -12,22 +12,30 @@ function App() {
   const [login, setLogin] = useState({
     user: localStorage.getItem("user"),
   });
-
+  console.log(JSON.parse(login.user))
+  console.log(login.user)
   const location = useLocation();
 
   return (
     <>
-      <Navbar />
-      <TransitionGroup>
-        <CSSTransition key={location.key} classNames="sliding" timeout={500}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/stats" element={<Stats />} />
-            <Route path="form" element={<Form />} />
-          </Routes>
-        </CSSTransition>
-      </TransitionGroup>
+      {login.user == null ?
+        <Routes>
+          <Route path="/login" element={<Login />} />
+        </Routes>
+        :
+        <>
+          <Navbar />
+          <TransitionGroup>
+            <CSSTransition key={location.key} classNames="sliding" timeout={500}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/stats" element={<Stats />} />
+                <Route path="form" element={<Form />} />
+              </Routes>
+            </CSSTransition>
+          </TransitionGroup>
+        </>
+      }
     </>
   );
 }
