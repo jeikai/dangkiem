@@ -6,6 +6,7 @@ import "./App.css";
 import Login from "./Login/Login";
 import Navbar from "./Navbar/Navbar";
 import Home from "./Home/Home";
+import HomeAdmin from "./HomeAdmin/HomeAdmin"
 import Stats from "./Stats/Stats";
 import Form from "./Form/Form";
 function App() {
@@ -30,7 +31,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/stats" element={<Stats />} />
-                <Route path="form" element={<Form />} />
+                <Route path="/form" element={<Form />} />
+                <Route path="/admin" element={<HomeAdmin />} />
               </Routes>
             </CSSTransition>
           </TransitionGroup>

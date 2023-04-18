@@ -10,6 +10,16 @@ $primary-color: #216bb4;
   display: flex;
   flex-direction: column;
 
+  .barchart {
+    display: flex;
+    margin-top: 100px;
+    align-self: center;
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+    padding: 50px;
+  }
+
   .stats-header {
     display: flex;
     justify-content: center;
