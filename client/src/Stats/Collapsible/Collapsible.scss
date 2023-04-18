@@ -1,23 +1,29 @@
-.content {
-    border: 1px solid rgb(128, 123, 123);
-    padding: 0.5 rem;
-    border-radius: 20px;
-    overflow: hidden;
-    transition: height ease 0.9s;
+.collapsible {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-}
+    .content {
+        padding: 0.5 rem;
+        overflow: hidden;
+        transition: height ease 0.9s;
+        width: 80%;
+    }
 
+    #expand {
+        width: 80%;
+        padding: 15px 20px;
+        background-color: rgba(0, 0, 0, 0.801);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-bottom: none;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        backdrop-filter: blur(10px);
+        color: white;
 
-button {
-    padding: 15px 20px;
-    background-color: rgba(0, 0, 0, 0.801);
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    backdrop-filter: blur(10px);
-    color: white;
-
-    &:focus {
-        background-color: rgba(224, 218, 218, 0.591);
+        &:focus {
+            background-color: rgba(224, 218, 218, 0.591);
+        }
     }
 }

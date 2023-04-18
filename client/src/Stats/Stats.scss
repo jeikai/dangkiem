@@ -32,12 +32,9 @@ $primary-color: #216bb4;
   .table-container {
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    width: 90%;
+    border-radius: 0px;
     height: fit-content;
     overflow: hidden;
-    max-width: 900px;
-    align-self: center;
 
     .table {
       border-collapse: collapse;

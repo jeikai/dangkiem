@@ -13,8 +13,8 @@ export default function FullCollapsible(props) {
     // if (contentRef.current) console.log(contentRef.current.scrollHeight);
 
     return (
-        <div>
-            <button id="expand" onClick={toggle}>{props.label}</button>
+        <div className="collapsible">
+            <button id="expand" onClick={toggle}>{<div>{props.label} <i class="fa-solid fa-caret-down fa-beat"></i></div>}</button>
             <div className="content"
                 ref={contentRef} style={open ? { height: contentRef.current.scrollHeight + 'px' } : { height: '0px' }}>
                 {props.children}
