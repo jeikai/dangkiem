@@ -1,6 +1,6 @@
 import React from "react";
 import "./Home.scss";
-import Table from "./Table";
+import RecentTable from "../RecentTable/RecentTable"
 import data from "../data.js";
 
 export default function () {
@@ -11,7 +11,7 @@ export default function () {
         <h1>Đăng kiểm gần đây</h1>
       </div>
       <div className="table-container">
-        <Table className="recent-table" data={data} />
+        <RecentTable data={data} />
       </div>
     </div>
   );

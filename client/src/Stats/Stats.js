@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import "./Stats.scss";
-import Table from "../Home/Table";
+import Table from "../RecentTable/RecentTable";
 import Collapsible from "./Collapsible/Collapsible"
 import data from "../data";
 
