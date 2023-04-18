@@ -25,14 +25,14 @@ export default function Navbar() {
       >
         <li className="nav-action">
           <Link to={"/"} end className="nav-action-home">
-            <i class="fa-solid fa-file"></i>
+            <i class="fa-solid fa-clock-rotate-left"></i>
             <span>Lịch sử</span>
           </Link>
         </li>
         <li className="nav-action">
           <Link to={"/form"} end className="nav-action-form">
             <i class="fa-sharp fa-solid fa-rectangle-list"></i>
-            <span>Biểu mẫu</span>
+            <span>Đơn đăng kiểm</span>
           </Link>
         </li>
         <li className="nav-action">

@@ -7,7 +7,7 @@ export default function () {
   return (
     <div className="recent">
       <div className="recent-header">
-        <img src="/img/recent-icon.png" />
+        <i class="fa-solid fa-clock-rotate-left fa-spin fa-spin-reverse fa-2xl"></i>
         <h1>Đăng kiểm gần đây</h1>
       </div>
       <div className="table-container">

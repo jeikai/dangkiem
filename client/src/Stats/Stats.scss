@@ -5,7 +5,6 @@ $primary-color: #216bb4;
   height: 100%;
   min-height: 100vh;
   min-width: 600px;
-  background: rgba(0, 0, 0, 0.345);
   padding: 20px;
   padding-top: 60px;
   display: flex;
@@ -15,6 +14,7 @@ $primary-color: #216bb4;
     display: flex;
     margin-top: 100px;
     align-self: center;
+    background-color: rgba(49, 9, 70, 0.623);
     backdrop-filter: blur(20px);
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 2px;
@@ -30,47 +30,4 @@ $primary-color: #216bb4;
     margin: 50px;
   }
 
-  .table-container {
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 0px;
-    height: fit-content;
-    overflow: hidden;
-
-    .table {
-      border-collapse: collapse;
-      width: 100%;
-
-      td,
-      th {
-        border: 1px solid rgba(242, 242, 242, 0.8);
-        padding: 8px;
-      }
-
-      tr {
-        color: white;
-
-        &:nth-child(even) {
-          background-color: rgba(208, 203, 203, 0.263);
-        }
-
-        &:nth-child(odd) {
-          background-color: rgba(194, 180, 180, 0.171);
-        }
-
-        &:hover {
-          background-color: rgba(242, 242, 242, 0.418);
-          cursor: pointer;
-        }
-      }
-
-      th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        text-align: left;
-        background-color: black;
-        color: white;
-      }
-    }
-  }
 }

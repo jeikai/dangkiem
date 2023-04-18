@@ -14,16 +14,16 @@
     #expand {
         width: 80%;
         padding: 15px 20px;
-        background-color: rgba(0, 0, 0, 0.801);
+        background-color: rgba(255, 228, 196, 0.256);
         border: 2px solid rgba(255, 255, 255, 0.5);
-        border-bottom: none;
+        border-bottom: 1.5px dashed rgb(255, 255, 255);
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
         backdrop-filter: blur(10px);
         color: white;
 
         &:focus {
-            background-color: rgba(224, 218, 218, 0.591);
+            background-color: rgba(27, 6, 48, 0.591);
         }
     }
 }
