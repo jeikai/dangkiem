@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('Car', {
+        await queryInterface.createTable('Cars', {
 
             id: {
                 allowNull: false,
@@ -23,6 +23,9 @@ module.exports = {
             },
             color: {
                 type: Sequelize.STRING
+            },
+            registerDate: {
+                type: Sequelize.DATE
             },
             registerCity: {
                 type: Sequelize.STRING
