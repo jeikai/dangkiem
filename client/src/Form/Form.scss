@@ -1,4 +1,5 @@
 $primary-color: #216bb4;
+
 @mixin desktop {
   @media (min-width: 768px) {
     @content;
@@ -6,10 +7,10 @@ $primary-color: #216bb4;
 }
 
 .form-container {
-  background: rgba(0, 0, 0, 0.559);
   padding-top: 60px;
   position: relative;
   margin: auto;
+
   h1 {
     margin: 50px;
     font-size: 3rem;
@@ -18,21 +19,24 @@ $primary-color: #216bb4;
     justify-content: center;
     color: white;
   }
+
   .form-input-container {
     display: flex;
     width: 90%;
     margin: auto;
     flex-direction: column;
-    background-color: transparent;
+    background-color: rgba(255, 228, 196, 0.256);
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 20px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(40px);
+
     @include desktop {
       display: grid;
       grid-template-columns: 1fr 1fr;
       max-width: 800px;
       justify-items: center;
     }
+
     .form-input {
       margin: 30px 0;
       display: flex;
@@ -40,11 +44,13 @@ $primary-color: #216bb4;
       width: 90%;
       align-self: center;
       border-bottom: 2px solid #fff;
+
       label {
         margin: 10px;
         color: #fff;
         font-size: 1em;
       }
+
       input {
         width: 100%;
         height: 50px;
@@ -64,6 +70,7 @@ $primary-color: #216bb4;
     max-width: 800px;
     margin: auto;
     padding: 30px;
+
     input {
       padding: 15px 20px;
       background-color: transparent;
@@ -71,11 +78,13 @@ $primary-color: #216bb4;
       border-radius: 20px;
       backdrop-filter: blur(10px);
       color: white;
+
       &:hover {
         cursor: pointer;
         background-color: rgba(255, 254, 254, 0.5);
       }
     }
+
     @include desktop {
       justify-content: center;
     }

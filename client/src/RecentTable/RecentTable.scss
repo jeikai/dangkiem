@@ -1,0 +1,54 @@
+form {
+    .search_group {
+        display: flex;
+        flex-direction: column;
+
+        .searchbox {
+            all: unset;
+
+            &::placeholder {
+                color: white;
+            }
+
+            border-bottom: 1px solid white;
+            padding: 10px;
+            background-color: rgba(255, 228, 196, 0.256);
+        }
+    }
+
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+
+        td,
+        th {
+            border: 1px solid rgba(242, 242, 242, 0.8);
+            padding: 8px;
+        }
+
+        tr {
+            color: white;
+
+            &:nth-child(even) {
+                background-color: rgba(208, 203, 203, 0.263);
+            }
+
+            &:nth-child(odd) {
+                background-color: rgba(194, 180, 180, 0.171);
+            }
+
+            &:hover {
+                background-color: rgba(242, 242, 242, 0.418);
+                cursor: pointer;
+            }
+        }
+
+        th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: rgba(92, 8, 120, 0.769);
+            color: white;
+        }
+    }
+}

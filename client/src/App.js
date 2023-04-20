@@ -6,8 +6,10 @@ import "./App.css";
 import Login from "./Login/Login";
 import Navbar from "./Navbar/Navbar";
 import Home from "./Home/Home";
+import HomeAdmin from "./HomeAdmin/HomeAdmin"
 import Stats from "./Stats/Stats";
 import Form from "./Form/Form";
+import AccountRegister from "./AccountRegister/AccountRegister";
 function App() {
   const [login, setLogin] = useState({
     user: localStorage.getItem("user"),
@@ -31,6 +33,9 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/stats" element={<Stats />} />
                 <Route path="form" element={<Form />} />
+                <Route path="/form" element={<Form />} />
+                <Route path="/admin" element={<HomeAdmin />} />
+                <Route path="/signup" element={<AccountRegister />} />
               </Routes>
             </CSSTransition>
           </TransitionGroup>

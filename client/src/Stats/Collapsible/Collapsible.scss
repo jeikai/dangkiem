@@ -1,0 +1,29 @@
+.collapsible {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .content {
+        padding: 0.5 rem;
+        overflow: hidden;
+        transition: height ease 0.9s;
+        width: 80%;
+    }
+
+    #expand {
+        width: 80%;
+        padding: 15px 20px;
+        background-color: rgba(255, 228, 196, 0.256);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-bottom: 1.5px dashed rgb(255, 255, 255);
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        backdrop-filter: blur(10px);
+        color: white;
+
+        &:focus {
+            background-color: rgba(27, 6, 48, 0.591);
+        }
+    }
+}

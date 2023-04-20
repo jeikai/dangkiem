@@ -4,6 +4,7 @@ import registerService from "../services/registerService"
 let handleLogin = async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
+    console.log(req.body)
     if (!username || !password) {
         return res.status(200).json({
             errCode: 1,
