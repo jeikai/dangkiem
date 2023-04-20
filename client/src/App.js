@@ -14,7 +14,7 @@ function App() {
   const [login, setLogin] = useState({
     user: localStorage.getItem("user"),
   });
-  console.log(JSON.parse(login.user))
+  console.log(JSON.parse(login.user).username)
   console.log(login.user)
   const location = useLocation();
 
