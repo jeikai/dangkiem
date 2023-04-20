@@ -31,15 +31,13 @@ let handleLogin = async (req, res) => {
 }
 
 let handleRegister = async (req, res) => {
-    let licensePlate = req.body.licensePlate;
-    let data = await registerService.handleRegister(licensePlate);
-    return res.status(200).json({
-        data: data
-    })
+    let plateNumber = req.body.plateNumber;
+    let data = await registerService.handleRegister(plateNumber);
+    return res.status(200).json(data);
 }
-
 
 module.exports = {
     handleLogin: handleLogin,
     handleRegister: handleRegister,
+  
 }

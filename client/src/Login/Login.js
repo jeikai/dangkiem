@@ -40,7 +40,7 @@ export default function Login() {
         password: password
       }
       const data = await axios.post(loginRoute, user)
-      console.log(data.data)
+      // console.log(data.data)
       if (data.data.status == false) {
         toast.error(data.data.message, toastOptions);
       } else {

@@ -1,19 +1,62 @@
 import React from "react";
 import "./Form.scss";
+import axios from "axios";
+import { formRoute, createRegistationRoute } from "../utils/routes";
+
+
 
 export default function Form() {
+  let handleOnblur = async () => {
+    let value = document.querySelector("#plateNumber").value;
+    let data = await axios.post(formRoute, { "plateNumber": value });
+    let formIfo = data.data.data;
+    if (data.data.errCode === 0) {
+      document.querySelector("#owner").value = formIfo.driverName;
+      document.querySelector("#registrationDate").value = formIfo.registrationDate;
+      document.querySelector("#expirationDate").value = formIfo.expirationDate;
+      document.querySelector("#manufacturer").value = formIfo.manufacture;
+      document.querySelector("#vehicleType").value = formIfo.model;
+      document.querySelector("#color").value = formIfo.color;
+      document.querySelector("#usage").value = formIfo.purpose;
+      document.querySelector("#registerDate").value = formIfo.registerDate;
+      // ten trung tam dang kiem
+      document.querySelector("#inspectionPlace").value = "user name"
+    }
+  }
+
+  let handleSubmit = async () => {
+    console.log("submit");
+    let plateNumber = document.querySelector("#plateNumber").value;
+    // ten trung tam dang kiem 
+    let name = "Trung tâm đăng kiểm Hà Nội 1";
+    let registrationDate = document.querySelector("#registrationDate").value;
+    let expirationDate = document.querySelector("#expirationDate").value;
+    console.log(`${plateNumber} ${name} ${registrationDate} ${expirationDate}`);
+    let data = await axios.post(createRegistationRoute, {
+      "plateNumber": plateNumber,
+      "name": name,
+      "registrationDate": registrationDate,
+      "expirationDate": expirationDate
+    });
+
+    console.log(data);
+
+  }
   return (
     <div className="form-container">
       <h1>Điền vào Biểu mẫu</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-input-container">
+
+          <div className="form-input">
+            <label for="plateNumber">Biển số xe:</label>
+            <input type="text" id="plateNumber" name="plateNumber"
+              onBlur={handleOnblur}
+              required />
+          </div>
           <div className="form-input">
             <label for="owner">Chủ sở hữu:</label>
             <input type="text" id="owner" name="owner" required />
-          </div>
-          <div className="form-input">
-            <label for="licensePlate">Biển số xe:</label>
-            <input type="text" id="licensePlate" name="licensePlate" required />
           </div>
           <div className="form-input">
             <label for="registrationDate">Ngày đăng kiểm:</label>
@@ -70,4 +113,6 @@ export default function Form() {
       </form>
     </div>
   );
+
+
 }

@@ -22,21 +22,20 @@ let handleRegister = async (plateNumber) => {
                 } else {
                     data.errCode = 0;
                     data.errMessage = "success";
-                    // data.car = car;
-                    data.driver = driver;
+                    console.log(getRegisterDate(car.registerDate));
                     data.data = {
                         driverName: driver.driverName,
                         plateNumber: car.plateNumber,
-                        registerDate: getRegisterDate(),
-                        expireDate: getExpireDate(),
+                        registrationDate: getRegistrationDate(),
+                        expirationDate: getExpirationDate(),
                         manufacture: car.manufacture,
                         model: car.model,
                         color: car.color,
-                        purpose: car.purpose
+                        purpose: car.purpose,
+                        registerDate: getRegisterDate(car.registerDate)
                     };
                     resolve(data);
                 }
-
             }
         } catch (error) {
             reject(error);
@@ -44,29 +43,83 @@ let handleRegister = async (plateNumber) => {
     })
 }
 
-let getRegisterDate = () => {
-    let date = new Date();
-    // let year = date.getFullYear;
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+let createRegister = async (data) => {
+    let plateNumber = data.plateNumber;
+    let name = data.name;
+    let registrationDate = data.registrationDate;
+    let expirationDate = data.expirationDate;
+
+    let car = await findCar(plateNumber);
+    if (!car) 
+        return {
+            errCode: 1,
+            errMessage: "the plate number can't exist"
+        };
+
+    let user = await findUser(name);
+    if (!user)
+        return {
+            errCode: 2,
+            errMessage: "user can't exist"
+        }
+    
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db.Register.create({
+                userId: user.id,
+                carId: car.id,
+                registerDate: data.registrationDate,
+                expireDate: data.expirationDate
+            });
+            console.log(data.registrationDate);
+            resolve('create register success');
+        } catch (error) {
+            reject(error);
+        }
+    })
 }
 
-let getExpireDate = () => {
-    let date = new Date();
-    let year = date.getFullYear;
-    let month = date.getMonth();
-    month += 12;
-    if (month > 12) {
-        month %= 12;
-        year++;
-    }
-    return `${year}-${month}-${date.getDate()}`;
+let getRegisterDate = (date) => {
+    let year = date.getFullYear();
+    let month = "";
+    let day = "";
+    if (date.getMonth() < 10) month = '0' + date.getMonth();
+    else month = date.getMonth();
+    if (date.getDate() < 10) day = '0' + date.getDate();
+    else day = date.getDate();
+    return `${year}-${month}-${day}`;
 }
 
-let findCar = (plateNumber) => {
+let getRegistrationDate = () => {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = "";
+    let day = "";
+    if (date.getMonth() < 10) month = '0' + date.getMonth();
+    else month = date.getMonth();
+    if (date.getDate() < 10) day = '0' + date.getDate();
+    else day = date.getDate();
+    return `${year}-${month}-${day}`;
+}
+
+let getExpirationDate = () => {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = "";
+    let day = "";
+    year += 1;
+    if (date.getMonth() < 10) month = '0' + date.getMonth();
+    else month = date.getMonth();
+    if (date.getDate() < 10) day = '0' + date.getDate();
+    else day = date.getDate();
+    return `${year}-${month}-${day}`;
+}
+
+let findCar = (pNumber) => {
     return new Promise(async (resolve, reject) => {
         try {
             let car = await db.Car.findOne({
-                where: { plateNumber: plateNumber }
+                where: { plateNumber: pNumber }
             })
             resolve(car);
         } catch (error) {
@@ -87,6 +140,23 @@ let findDriver = (driverId) => {
         }
     })
 }
+
+let findUser = (name) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { name: name }
+            })
+            resolve(user);
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+
+
 module.exports = {
     handleRegister: handleRegister,
+    createRegister: createRegister,
 }
