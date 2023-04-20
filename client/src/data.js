@@ -1,7 +1,7 @@
 export default [{
   "stt": 1,
   "plate_number": "2662941774",
-  "registered_date": "8/30/2022",
+  "registered_date": "8/30/2021",
   "place": "8 Mockingbird Court"
 }, {
   "stt": 2,

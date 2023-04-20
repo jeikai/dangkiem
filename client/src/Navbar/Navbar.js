@@ -1,22 +1,28 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
 
 export default function Navbar() {
   const [showNavActions, setShowNavActions] = React.useState(false);
+  const [currentUser, setcurrentUser] = useState("")
   const logout = () => {
     localStorage.clear();
+    window.location.replace("http://localhost:3000/login");
   }
   function toggleNavActions() {
     console.log("Toggle nav actions");
     setShowNavActions(!showNavActions);
   }
+  useEffect(() => {
+    const data = localStorage.getItem("user")
+    setcurrentUser(JSON.parse(data).username)
+  }, [currentUser])
 
   return (
     <nav>
       <div className="nav-center">
         <img src="/img/logo.png" />
-        <h2>Tên trung tâm đăng kiểm</h2>
+        <h2>{currentUser}</h2>
       </div>
 
       <ul

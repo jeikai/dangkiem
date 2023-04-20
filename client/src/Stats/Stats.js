@@ -7,50 +7,47 @@ import Table from "../RecentTable/RecentTable";
 import Collapsible from "./Collapsible/Collapsible"
 import data from "../data";
 
-const chartData = [
-  {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'Page B',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'Page E',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: 'Page F',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+
+function Time() {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+  var yyyy = today.getFullYear();
+
+  today = mm + '/' + dd + '/' + yyyy;
+  let now = new Date(today)
+  return now;
+}
+function Convert( a) {
+  a *= 0.001
+  a /= 3600
+  a /=24
+  return a
+}
+let month = [0,0,0,0,0,0,0,0,0,0,0,0]
+let month_expired = [0,0,0,0,0,0,0,0,0,0,0,0]
+for ( let i =0; i< data.length; i++) {
+  let a = new Date(data[i].registered_date)
+  for ( let j = 0; j< 12; j++) {
+    if ( a.getMonth() + 1 == j + 1) {
+      if ( Convert(Time() - a) >=365) {    
+        ++month_expired[j]
+      } else {
+        ++month[j]
+      }
+      break
+    } 
+  }
+}
+const chartData_2 = []
+for ( let i = 0; i< 12; i++) {
+  chartData_2.push({
+    name: 'Tháng' + (i + 1),
+    'chưa hết hạn': month[i],
+    'hết hạn': month_expired[i],
+    amt: 2400
+  })
+}
 
 
 export default function () {
@@ -79,14 +76,14 @@ export default function () {
   return (
     <div className="stats">
       <div className="barchart" ref={barRef}>
-        <BarChart width={barRef.current > 950 ? 900 : 375} height={350} data={chartData}>
+        <BarChart width={barRef.current > 950 ? 900 : 375} height={350} data={chartData_2}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="pv" fill="#8884d8" />
-          <Bar dataKey="uv" fill="#82ca9d" />
+          <Bar dataKey="hết hạn" fill="#8884d8" />
+          <Bar dataKey="chưa hết hạn" fill="#82ca9d" />
         </BarChart>
       </div>
 
