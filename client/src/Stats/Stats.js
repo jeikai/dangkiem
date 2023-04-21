@@ -16,31 +16,31 @@ function Time() {
 
   today = mm + '/' + dd + '/' + yyyy;
   let now = new Date(today)
-  return now; 
+  return now;
 }
-function Convert( a) {
+function Convert(a) {
   a *= 0.001
   a /= 3600
-  a /=24
+  a /= 24
   return a
 }
-let month = [0,0,0,0,0,0,0,0,0,0,0,0]
-let month_expired = [0,0,0,0,0,0,0,0,0,0,0,0]
-for ( let i =0; i< data.length; i++) {
+let month = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+let month_expired = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+for (let i = 0; i < data.length; i++) {
   let a = new Date(data[i].registered_date)
-  for ( let j = 0; j< 12; j++) {
-    if ( a.getMonth() + 1 == j + 1) {
-      if ( Convert(Time() - a) >=365) {    
+  for (let j = 0; j < 12; j++) {
+    if (a.getMonth() + 1 == j + 1) {
+      if (Convert(Time() - a) >= 365) {
         ++month_expired[j]
       } else {
         ++month[j]
       }
       break
-    } 
+    }
   }
 }
 const chartData_2 = []
-for ( let i = 0; i< 12; i++) {
+for (let i = 0; i < 12; i++) {
   chartData_2.push({
     name: 'Tháng' + (i + 1),
     'chưa hết hạn': month[i],

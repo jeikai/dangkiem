@@ -2,6 +2,8 @@ import express from "express";
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
 import registerFormController from "../controllers/registerFormCotroller"
+import statsController from "../controllers/statsController"
+
 let router = express.Router();
 
 let initWebRoutes = (app) => {
@@ -15,7 +17,8 @@ let initWebRoutes = (app) => {
     router.post('/api/login', userController.handleLogin);
     router.post('/api/form', userController.handleRegister);
     router.post('/api/create-register', registerFormController.createRegister);
-    
+    router.post('/api/stats', statsController.handleStats);
+
 
     return app.use("/", router);
 }
