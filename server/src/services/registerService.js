@@ -81,7 +81,7 @@ let createRegister = async (data) => {
 
 let getRegisterDate = (date) => {
     let year = date.getFullYear();
-    let month = "";
+    let month = ""; 
     let day = "";
     if (date.getMonth() < 10) month = '0' + date.getMonth();
     else month = date.getMonth();

@@ -1,7 +1,7 @@
 import React from "react";
 import { useRef, useEffect } from "react";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
+import axios from "axios";
 import "./Stats.scss";
 import Table from "../RecentTable/RecentTable";
 import Collapsible from "./Collapsible/Collapsible"
@@ -16,7 +16,7 @@ function Time() {
 
   today = mm + '/' + dd + '/' + yyyy;
   let now = new Date(today)
-  return now;
+  return now; 
 }
 function Convert( a) {
   a *= 0.001
@@ -66,6 +66,12 @@ export default function () {
     }
   }, [barRef.current]);
 
+  useEffect(() => {
+    async function Data() {
+      const data = await axios.get()
+    }
+    Data()
+  }, [])
   function forceUpdate() {
     // force a re-render of the component by setting the state to the current state
     setState(prevState => ({ ...prevState }));
