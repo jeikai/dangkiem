@@ -5,7 +5,7 @@ export default function () {
   return (
     <div className="account-register">
       <div className="register">
-        <form action="">
+        <form action=""> 
           <h2>ĐĂNG KÍ TÀI KHOẢN CHO TRUNG TÂM ĐĂNG KIỂM</h2>
           <img src="./img/logo.png" />
           <div className="inputbox">

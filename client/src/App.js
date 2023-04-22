@@ -10,11 +10,11 @@ import HomeAdmin from "./HomeAdmin/HomeAdmin"
 import Stats from "./Stats/Stats";
 import Form from "./Form/Form";
 import AccountRegister from "./AccountRegister/AccountRegister";
+import data_navbar from "./data_navbar";
 function App() {
   const [login, setLogin] = useState({
     user: localStorage.getItem("user"),
   });
-  // console.log(JSON.parse(login.user).rolebit)
   const location = useLocation();
 
   return (
@@ -26,7 +26,7 @@ function App() {
         :
         login.user != null && JSON.parse(login.user).rolebit == 0 ?
           <>
-            <Navbar user={JSON.parse(login.user)}/>
+            <Navbar user={JSON.parse(login.user)} data={data_navbar[0]} />
             <TransitionGroup>
               <CSSTransition key={location.key} classNames="sliding" timeout={500}>
                 <Routes>
@@ -38,23 +38,22 @@ function App() {
             </TransitionGroup>
           </>
           :
-          login.user != null && JSON.parse(login.user).rolebit == 1 ? 
-          <>
-            <Navbar>
+          login.user != null && JSON.parse(login.user).rolebit == 1 ?
+            <>
+              <Navbar user={JSON.parse(login.user)} data={data_navbar[1]} />
               <TransitionGroup>
                 <CSSTransition key={location.key} classNames="sliding" timeout={500}>
                   <Routes>
-                    <Route path="/admin" element={<HomeAdmin />} />
+                    <Route path="/" element={<HomeAdmin />} />
                     <Route path="/signup" element={<AccountRegister />} />
                   </Routes>
                 </CSSTransition>
               </TransitionGroup>
-            </Navbar>
-          </>
-          : 
-          <>
-            404 NOT FOUND
-          </>
+            </>
+            :
+            <>
+              404 NOT FOUND
+            </>
       }
     </>
   );

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
-
-export default function Navbar({user}) {
+import data_navbar from "../data_navbar";
+export default function Navbar({user, data}) {
   const [showNavActions, setShowNavActions] = React.useState(false);
   const logout = () => {
     localStorage.clear();
@@ -12,7 +12,6 @@ export default function Navbar({user}) {
     console.log("Toggle nav actions");
     setShowNavActions(!showNavActions);
   }
-
   return (
     <nav>
       <div className="nav-center">
@@ -25,21 +24,21 @@ export default function Navbar({user}) {
         onMouseLeave={toggleNavActions}
       >
         <li className="nav-action">
-          <Link to={"/"} end className="nav-action-home">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-            <span>Lịch sử</span>
+          <Link to={data.link1} end >
+            <i class={data.icon1}></i>
+            <span>{data.tag1}</span>
           </Link>
         </li>
         <li className="nav-action">
-          <Link to={"/form"} end className="nav-action-form">
-            <i class="fa-sharp fa-solid fa-rectangle-list"></i>
-            <span>Đơn đăng kiểm</span>
+          <Link to={data.link2} end >
+            <i class={data.icon2}></i>
+            <span>{data.tag2}</span>
           </Link>
         </li>
         <li className="nav-action">
-          <Link to={"/stats"} end className="nav-action-stats">
-            <i class="fa-solid fa-chart-column"></i>
-            <span>Thống kê</span>
+          <Link to={data.link3} end >
+            <i class={data.icon3}></i>
+            <span>{data.tag3}</span>
           </Link>
         </li>
         <li className="nav-action">
