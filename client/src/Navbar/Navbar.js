@@ -16,7 +16,7 @@ export default function Navbar({user, data}) {
     <nav>
       <div className="nav-center">
         <img src="/img/logo.png" />
-        <h2>{user.username}</h2>
+        <h2>{user.name}</h2>
       </div>
 
       <ul
