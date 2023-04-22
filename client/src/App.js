@@ -14,7 +14,7 @@ function App() {
   const [login, setLogin] = useState({
     user: localStorage.getItem("user"),
   });
-  
+  // console.log(JSON.parse(login.user).rolebit)
   const location = useLocation();
 
   return (
@@ -24,21 +24,37 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
         :
-        <>
-          <Navbar />
-          <TransitionGroup>
-            <CSSTransition key={location.key} classNames="sliding" timeout={500}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/stats" element={<Stats />} />
-                <Route path="form" element={<Form />} />
-                <Route path="/form" element={<Form />} />
-                <Route path="/admin" element={<HomeAdmin />} />
-                <Route path="/signup" element={<AccountRegister />} />
-              </Routes>
-            </CSSTransition>
-          </TransitionGroup>
-        </>
+        login.user != null && JSON.parse(login.user).rolebit == 0 ?
+          <>
+            <Navbar user={JSON.parse(login.user)}/>
+            <TransitionGroup>
+              <CSSTransition key={location.key} classNames="sliding" timeout={500}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/stats" element={<Stats user={JSON.parse(login.user)} />} />
+                  <Route path="form" element={<Form />} />
+                </Routes>
+              </CSSTransition>
+            </TransitionGroup>
+          </>
+          :
+          login.user != null && JSON.parse(login.user).rolebit == 1 ? 
+          <>
+            <Navbar>
+              <TransitionGroup>
+                <CSSTransition key={location.key} classNames="sliding" timeout={500}>
+                  <Routes>
+                    <Route path="/admin" element={<HomeAdmin />} />
+                    <Route path="/signup" element={<AccountRegister />} />
+                  </Routes>
+                </CSSTransition>
+              </TransitionGroup>
+            </Navbar>
+          </>
+          : 
+          <>
+            404 NOT FOUND
+          </>
       }
     </>
   );

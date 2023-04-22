@@ -1,56 +1,35 @@
 import React from "react";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import axios from "axios";
 import "./Stats.scss";
 import Table from "../RecentTable/RecentTable";
 import Collapsible from "./Collapsible/Collapsible"
 import data from "../data";
+import { getStatsData } from "../utils/routes";
 
+export default function ({ user }) {
+  const [month_unexpired, setUnexpired] = useState([])
+  const [month_expired, setExpired] = useState([  ])
 
-function Time() {
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0');
-  var yyyy = today.getFullYear();
-
-  today = mm + '/' + dd + '/' + yyyy;
-  let now = new Date(today)
-  return now;
-}
-function Convert(a) {
-  a *= 0.001
-  a /= 3600
-  a /= 24
-  return a
-}
-let month = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-let month_expired = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-for (let i = 0; i < data.length; i++) {
-  let a = new Date(data[i].registered_date)
-  for (let j = 0; j < 12; j++) {
-    if (a.getMonth() + 1 == j + 1) {
-      if (Convert(Time() - a) >= 365) {
-        ++month_expired[j]
-      } else {
-        ++month[j]
-      }
-      break
+  useEffect(() => {
+    async function Data() {
+      const data = await axios.get(`${getStatsData}/${user.id}`)
+      setUnexpired(data.data.month_unexpired)
+      setExpired(data.data.month_expired)
     }
+    Data()
+  }, [user])
+  console.log(month_expired, month_unexpired)
+  const chartData_2 = []
+  for (let i = 0; i < 12; i++) {
+    chartData_2.push({
+      name: 'Tháng' + (i + 1),
+      'chưa hết hạn': month_unexpired[i],
+      'hết hạn': month_expired[i],
+      amt: 2400
+    })
   }
-}
-const chartData_2 = []
-for (let i = 0; i < 12; i++) {
-  chartData_2.push({
-    name: 'Tháng' + (i + 1),
-    'chưa hết hạn': month[i],
-    'hết hạn': month_expired[i],
-    amt: 2400
-  })
-}
-
-
-export default function () {
   const barRef = useRef(window.innerWidth);
 
   useEffect(() => {
@@ -65,6 +44,8 @@ export default function () {
       window.removeEventListener('resize', handleResize);
     }
   }, [barRef.current]);
+
+
 
   useEffect(() => {
     async function Data() {
@@ -82,7 +63,7 @@ export default function () {
   return (
     <div className="stats">
       <div className="barchart" ref={barRef}>
-        <BarChart width={barRef.current > 950 ? 900 : 375} height={350} data={chartData_2}>
+        <BarChart width={900} height={350} data={chartData_2}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />

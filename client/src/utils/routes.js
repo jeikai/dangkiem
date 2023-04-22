@@ -4,7 +4,7 @@ export const formRoute = `${host}/api/form`;
 export const createRegistationRoute = `${host}/api/create-register`;
 export const getStatsData = `${host}/api/stats`; 
 // axios.post(getStatsData, {"userId" : 2});
-// data return : 
+// data return :  
 // {
 // "errCode": 0,
 //     "errMessage": "get data success",
