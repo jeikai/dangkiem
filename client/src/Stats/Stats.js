@@ -10,7 +10,8 @@ import { getStatsData } from "../utils/routes";
 
 export default function ({ user }) {
   const [month_unexpired, setUnexpired] = useState([])
-  const [month_expired, setExpired] = useState([  ])
+  const [month_expired, setExpired] = useState([])
+
 
   useEffect(() => {
     async function Data() {
@@ -20,6 +21,7 @@ export default function ({ user }) {
     }
     Data()
   }, [user])
+
   console.log(month_expired, month_unexpired)
   const chartData_2 = []
   for (let i = 0; i < 12; i++) {
@@ -31,19 +33,20 @@ export default function ({ user }) {
     })
   }
   const barRef = useRef(window.innerWidth);
-
+  const [state, setState] = React.useState({}); // state used to force re-render
   useEffect(() => {
     const handleResize = () => {
-      barRef.current = window.innerWidth;
-      forceUpdate();
-      //console.log(barRef.current);
+      const currentWidth = window.innerWidth;
+      barRef.current = currentWidth;
+      setState(prevState => ({ ...prevState })); // trigger re-render
     };
+    handleResize(); // set initial width
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
-    }
-  }, [barRef.current]);
+    };
+  }, []);
 
 
 
@@ -58,12 +61,11 @@ export default function ({ user }) {
     setState(prevState => ({ ...prevState }));
   }
 
-  const [state, setState] = React.useState({}); // state used to force re-render
 
   return (
     <div className="stats">
       <div className="barchart" ref={barRef}>
-        <BarChart width={900} height={350} data={chartData_2}>
+        <BarChart width={barRef.current > 950 ? 900 : 375} height={350} data={chartData_2}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
