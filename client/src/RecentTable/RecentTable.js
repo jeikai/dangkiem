@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './RecentTable.scss';
 
-function RecentTable({data}) {
+function RecentTable({ data }) {
   const [plateSearch, setPlateSearch] = useState('');
   const [dateSearch, setDateSearch] = useState('');
   const [placeSearch, setPlaceSearch] = useState('');
@@ -10,17 +10,20 @@ function RecentTable({data}) {
     .filter((item) => {
       return placeSearch === ''
         ? item
-        : item['User.address'].toLowerCase().includes(placeSearch);
+        : item['User.address'].toLowerCase().includes(placeSearch.toLowerCase());
     })
     .filter((item) => {
+      console.log("item['Car.plateNumber']");
+      console.log(item['Car.plateNumber']);
+      console.log(typeof (item['Car.plateNumber']));
       return plateSearch === ''
         ? item
-        : item['Car.plateNumber'].toLowerCase().includes(plateSearch);
+        : item['Car.plateNumber'].includes(plateSearch.toUpperCase());
     })
     .filter((item) => {
       return dateSearch === ''
         ? item
-        : item.registerDate.toLowerCase().includes(dateSearch);
+        : item.registerDate.toLowerCase().includes(dateSearch.toLowerCase());
     })
     .map((data) => {
       return (
@@ -39,19 +42,19 @@ function RecentTable({data}) {
         <input
           type="text"
           className="searchbox"
-          onChange={(e) => setPlateSearch(e.target.value.toLowerCase())}
+          onChange={(e) => setPlateSearch(e.target.value)}
           placeholder="Tìm kiếm theo biển số xe"
         ></input>
         <input
           type="text"
           className="searchbox"
-          onChange={(e) => setDateSearch(e.target.value.toLowerCase())}
+          onChange={(e) => setDateSearch(e.target.value)}
           placeholder="Tìm kiếm theo ngày đăng kiểm"
         ></input>
         <input
           type="text"
           className="searchbox"
-          onChange={(e) => setPlaceSearch(e.target.value.toLowerCase())}
+          onChange={(e) => setPlaceSearch(e.target.value)}
           placeholder="Tìm kiếm nơi đăng kiểm"
         ></input>
       </div>

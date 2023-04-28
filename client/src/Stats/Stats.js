@@ -14,6 +14,7 @@ export default function ({ user }) {
   useEffect(() => {
     async function Data() {
       const regis = await axios.get(`${getHistoryData}/${user.id}`)
+      console.log('regis.data.data: ')
       console.log(regis.data.data)
       setData(regis.data.data)
     }
@@ -50,12 +51,6 @@ export default function ({ user }) {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  function forceUpdate() {
-    // force a re-render of the component by setting the state to the current state
-    setState(prevState => ({ ...prevState }));
-  }
-
 
   return (
     <div className="stats">
