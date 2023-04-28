@@ -8,31 +8,30 @@ function RecentTable({data}) {
 
   let TableLine = data
     .filter((item) => {
-      return placeSearch.toLowerCase() === ''
+      return placeSearch === ''
         ? item
-        : item.place.toLowerCase().includes(placeSearch);
+        : item['User.address'].toLowerCase().includes(placeSearch);
     })
     .filter((item) => {
-      return plateSearch.toLowerCase() === ''
+      return plateSearch === ''
         ? item
-        : item.plate_number.toLowerCase().includes(plateSearch);
+        : item['Car.plateNumber'].toLowerCase().includes(plateSearch);
     })
     .filter((item) => {
-      return dateSearch.toLowerCase() === ''
+      return dateSearch === ''
         ? item
-        : item.registered_date.toLowerCase().includes(dateSearch);
+        : item.registerDate.toLowerCase().includes(dateSearch);
     })
     .map((data) => {
       return (
         <tr key={data.carId}>
           <td>{data.carId}</td>
-          {/* <td>{data.Car.plateNumber}</td> */}
+          <td>{data['Car.plateNumber']}</td>
           <td>{data.registerDate}</td>
-          {/* <td>{data.User.address}</td> */}
+          <td>{data['User.address']}</td>
         </tr>
       );
     });
-  console.log(data);
 
   return (
     <form>

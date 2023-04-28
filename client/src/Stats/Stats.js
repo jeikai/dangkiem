@@ -5,12 +5,20 @@ import axios from "axios";
 import "./Stats.scss";
 import Table from "../RecentTable/RecentTable";
 import Collapsible from "./Collapsible/Collapsible"
-import data from "../data";
+import { getHistoryData } from "../utils/routes";
 import { getStatsData } from "../utils/routes";
 
 export default function ({ user }) {
   const [month_expired, setExpired] = useState([])
-
+  const [data, setData] = useState([])
+  useEffect(() => {
+    async function Data() {
+      const regis = await axios.get(`${getHistoryData}/${user.id}`)
+      console.log(regis.data.data)
+      setData(regis.data.data)
+    }
+    Data()
+  }, [user])
   useEffect(() => {
     async function Data() {
       const data = await axios.get(`${getStatsData}/${user.id}`)
