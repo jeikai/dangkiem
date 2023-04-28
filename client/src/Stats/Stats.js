@@ -9,34 +9,29 @@ import data from "../data";
 import { getStatsData } from "../utils/routes";
 
 export default function ({ user }) {
-  const [month_unexpired, setUnexpired] = useState([])
-  const [month_expired, setExpired] = useState([  ])
+  const [month_expired, setExpired] = useState([])
 
   useEffect(() => {
     async function Data() {
       const data = await axios.get(`${getStatsData}/${user.id}`)
-      setUnexpired(data.data.month_unexpired)
       setExpired(data.data.month_expired)
     }
     Data()
   }, [user])
-  console.log(month_expired, month_unexpired)
   const chartData_2 = []
   for (let i = 0; i < 12; i++) {
     chartData_2.push({
       name: 'Tháng' + (i + 1),
-      'chưa hết hạn': month_unexpired[i],
       'hết hạn': month_expired[i],
       amt: 2400
     })
   }
   const barRef = useRef(window.innerWidth);
-
+  
   useEffect(() => {
     const handleResize = () => {
       barRef.current = window.innerWidth;
       forceUpdate();
-      //console.log(barRef.current);
     };
     window.addEventListener('resize', handleResize);
 
@@ -45,14 +40,6 @@ export default function ({ user }) {
     }
   }, [barRef.current]);
 
-
-
-  useEffect(() => {
-    async function Data() {
-      const data = await axios.get()
-    }
-    Data()
-  }, [])
   function forceUpdate() {
     // force a re-render of the component by setting the state to the current state
     setState(prevState => ({ ...prevState }));
@@ -63,14 +50,13 @@ export default function ({ user }) {
   return (
     <div className="stats">
       <div className="barchart" ref={barRef}>
-        <BarChart width={900} height={350} data={chartData_2}>
+        <BarChart width={barRef.current > 950 ? 900 : 375} height={350} data={chartData_2}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
           <Legend />
           <Bar dataKey="hết hạn" fill="#8884d8" />
-          <Bar dataKey="chưa hết hạn" fill="#82ca9d" />
         </BarChart>
       </div>
 

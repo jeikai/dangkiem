@@ -7,7 +7,7 @@ let handleRegister = async (plateNumber) => {
         try {
             let data = {};
             let car = await findCar(plateNumber);
-            if (!car) {
+            if (!car) { 
                 data.errCode = 1;
                 data.errMessage = "plate number isn't exist";
                 data.data = {};

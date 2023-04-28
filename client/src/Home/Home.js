@@ -1,9 +1,19 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./Home.scss";
 import RecentTable from "../RecentTable/RecentTable"
-import data from "../data.js";
-
-export default function () {
+import axios from "axios";
+import { getHistoryData } from "../utils/routes"
+export default function ({user}) {
+  const [data, setData] = useState([])
+  useEffect(() => {
+    async function Data() {
+      const regis = await axios.get(`${getHistoryData}/${user.id}`)
+      console.log(regis.data.data)
+      setData(regis.data.data)
+    }
+    Data()
+  }, [user])
+  console.log(data) 
   return (
     <div className="recent">
       <div className="recent-header">

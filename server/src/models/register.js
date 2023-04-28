@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            Register.belongsTo(models.Car, {foreignKey: {unique: true}});
+            Register.belongsTo(models.User, {foreignKey: {unique: true}});
         }
     };
     Register.init({

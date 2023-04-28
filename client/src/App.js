@@ -30,7 +30,7 @@ function App() {
             <TransitionGroup>
               <CSSTransition key={location.key} classNames="sliding" timeout={500}>
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/" element={<Home user={JSON.parse(login.user)}/>} />
                   <Route path="/stats" element={<Stats user={JSON.parse(login.user)} />} />
                   <Route path="form" element={<Form />} />
                 </Routes>

@@ -18,6 +18,7 @@ let initWebRoutes = (app) => {
     router.post('/api/form', userController.handleRegister);
     router.post('/api/create-register', registerFormController.createRegister);
     router.get('/api/stats/:id', statsController.handleStats);
+    router.get('/api/history/:id', statsController.handleGetRegister);
 
 
     return app.use("/", router);

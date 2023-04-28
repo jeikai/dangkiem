@@ -6,7 +6,9 @@ let createRegister = (req, res) => {
     registerService.createRegister(req.body);
 
 }
-
+let handleRegis = (req, res) => {
+    
+}
 module.exports = {
     createRegister: createRegister,
 };

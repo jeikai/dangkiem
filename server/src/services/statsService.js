@@ -1,31 +1,44 @@
-import db from '../models/index';
+import db from "../models/index";
 
 let handleStats = async (userId) => {
-    let data = await getRegisterData(userId);
-    if (!data) return {
-        errCode: 1,
-        errMessage: "can't get data from database",
-        data: {}
-    }
+  let data = await getRegisterData(userId);
+  if (!data)
+    return {
+      errCode: 1,
+      errMessage: "can't get data from database",
+      data: {},
+    };
 
-    return data;
-}
+  return data;
+};
 
 let getRegisterData = (userId) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let register = await db.Register.findAll({
-                attributes: ["registerDate", "expireDate"],
-                where: { userId: userId },
-                raw: true
-            });
-            resolve(register);
-        } catch (error) {
-            reject.log(error);
-        }
-    })
-}
+  return new Promise(async (resolve, reject) => {
+    try {
+      let register = await db.Register.findAll({
+        attributes: ["registerDate", "expireDate", "carId"],
+        where: { userId: userId },
+        raw: true,
+        include: [
+          {
+            model: db.Car,
+            as: "Car",
+            attributes: ["plateNumber"]
+          },
+          {
+            model: db.User,
+            attributes: ["address"]
+          }
+        ],
+      });
+      console.log(register);
+      resolve(register);
+    } catch (error) {
+      reject.log(error);
+    }
+  });
+};
 
 module.exports = {
-    handleStats: handleStats
-}
+  handleStats: handleStats,
+};
