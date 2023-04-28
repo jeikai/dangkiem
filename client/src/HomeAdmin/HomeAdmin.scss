@@ -20,40 +20,4 @@
         }
     }
 
-    .centers-list {
-        margin: 0;
-        padding: 0;
-        backdrop-filter: blur(40px);
-        border: 2px solid rgba(255, 255, 255, 0.5);
-        border-radius: 20px;
-        width: 90%;
-        height: fit-content;
-        overflow: hidden;
-        max-width: 900px;
-        align-self: center;
-        list-style: none;
-        list-style-position: outside;
-
-        li {
-            padding: 30px;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-
-            &:nth-child(even) {
-                background-color: rgba(208, 203, 203, 0.263);
-            }
-
-            &:nth-child(odd) {
-                background-color: rgba(194, 180, 180, 0.171);
-            }
-
-            &:hover {
-                background-color: rgba(242, 242, 242, 0.418);
-                cursor: pointer;
-            }
-        }
-
-
-    }
 }

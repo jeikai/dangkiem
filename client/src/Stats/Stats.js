@@ -9,7 +9,9 @@ import data from "../data";
 import { getStatsData } from "../utils/routes";
 
 export default function ({ user }) {
+  const [month_unexpired, setUnexpired] = useState([])
   const [month_expired, setExpired] = useState([])
+
 
   useEffect(() => {
     async function Data() {
@@ -18,6 +20,8 @@ export default function ({ user }) {
     }
     Data()
   }, [user])
+
+  console.log(month_expired, month_unexpired)
   const chartData_2 = []
   for (let i = 0; i < 12; i++) {
     chartData_2.push({
@@ -27,25 +31,26 @@ export default function ({ user }) {
     })
   }
   const barRef = useRef(window.innerWidth);
-  
+  const [state, setState] = React.useState({}); // state used to force re-render
   useEffect(() => {
     const handleResize = () => {
-      barRef.current = window.innerWidth;
-      forceUpdate();
+      const currentWidth = window.innerWidth;
+      barRef.current = currentWidth;
+      setState(prevState => ({ ...prevState })); // trigger re-render
     };
+    handleResize(); // set initial width
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
-    }
-  }, [barRef.current]);
+    };
+  }, []);
 
   function forceUpdate() {
     // force a re-render of the component by setting the state to the current state
     setState(prevState => ({ ...prevState }));
   }
 
-  const [state, setState] = React.useState({}); // state used to force re-render
 
   return (
     <div className="stats">
