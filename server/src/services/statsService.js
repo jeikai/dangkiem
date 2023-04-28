@@ -18,7 +18,7 @@ let getRegisterData = (userId) => {
       let register = await db.Register.findAll({
         attributes: ["registerDate", "expireDate", "carId"],
         where: { userId: userId },
-        raw: true,
+
         include: [
           {
             model: db.Car,

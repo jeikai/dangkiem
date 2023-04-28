@@ -19,7 +19,6 @@ export default function ({ user }) {
     Data()
   }, [user])
 
-  console.log(month_expired, month_unexpired)
   const chartData_2 = []
   for (let i = 0; i < 12; i++) {
     chartData_2.push({
