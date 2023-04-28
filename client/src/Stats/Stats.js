@@ -9,9 +9,7 @@ import data from "../data";
 import { getStatsData } from "../utils/routes";
 
 export default function ({ user }) {
-  const [month_unexpired, setUnexpired] = useState([])
   const [month_expired, setExpired] = useState([])
-
 
   useEffect(() => {
     async function Data() {
