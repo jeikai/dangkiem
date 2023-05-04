@@ -31,7 +31,6 @@ let getRegisterData = (userId) => {
           }
         ],
       });
-      console.log(register);
       resolve(register);
     } catch (error) {
       reject.log(error);

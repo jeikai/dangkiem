@@ -6,9 +6,18 @@ let createRegister = (req, res) => {
     registerService.createRegister(req.body);
 
 }
-let handleRegis = (req, res) => {
-    
+let handleGetRegister = async (req, res) => {
+    let userId = req.params.id;
+    let data = await registerService.handleGetRegister(userId);
+
+    return res.status(200).json({
+        errCode: 0, 
+        errMessage: "get data success",
+        data: data
+    })
+
 }
 module.exports = {
     createRegister: createRegister,
+    handleGetRegister: handleGetRegister
 };

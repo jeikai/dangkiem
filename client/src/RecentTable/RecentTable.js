@@ -15,7 +15,7 @@ function RecentTable({data}) {
     .filter((item) => {
       return plateSearch === ''
         ? item
-        : item['Car.plateNumber'].toLowerCase().includes(plateSearch);
+        : item['Car.plateNumber'].toString().toLowerCase().includes(plateSearch);
     })
     .filter((item) => {
       return dateSearch === ''
@@ -58,7 +58,7 @@ function RecentTable({data}) {
       <table className="table">
         <thead>
           <tr>
-            <th>STT</th>
+            <th>ID</th>
             <th>Biển số xe</th>
             <th>Ngày đăng kiểm</th>
             <th>Nơi đăng kiểm</th>
