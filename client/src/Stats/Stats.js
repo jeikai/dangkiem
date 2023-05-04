@@ -18,8 +18,7 @@ import Collapsible from './Collapsible/Collapsible';
 import { getStatsData, getUnexpiredData, getExpiredData } from '../utils/routes';
 
 export default function ({ user }) {
-  const [month_expired, setExpired] = useState([]);
-
+  const [month_expired, setExpired] = useState([])
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
   useEffect(() => {
@@ -68,11 +67,6 @@ export default function ({ user }) {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  function forceUpdate() {
-    // force a re-render of the component by setting the state to the current state
-    setState((prevState) => ({ ...prevState }));
-  }
 
   return (
     <div className="stats">
