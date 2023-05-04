@@ -2,7 +2,7 @@ import React from "react";
 import "./Form.scss";
 import axios from "axios";
 import { formRoute, createRegistationRoute } from "../utils/routes";
-
+import {ReactToPrint} from 'react-to-print'
 
 
 export default function Form() {
