@@ -1,5 +1,8 @@
 import React from "react";
+import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
+
 import "./HomeAdmin.scss";
+
 
 import Table from "../RecentTable/RecentTable";
 import Collapsible from "../Stats/Collapsible/Collapsible"
@@ -22,15 +25,47 @@ export default function HomeAdmin() {
     )
   })
 
+  const data01 = [
+    { name: 'Hà Nội 1', value: 400 },
+    { name: 'Đà Nẵng', value: 300 },
+    { name: 'Thanh Hoá', value: 300 },
+    { name: 'Group D', value: 200 },
+    { name: 'Group E', value: 278 },
+    { name: 'Group F', value: 189 },
+  ];
+
 
   return (
-    <div className="centers">
-      <div className="centers-header">
-        <h1>Danh sách các trung tâm đăng kiểm</h1>
+    <div className="admin-home">
+      <div className="chart-header">
+        <h1>Tỷ lệ đăng kiểm theo trung tâm</h1>
+      </div>
+      <div className="barchart">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart width={400} height={400}>
+            <Pie
+              dataKey="value"
+              isAnimationActive={false}
+              data={data01}
+              cx="50%"
+              cy="50%"
+              outerRadius={80}
+              fill="#8884d8"
+              label
+            />
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
 
-      <div>
-        {Centers}
+      <div className="centers">
+        <div className="centers-header">
+          <h1>Danh sách các trung tâm đăng kiểm</h1>
+        </div>
+
+        <div>
+          {Centers}
+        </div>
       </div>
     </div>
   );

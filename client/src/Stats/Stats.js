@@ -52,37 +52,24 @@ export default function ({ user }) {
       amt: 2400,
     });
   }
-  const barRef = useRef(window.innerWidth);
-  const [state, setState] = React.useState({}); // state used to force re-render
-  useEffect(() => {
-    const handleResize = () => {
-      const currentWidth = window.innerWidth;
-      barRef.current = currentWidth;
-      setState((prevState) => ({ ...prevState })); // trigger re-render
-    };
-    handleResize(); // set initial width
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   return (
     <div className="stats">
-      <div className="barchart" ref={barRef}>
-        <BarChart
-          width={barRef.current > 950 ? 900 : 375}
-          height={350}
-          data={chartData_2}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="hết hạn" fill="#8884d8" />
-        </BarChart>
+      <div className="barchart">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            width="100%"
+            height="100%"
+            data={chartData_2}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="hết hạn" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
 
       <hr />
