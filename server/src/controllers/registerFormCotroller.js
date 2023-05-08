@@ -15,7 +15,6 @@ let handleGetRegister = async (req, res) => {
         errMessage: "get data success",
         data: data
     })
-
 }
 module.exports = {
     createRegister: createRegister,

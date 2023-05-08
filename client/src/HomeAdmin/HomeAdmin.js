@@ -38,7 +38,7 @@ export default function HomeAdmin() {
   return (
     <div className="admin-home">
       <div className="chart-header">
-        <h1>Tỷ lệ đăng kiểm theo trung tâm</h1>
+
       </div>
       <div className="barchart">
         <ResponsiveContainer width="100%" height="100%">

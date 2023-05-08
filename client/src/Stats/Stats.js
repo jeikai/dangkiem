@@ -52,7 +52,7 @@ export default function ({ user }) {
       amt: 2400,
     });
   }
-
+ console.log(chartData_2)
   return (
     <div className="stats">
       <div className="barchart">
