@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import './RecentTable.scss';
+import { Input } from "@material-tailwind/react";
+import { Card, Typography } from "@material-tailwind/react";
+//import './RecentTable.scss';
 
 function RecentTable({ data }) {
   const [plateSearch, setPlateSearch] = useState('');
   const [dateSearch, setDateSearch] = useState('');
   const [placeSearch, setPlaceSearch] = useState('');
 
-  let TableLine = data
+  const TABLE_HEAD = ["ID", "Biển số xe", "Ngày đăng kiểm", "Nơi đăng kiểm", ""];
+
+  let TABLE_ROWS = data
     .filter((item) => {
       return placeSearch === ''
         ? item
@@ -25,50 +29,87 @@ function RecentTable({ data }) {
         ? item
         : item.registerDate.toLowerCase().includes(dateSearch.toLowerCase());
     })
-    .map((data) => {
-      return (
-        <tr key={data.carId}>
-          <td>{data.carId}</td>
-          <td>{data['Car.plateNumber']}</td>
-          <td>{data.registerDate}</td>
-          <td>{data['User.address']}</td>
-        </tr>
-      );
-    });
 
   return (
     <form>
-      <div className="search_group">
-        <input
-          type="text"
-          className="searchbox"
+      <div className="mt-10 flex flex-col lg:flex-row gap-2">
+        <Input
+          variant="outlined"
+          label="Tìm kiếm theo biển số xe"
           onChange={(e) => setPlateSearch(e.target.value)}
-          placeholder="Tìm kiếm theo biển số xe"
-        ></input>
-        <input
-          type="text"
-          className="searchbox"
+          className='' />
+        <Input
+          variant="outlined"
+          label="Tìm kiếm theo ngày đăng kiểm"
           onChange={(e) => setDateSearch(e.target.value)}
-          placeholder="Tìm kiếm theo ngày đăng kiểm"
-        ></input>
-        <input
-          type="text"
-          className="searchbox"
+          className='' />
+        <Input
+          variant="outlined"
+          label="Tìm kiếm theo nơi đăng kiểm"
           onChange={(e) => setPlaceSearch(e.target.value)}
-          placeholder="Tìm kiếm nơi đăng kiểm"
-        ></input>
+          className='' />
+
       </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Biển số xe</th>
-            <th>Ngày đăng kiểm</th>
-            <th>Nơi đăng kiểm</th>
-          </tr>
-        </thead>
-        <tbody>{TableLine}</tbody>
-      </table>
+
+      <Card className='overflow-scroll h-full w-full mt-6'>
+        <table className="w-full min-w-max table-auto text-left" >
+          <thead>
+            <tr>
+              {TABLE_HEAD.map((head) => (
+                <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal leading-none opacity-70"
+                  >
+                    {head}
+                  </Typography>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {TABLE_ROWS.map((data, index) => {
+              const isLast = index === TABLE_ROWS.length - 1;
+              const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+
+              return (
+                <tr key={data.carId}>
+                  <td className={classes}>
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {data.carId}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {data["Car.plateNumber"]}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {data.registerDate}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {data['User.address']}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography as="a" href="#" variant="small" color="blue" className="font-medium">
+                      Sửa lượt đăng kiểm
+                    </Typography>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+
+      </Card>
+
+
+
     </form>
   );
 }

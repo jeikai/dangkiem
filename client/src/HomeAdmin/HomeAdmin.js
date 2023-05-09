@@ -1,38 +1,33 @@
 import React from "react";
+import {
+  Typography,
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+} from "@material-tailwind/react";
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 
 import "./HomeAdmin.scss";
 
 
-import Table from "../RecentTable/RecentTable";
-import Collapsible from "../Stats/Collapsible/Collapsible"
+import RecentTable from "../RecentTable/RecentTable";
 import mockData from "../data.js";
 
 export default function HomeAdmin() {
 
-  const centersList = [{ name: 'trung tam 1', id: 1 }, { name: 'trung tam 2', id: 2 }, { name: 'trung tam 3', id: 3 }];
-  let Centers = centersList.map((data) => {
-    return (
-      <div>
-        <Collapsible label={data.name} >
-          <div className="table-container">
-            <Table className="stats-table" data={mockData} />
-          </div>
-        </Collapsible>
-
-        <hr />
-      </div>
-    )
-  })
-
   const data01 = [
-    { name: 'Hà Nội 1', value: 400 },
-    { name: 'Đà Nẵng', value: 300 },
-    { name: 'Thanh Hoá', value: 300 },
-    { name: 'Group D', value: 200 },
-    { name: 'Group E', value: 278 },
-    { name: 'Group F', value: 189 },
+    { label: 'Hà Nội 1', value: "hanoi", desc: "ban lay data table cua tung trung tam" },
+    { label: 'Đà Nẵng', value: "danang", desc: "ban lay data table cua tung trung tam" },
+    { label: 'Thanh Hoá', value: "thanhhoa", desc: "ban lay data table cua tung trung tam" },
   ];
+  const data011 = [
+    { key: 'Hà Nội 1', value: 400, },
+    { key: 'Đà Nẵng', value: 500 },
+    { key: 'Thanh Hoá', value: 600 },
+  ];
+
 
 
   return (
@@ -46,7 +41,7 @@ export default function HomeAdmin() {
             <Pie
               dataKey="value"
               isAnimationActive={false}
-              data={data01}
+              data={data011}
               cx="50%"
               cy="50%"
               outerRadius={80}
@@ -60,12 +55,33 @@ export default function HomeAdmin() {
 
       <div className="centers">
         <div className="centers-header">
-          <h1>Danh sách các trung tâm đăng kiểm</h1>
+          <Typography variant="h2" color="blue" textGradient>
+            Danh sách các trung tâm đăng kiểm
+          </Typography>
         </div>
 
-        <div>
-          {Centers}
-        </div>
+        <Tabs value="hanoi">
+          <TabsHeader>
+            {data01.map(({ label, value }) => (
+              <Tab key={value} value={value}>
+                {label}
+              </Tab>
+            ))}
+          </TabsHeader>
+          <TabsBody
+            animate={{
+              initial: { y: 250 },
+              mount: { y: 0 },
+              unmount: { y: 250 },
+            }}
+          >
+            {data01.map(({ value, desc }) => (
+              <TabPanel key={value} value={value}>
+                {desc}
+              </TabPanel>
+            ))}
+          </TabsBody>
+        </Tabs>
       </div>
     </div>
   );

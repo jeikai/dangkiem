@@ -1,4 +1,12 @@
 import React from 'react';
+import "./Stats.scss"
+import {
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+} from "@material-tailwind/react";
 import { useRef, useEffect, useState } from 'react';
 import {
   BarChart,
@@ -12,10 +20,10 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import axios from 'axios';
-import './Stats.scss';
-import Table from '../RecentTable/RecentTable';
-import Collapsible from './Collapsible/Collapsible';
+import RecentTable from '../RecentTable/RecentTable';
 import { getStatsData, getUnexpiredData, getExpiredData } from '../utils/routes';
+
+
 
 export default function ({ user }) {
   const [month_expired, setExpired] = useState([])
@@ -52,9 +60,24 @@ export default function ({ user }) {
       amt: 2400,
     });
   }
- console.log(chartData_2)
+  console.log(chartData_2)
+
+
+  const data = [
+    {
+      label: "Chưa hết hạn",
+      value: "html",
+      desc: data2,
+    },
+    {
+      label: "Sắp hết hạn",
+      value: "react",
+      desc: data3,
+    },
+  ];
+
   return (
-    <div className="stats">
+    <div className="stats ">
       <div className="barchart">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -72,21 +95,30 @@ export default function ({ user }) {
         </ResponsiveContainer>
       </div>
 
-      <hr />
-
-      <Collapsible label={'Xe chưa hết hạn đăng kiểm theo tháng/quý/năm'}>
-        <div className="table-container">
-          <Table className="stats-table" data={data2} />
-        </div>
-      </Collapsible>
-
-      <hr />
-
-      <Collapsible label={'Xe hết hạn'}>
-        <div className="table-container">
-          <Table className="stats-table" data={data3} />
-        </div>
-      </Collapsible>
+      <Tabs value="html">
+        <TabsHeader>
+          {data.map(({ label, value }) => (
+            <Tab key={value} value={value}>
+              {label}
+            </Tab>
+          ))}
+        </TabsHeader>
+        <TabsBody
+          animate={{
+            initial: { y: 250 },
+            mount: { y: 0 },
+            unmount: { y: 250 },
+          }}
+        >
+          {data.map(({ value, desc }) => (
+            <TabPanel key={value} value={value}>
+              <RecentTable data={desc} />
+            </TabPanel>
+          ))}
+        </TabsBody>
+      </Tabs>
     </div>
   );
+
+
 }
