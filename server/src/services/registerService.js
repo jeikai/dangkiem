@@ -45,7 +45,7 @@ let handleRegister = async (plateNumber) => {
 
 let createRegister = async (data) => {
   let plateNumber = data.plateNumber;
-  let username = data.username;
+  let id = data.id;
   let registrationDate = data.registrationDate;
   let expirationDate = data.expirationDate;
 
@@ -53,31 +53,53 @@ let createRegister = async (data) => {
   if (!car)
     return {
       errCode: 1,
-      errMessage: "the plate number can't exist",
-    };
-
-  let user = await findUser(username);
-  if (!user)
-    return {
-      errCode: 2,
-      errMessage: "user can't exist",
+      errMessage: "The plate number can't exist",
     };
 
   return new Promise(async (resolve, reject) => {
     try {
       await db.Register.create({
-        userId: user.id,
+        userId: data.id,
         carId: car.id,
-        registerDate: data.registrationDate,
-        expireDate: data.expirationDate,
+        registerDate: registrationDate,
+        expireDate: expirationDate,
       });
-      // console.log(data.registrationDate);
-      resolve("create register success");
+      console.log(data.registrationDate);
+      resolve({
+        errCode: 0,
+        errMessage: "Create register success"
+      });
     } catch (error) {
       reject(error);
     }
   });
 };
+
+let deleteRegister = async (id) => {
+  let register = await db.Register.findOne({
+    where: { id: id }
+  });
+  if (!register) return {
+    errCode: 1,
+    errMessage: "register id isn't exist"
+  }
+  return new Promise(async (resolve, reject) => {
+    try {
+      await db.Register.destroy({
+        where: { id: id }
+      })
+
+      resolve({
+        errCode: 0,
+        errMessage: `deleted register have id : ${id}`
+      })
+    } catch (error) {
+      reject(error)
+    }
+
+
+  })
+}
 
 let getRegisterDate = (date) => {
   let year = date.getFullYear();
@@ -95,10 +117,11 @@ let getRegistrationDate = () => {
   let year = date.getFullYear();
   let month = "";
   let day = "";
-  if (date.getMonth() < 10) month = "0" + date.getMonth();
-  else month = date.getMonth();
+  if (date.getMonth() < 10) month = "0" + (date.getMonth() + 1);
+  else month = date.getMonth() + 1;
   if (date.getDate() < 10) day = "0" + date.getDate();
   else day = date.getDate();
+  if (date.getHours() < 10) hour = "0" + date.getHours();
   return `${year}-${month}-${day}`;
 };
 
@@ -108,8 +131,8 @@ let getExpirationDate = () => {
   let month = "";
   let day = "";
   year += 1;
-  if (date.getMonth() < 10) month = "0" + date.getMonth();
-  else month = date.getMonth();
+  if (date.getMonth() < 10) month = "0" + (date.getMonth() + 1);
+  else month = date.getMonth() + 1;
   if (date.getDate() < 10) day = "0" + date.getDate();
   else day = date.getDate();
   return `${year}-${month}-${day}`;
@@ -194,4 +217,5 @@ module.exports = {
   handleRegister: handleRegister,
   createRegister: createRegister,
   handleGetRegister: handleGetRegister,
+  deleteRegister: deleteRegister
 };

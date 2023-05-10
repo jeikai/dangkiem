@@ -1,4 +1,12 @@
 import React from 'react';
+import "./Stats.scss"
+import {
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+} from "@material-tailwind/react";
 import { useRef, useEffect, useState } from 'react';
 import {
   BarChart,
@@ -12,10 +20,10 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import axios from 'axios';
-import './Stats.scss';
-import Table from '../RecentTable/RecentTable';
-import Collapsible from './Collapsible/Collapsible';
+import RecentTable from '../RecentTable/RecentTable';
 import { getStatsData, getUnexpiredData, getExpiredData } from '../utils/routes';
+
+
 
 export default function ({ user }) {
   const [month_expired, setExpired] = useState([])
@@ -52,54 +60,65 @@ export default function ({ user }) {
       amt: 2400,
     });
   }
-  const barRef = useRef(window.innerWidth);
-  const [state, setState] = React.useState({}); // state used to force re-render
-  useEffect(() => {
-    const handleResize = () => {
-      const currentWidth = window.innerWidth;
-      barRef.current = currentWidth;
-      setState((prevState) => ({ ...prevState })); // trigger re-render
-    };
-    handleResize(); // set initial width
-    window.addEventListener('resize', handleResize);
+  console.log(chartData_2)
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+
+  const data = [
+    {
+      label: "Chưa hết hạn",
+      value: "html",
+      desc: data2,
+    },
+    {
+      label: "Sắp hết hạn",
+      value: "react",
+      desc: data3,
+    },
+  ];
 
   return (
-    <div className="stats">
-      <div className="barchart" ref={barRef}>
-        <BarChart
-          width={barRef.current > 950 ? 900 : 375}
-          height={350}
-          data={chartData_2}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="hết hạn" fill="#8884d8" />
-        </BarChart>
+    <div className="stats ">
+      <div className="barchart">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            width="100%"
+            height="100%"
+            data={chartData_2}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="hết hạn" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
 
-      <hr />
-
-      <Collapsible label={'Xe chưa hết hạn đăng kiểm theo tháng/quý/năm'}>
-        <div className="table-container">
-          <Table className="stats-table" data={data2} />
-        </div>
-      </Collapsible>
-
-      <hr />
-
-      <Collapsible label={'Xe hết hạn'}>
-        <div className="table-container">
-          <Table className="stats-table" data={data3} />
-        </div>
-      </Collapsible>
+      <Tabs value="html">
+        <TabsHeader>
+          {data.map(({ label, value }) => (
+            <Tab key={value} value={value}>
+              {label}
+            </Tab>
+          ))}
+        </TabsHeader>
+        <TabsBody
+          animate={{
+            initial: { y: 250 },
+            mount: { y: 0 },
+            unmount: { y: 250 },
+          }}
+        >
+          {data.map(({ value, desc }) => (
+            <TabPanel key={value} value={value}>
+              <RecentTable data={desc} />
+            </TabPanel>
+          ))}
+        </TabsBody>
+      </Tabs>
     </div>
   );
+
+
 }

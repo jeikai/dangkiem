@@ -181,14 +181,6 @@ module.exports = {
             },
             {
                 userId: "2",
-                carId: "",
-                registerDate: "2022-09-16",
-                expireDate: "2023-09-16",
-                createdAt: new Date(),
-                updatedAt: new Date()
-            },
-            {
-                userId: "2",
                 carId: "23",
                 registerDate: "2022-10-29",
                 expireDate: "2023-10-29",

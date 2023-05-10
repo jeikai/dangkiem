@@ -3,6 +3,7 @@ import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
 import registerFormController from "../controllers/registerFormCotroller"
 import statsController from "../controllers/statsController"
+import uploadFileController from "../controllers/uploadFileController"
 
 const multer = require('multer');
 import path from "path";
@@ -24,7 +25,7 @@ let initWebRoutes = (app) => {
     router.get('/crud', homeController.getCRUD);
     router.post('/postCrud', homeController.postCRUD);
     router.get('/uploadfile', homeController.getUploadFilePage);
-    router.post('/postfile', upload.single('file'), homeController.handleUploadFile);
+    router.post('/postfile', upload.single('file'), uploadFileController.handleUploadFile);
 
     router.post('/post-rud', homeController.displayPostCRUD);
     router.get('/get-crud', homeController.displayGetCRUD);
@@ -32,6 +33,7 @@ let initWebRoutes = (app) => {
     router.post('/api/login', userController.handleLogin);
     router.post('/api/form', userController.handleRegister);
     router.post('/api/create-register', registerFormController.createRegister);
+    router.delete('/api/delete-register/:id', registerFormController.deleteRegister)
     router.get('/api/stats/:id', statsController.handleStats);
     router.get('/api/unexpired/:id', statsController.handleGetUnexpiredData);
     router.get('/api/expired/:id', statsController.handleGetExpiredData);

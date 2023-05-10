@@ -1,5 +1,14 @@
 import React, { useRef } from "react";
-import "./Login.scss";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Input,
+  Checkbox,
+  Button,
+} from "@material-tailwind/react";
 import { loginRoute } from "../utils/routes";
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
@@ -53,32 +62,32 @@ export default function Login() {
       }
     }
   }
+
   return (
-
-    <section>
-      <div className="login">
-        <form onSubmit={handleSubmit} >
-          <h2>CỤC ĐĂNG KIỂM VIỆT NAM</h2>
-          <img src="./img/logo.png" />
-          <div className="inputbox">
-            <i class="fa-regular fa-user"></i>
-            <input type="text" name="username" id="username"
-              onChange={(e) => handleChange(e)}></input>
-            <label for="username">Tên đăng nhập</label>
-          </div>
-
-          <div className="inputbox">
-            <i class="fa-solid fa-lock"></i>
-            <input type="password" name="password" id="password"
-              onChange={(e) => handleChange(e)}></input>
-            <label for="password">Mật khẩu</label>
-          </div>
-          <button type="submit" id="login-button">
-            Đăng nhập
-          </button>
+    <div className="flex h-screen w-full items-center mt-12" shadow={true}>
+      <Card className="w-96 mx-auto flex justify-center align-center" >
+        <form onSubmit={handleSubmit}>
+          <CardHeader shadow={false} className="flex flex-col items-center">
+            <img className="w-48" src="./img/logo.png" />
+          </CardHeader>
+          <CardBody className="flex flex-col gap-4">
+            <Typography variant="h4" color="blue">
+              Đăng nhập
+            </Typography>
+            <Typography color="gray" className="mt-1 font-normal">
+              Điền tên đăng nhập và mật khẩu để đăng nhập vào trung tâm đăng kiểm hoặc cục đăng kiểm
+            </Typography>
+            <Input size="lg" label="Tên đăng nhập" name="username" onChange={(e) => handleChange(e)} />
+            <Input type="password" size="lg" label="Mật khẩu" name="password" onChange={(e) => handleChange(e)} />
+          </CardBody>
+          <CardFooter className="pt-0">
+            <Button variant="gradient" type="submit" className="mt-6" fullWidth>
+              Đăng nhập
+            </Button>
+          </CardFooter>
         </form>
-      </div>
-      <ToastContainer />
-    </section>
+        <ToastContainer />
+      </Card>
+    </div>
   );
 }
