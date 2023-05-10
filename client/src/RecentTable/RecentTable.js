@@ -8,7 +8,7 @@ function RecentTable({ data }) {
   const [dateSearch, setDateSearch] = useState('');
   const [placeSearch, setPlaceSearch] = useState('');
 
-  const TABLE_HEAD = ["ID", "Biển số xe", "Ngày đăng kiểm", "Nơi đăng kiểm", ""];
+  const TABLE_HEAD = ["ID", "Biển số xe", "Ngày đăng kiểm", "Ngày hết hạn", "Nơi đăng kiểm", ""];
 
   let TABLE_ROWS = data
     .filter((item) => {
@@ -17,9 +17,9 @@ function RecentTable({ data }) {
         : item['User.address'].toLowerCase().includes(placeSearch.toLowerCase());
     })
     .filter((item) => {
-      console.log("item['Car.plateNumber']");
-      console.log(item['Car.plateNumber']);
-      console.log(typeof (item['Car.plateNumber']));
+      // console.log("item['Car.plateNumber']");
+      // console.log(item['Car.plateNumber']);
+      // console.log(typeof (item['Car.plateNumber']));
       return plateSearch === ''
         ? item
         : item['Car.plateNumber'].includes(plateSearch.toUpperCase());
@@ -88,6 +88,11 @@ function RecentTable({ data }) {
                   <td className={classes}>
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       {data.registerDate}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {data.expireDate}
                     </Typography>
                   </td>
                   <td className={classes}>

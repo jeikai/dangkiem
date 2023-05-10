@@ -95,8 +95,8 @@ let getRegistrationDate = () => {
   let year = date.getFullYear();
   let month = "";
   let day = "";
-  if (date.getMonth() < 10) month = "0" + date.getMonth();
-  else month = date.getMonth();
+  if (date.getMonth() < 10) month = "0" + ( date.getMonth() + 1);
+  else month = date.getMonth() + 1;
   if (date.getDate() < 10) day = "0" + date.getDate();
   else day = date.getDate();
   return `${year}-${month}-${day}`;
@@ -108,8 +108,8 @@ let getExpirationDate = () => {
   let month = "";
   let day = "";
   year += 1;
-  if (date.getMonth() < 10) month = "0" + date.getMonth();
-  else month = date.getMonth();
+  if (date.getMonth() < 10) month = "0" + ( date.getMonth() + 1);
+  else month = date.getMonth() + 1;
   if (date.getDate() < 10) day = "0" + date.getDate();
   else day = date.getDate();
   return `${year}-${month}-${day}`;
