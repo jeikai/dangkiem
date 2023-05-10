@@ -28,13 +28,13 @@ export default function Form() {
     console.log("submit");
     let plateNumber = document.querySelector("#plateNumber").value;
     // ten trung tam dang kiem 
-    let name = "Trung tâm đăng kiểm Hà Nội 1";
+    let username = "hanoi1";
     let registrationDate = document.querySelector("#registrationDate").value;
     let expirationDate = document.querySelector("#expirationDate").value;
-    console.log(`${plateNumber} ${name} ${registrationDate} ${expirationDate}`);
+    console.log(`${plateNumber} ${username} ${registrationDate} ${expirationDate}`);
     let data = await axios.post(createRegistationRoute, {
       "plateNumber": plateNumber,
-      "name": name,
+      "name": username,
       "registrationDate": registrationDate,
       "expirationDate": expirationDate
     });

@@ -13,9 +13,9 @@ function RecentTable({ data }) {
         : item['User.address'].toLowerCase().includes(placeSearch.toLowerCase());
     })
     .filter((item) => {
-      console.log("item['Car.plateNumber']");
-      console.log(item['Car.plateNumber']);
-      console.log(typeof (item['Car.plateNumber']));
+    //   console.log("item['Car.plateNumber']");
+    //   console.log(item['Car.plateNumber']);
+    //   console.log(typeof (item['Car.plateNumber']));
       return plateSearch === ''
         ? item
         : item['Car.plateNumber'].includes(plateSearch.toUpperCase());

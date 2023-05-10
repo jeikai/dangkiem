@@ -52,7 +52,7 @@ let handleGetExpiredData = async (req, res) => {
             delete data[i]
         }
     }
-    console.log(data.length)
+    // console.log(data.length)
     return res.status(200).json({
         errCode: 0,
         errMessage: "get data success",
@@ -68,7 +68,7 @@ let handleGetUnexpiredData = async (req, res) => {
             delete data[i]
         }
     }
-    console.log(data.length)
+    // console.log(data.length)
     return res.status(200).json({
         errCode: 0,
         errMessage: "get data success",

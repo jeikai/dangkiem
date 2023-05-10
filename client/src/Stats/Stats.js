@@ -24,7 +24,7 @@ export default function ({ user }) {
   useEffect(() => {
     async function Data() {
       const regis = await axios.get(`${getExpiredData}/${user.id}`);
-      console.log(regis.data.data)
+      // console.log(regis.data.data)
       setData3(regis.data.data);
     }
     Data();

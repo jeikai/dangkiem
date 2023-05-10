@@ -4,12 +4,27 @@ import userController from "../controllers/userController";
 import registerFormController from "../controllers/registerFormCotroller"
 import statsController from "../controllers/statsController"
 
+const multer = require('multer');
+import path from "path";
+
 let router = express.Router();
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../server/uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname);
+    }
+})
+const upload = multer({ storage: storage })
 
 let initWebRoutes = (app) => {
     router.get('/', homeController.getHomePage);
     router.get('/crud', homeController.getCRUD);
     router.post('/postCrud', homeController.postCRUD);
+    router.get('/uploadfile', homeController.getUploadFilePage);
+    router.post('/postfile', upload.single('file'), homeController.handleUploadFile);
 
     router.post('/post-rud', homeController.displayPostCRUD);
     router.get('/get-crud', homeController.displayGetCRUD);

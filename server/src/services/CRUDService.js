@@ -44,7 +44,7 @@ let getAllUser = () => {
             });
             resolve(users);
         } catch (error) {
-            console.log(error);
+            reject(error)
         }
     })
 }

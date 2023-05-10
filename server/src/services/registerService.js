@@ -22,7 +22,7 @@ let handleRegister = async (plateNumber) => {
         } else {
           data.errCode = 0;
           data.errMessage = "success";
-          console.log(getRegisterDate(car.registerDate));
+          // console.log(getRegisterDate(car.registerDate));
           data.data = {
             driverName: driver.driverName,
             plateNumber: car.plateNumber,
@@ -45,7 +45,7 @@ let handleRegister = async (plateNumber) => {
 
 let createRegister = async (data) => {
   let plateNumber = data.plateNumber;
-  let name = data.name;
+  let username = data.username;
   let registrationDate = data.registrationDate;
   let expirationDate = data.expirationDate;
 
@@ -56,7 +56,7 @@ let createRegister = async (data) => {
       errMessage: "the plate number can't exist",
     };
 
-  let user = await findUser(name);
+  let user = await findUser(username);
   if (!user)
     return {
       errCode: 2,
@@ -71,7 +71,7 @@ let createRegister = async (data) => {
         registerDate: data.registrationDate,
         expireDate: data.expirationDate,
       });
-      console.log(data.registrationDate);
+      // console.log(data.registrationDate);
       resolve("create register success");
     } catch (error) {
       reject(error);
@@ -141,11 +141,11 @@ let findDriver = (driverId) => {
   });
 };
 
-let findUser = (name) => {
+let findUser = (username) => {
   return new Promise(async (resolve, reject) => {
     try {
       let user = await db.User.findOne({
-        where: { name: name },
+        where: { username: username },
       });
       resolve(user);
     } catch (error) {
