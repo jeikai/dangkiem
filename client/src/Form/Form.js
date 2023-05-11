@@ -50,7 +50,7 @@ export default function Form({ user }) {
         registrationDate: formIfo.registrationDate,
         expirationDate: formIfo.expirationDate,
         manufacture: formIfo.manufacture,
-        vehicleType: formIfo.vehicleType,
+        vehicleType: formIfo.model,
         color: formIfo.color,
         registerDate: formIfo.registerDate,
         useage: formIfo.purpose,
@@ -71,7 +71,7 @@ export default function Form({ user }) {
     console.log(`${plateNumber} ${name} ${registrationDate} ${expirationDate}`);
     let data = await axios.post(createRegistationRoute, {
       plateNumber: plateNumber,
-      name: name,
+      id: user.id,
       registrationDate: registrationDate,
       expirationDate: expirationDate,
     });

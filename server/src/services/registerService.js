@@ -22,7 +22,7 @@ let handleRegister = async (plateNumber) => {
         } else {
           data.errCode = 0;
           data.errMessage = "success";
-          console.log(getRegisterDate(car.registerDate));
+          // console.log(getRegisterDate(car.registerDate));
           data.data = {
             driverName: driver.driverName,
             plateNumber: car.plateNumber,
@@ -45,7 +45,7 @@ let handleRegister = async (plateNumber) => {
 
 let createRegister = async (data) => {
   let plateNumber = data.plateNumber;
-  let name = data.name;
+  let id = data.id;
   let registrationDate = data.registrationDate;
   let expirationDate = data.expirationDate;
 
@@ -53,31 +53,53 @@ let createRegister = async (data) => {
   if (!car)
     return {
       errCode: 1,
-      errMessage: "the plate number can't exist",
-    };
-
-  let user = await findUser(name);
-  if (!user)
-    return {
-      errCode: 2,
-      errMessage: "user can't exist",
+      errMessage: "The plate number can't exist",
     };
 
   return new Promise(async (resolve, reject) => {
     try {
       await db.Register.create({
-        userId: user.id,
+        userId: data.id,
         carId: car.id,
-        registerDate: data.registrationDate,
-        expireDate: data.expirationDate,
+        registerDate: registrationDate,
+        expireDate: expirationDate,
       });
       console.log(data.registrationDate);
-      resolve("create register success");
+      resolve({
+        errCode: 0,
+        errMessage: "Create register success"
+      });
     } catch (error) {
       reject(error);
     }
   });
 };
+
+let deleteRegister = async (id) => {
+  let register = await db.Register.findOne({
+    where: { id: id }
+  });
+  if (!register) return {
+    errCode: 1,
+    errMessage: "register id isn't exist"
+  }
+  return new Promise(async (resolve, reject) => {
+    try {
+      await db.Register.destroy({
+        where: { id: id }
+      })
+
+      resolve({
+        errCode: 0,
+        errMessage: `deleted register have id : ${id}`
+      })
+    } catch (error) {
+      reject(error)
+    }
+
+
+  })
+}
 
 let getRegisterDate = (date) => {
   let year = date.getFullYear();
@@ -99,6 +121,7 @@ let getRegistrationDate = () => {
   else month = date.getMonth() + 1;
   if (date.getDate() < 10) day = "0" + date.getDate();
   else day = date.getDate();
+  if (date.getHours() < 10) hour = "0" + date.getHours();
   return `${year}-${month}-${day}`;
 };
 
@@ -141,11 +164,11 @@ let findDriver = (driverId) => {
   });
 };
 
-let findUser = (name) => {
+let findUser = (username) => {
   return new Promise(async (resolve, reject) => {
     try {
       let user = await db.User.findOne({
-        where: { name: name },
+        where: { username: username },
       });
       resolve(user);
     } catch (error) {
@@ -254,4 +277,5 @@ module.exports = {
   createRegister: createRegister,
   handleGetRegister: handleGetRegister,
   handleGetRegisterCucDangKiem: handleGetRegisterCucDangKiem,
+  deleteRegister: deleteRegister
 };
