@@ -16,7 +16,16 @@ let handleGetRegister = async (req, res) => {
         data: data
     })
 }
+let handleGetRegisterCucDangKiem = async (req, res) => {
+    let data = await registerService.handleGetRegisterCucDangKiem()
+    return res.status(200).json({
+        errCode: 0, 
+        errMessage: "get data success",
+        data: data
+    })
+}
 module.exports = {
     createRegister: createRegister,
-    handleGetRegister: handleGetRegister
+    handleGetRegister: handleGetRegister,
+    handleGetRegisterCucDangKiem: handleGetRegisterCucDangKiem
 };

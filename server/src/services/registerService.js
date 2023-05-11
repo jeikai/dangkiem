@@ -95,7 +95,7 @@ let getRegistrationDate = () => {
   let year = date.getFullYear();
   let month = "";
   let day = "";
-  if (date.getMonth() < 10) month = "0" + ( date.getMonth() + 1);
+  if (date.getMonth() < 10) month = "0" + (date.getMonth() + 1);
   else month = date.getMonth() + 1;
   if (date.getDate() < 10) day = "0" + date.getDate();
   else day = date.getDate();
@@ -108,7 +108,7 @@ let getExpirationDate = () => {
   let month = "";
   let day = "";
   year += 1;
-  if (date.getMonth() < 10) month = "0" + ( date.getMonth() + 1);
+  if (date.getMonth() < 10) month = "0" + (date.getMonth() + 1);
   else month = date.getMonth() + 1;
   if (date.getDate() < 10) day = "0" + date.getDate();
   else day = date.getDate();
@@ -190,8 +190,68 @@ let getRegisterData = (userId) => {
     }
   });
 };
+let handleGetRegisterCucDangKiem = async () => {
+  let data1 = await getRegisterDataCucDangKiem();
+  let data2 = await getTrungTamDangKiem();
+  let data3 = []
+  for (let i =0; i< data2.length; i++) {
+    let data = []
+    data.push(data2[i])
+    for ( let j = 0; j< data1.length; j++) {
+      if ( data2[i].id == data1[j].userId) {
+        data.push(data1[j])
+      }
+    }
+    data3.push(data)
+  }
+  if (!data3)
+    return {
+      errCode: 1,
+      errMessage: "can't get data from database",
+      data: {},
+    };
+
+  return data3;
+};
+let getTrungTamDangKiem = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await db.User.findAll({
+        attributes: ["id", "name"],
+        where: { rolebit: 0},
+        raw: true
+      })
+      resolve(data)
+    } catch (error) {
+      reject.log(error);
+    }
+  });
+}
+let getRegisterDataCucDangKiem = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let register = await db.Register.findAll({
+        attributes: ["registerDate", "expireDate", "carId", "userId"],
+        raw: true,
+        include: [
+          {
+            model: db.User,
+            attributes: ["address", "name"],
+            // where: {
+            //   userId: userId
+            // }
+          },
+        ],
+      });
+      resolve(register);
+    } catch (error) {
+      reject.log(error);
+    }
+  });
+};
 module.exports = {
   handleRegister: handleRegister,
   createRegister: createRegister,
   handleGetRegister: handleGetRegister,
+  handleGetRegisterCucDangKiem: handleGetRegisterCucDangKiem,
 };

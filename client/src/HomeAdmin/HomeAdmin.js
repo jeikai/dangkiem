@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Typography,
   Tabs,
@@ -6,35 +6,48 @@ import {
   TabsBody,
   Tab,
   TabPanel,
-} from "@material-tailwind/react";
+} from '@material-tailwind/react';
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
+import axios from 'axios';
+import './HomeAdmin.scss';
+import { getHistoryDataCucDangKiem } from '../utils/routes';
+import RecentTable from '../RecentTable/RecentTable';
 
-import "./HomeAdmin.scss";
-
-
-import RecentTable from "../RecentTable/RecentTable";
-import mockData from "../data.js";
-
-export default function HomeAdmin() {
-
+export default function HomeAdmin({ user }) {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    async function Data() {
+      const regis = await axios.get(getHistoryDataCucDangKiem);
+      console.log(regis.data.data);
+      setData(regis.data.data);
+    }
+    Data();
+  }, []);
   const data01 = [
-    { label: 'Hà Nội 1', value: "hanoi", desc: "ban lay data table cua tung trung tam" },
-    { label: 'Đà Nẵng', value: "danang", desc: "ban lay data table cua tung trung tam" },
-    { label: 'Thanh Hoá', value: "thanhhoa", desc: "ban lay data table cua tung trung tam" },
+    {
+      label: 'Hà Nội 1',
+      value: 'hanoi',
+      desc: 'ban lay data table cua tung trung tam',
+    },
+    {
+      label: 'Đà Nẵng',
+      value: 'danang',
+      desc: 'ban lay data table cua tung trung tam ta',
+    },
+    {
+      label: 'Thanh Hoá',
+      value: 'thanhhoa',
+      desc: 'ban lay data table cua tung trung tam',
+    },
   ];
   const data011 = [
-    { key: 'Hà Nội 1', value: 400, },
+    { key: 'Hà Nội 1', value: 400 },
     { key: 'Đà Nẵng', value: 500 },
     { key: 'Thanh Hoá', value: 600 },
   ];
 
-
-
   return (
     <div className="admin-home">
-      <div className="chart-header">
-
-      </div>
       <div className="barchart">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart width={400} height={400}>

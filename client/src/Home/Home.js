@@ -12,7 +12,7 @@ export default function ({ user }) {
       console.log(regis.data.data)
       setData(regis.data.data)
     }
-    Data()
+    Data() 
   }, [user])
   console.log(data)
   return (

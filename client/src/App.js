@@ -44,7 +44,7 @@ function App() {
               <TransitionGroup>
                 <CSSTransition key={location.key} classNames="sliding" timeout={500}>
                   <Routes>
-                    <Route path="/" element={<HomeAdmin />} />
+                    <Route path="/" element={<HomeAdmin user={JSON.parse(login.user)}/>} />
                     <Route path="/signup" element={<AccountRegister />} />
                   </Routes>
                 </CSSTransition>

@@ -21,7 +21,7 @@ let initWebRoutes = (app) => {
     router.get('/api/unexpired/:id', statsController.handleGetUnexpiredData);
     router.get('/api/expired/:id', statsController.handleGetExpiredData);
     router.get('/api/history/:id', registerFormController.handleGetRegister);
-
+    router.get('/api/historyCucdangkiem', registerFormController.handleGetRegisterCucDangKiem)
 
     return app.use("/", router);
 }
