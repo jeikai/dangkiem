@@ -4,11 +4,11 @@
 }
 .admin-home {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     .barchart {
         grid-column: 1/2;
     }
     .centers {
-        grid-column: 2/4;
+        grid-column: 2/10;
     }
 }

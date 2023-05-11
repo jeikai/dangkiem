@@ -29,7 +29,7 @@ function RecentTable({ data }) {
         ? item
         : item.registerDate.toLowerCase().includes(dateSearch.toLowerCase());
     })
-
+  console.log(data)
   return (
     <form>
       <div className="mt-10 flex flex-col lg:flex-row gap-2">

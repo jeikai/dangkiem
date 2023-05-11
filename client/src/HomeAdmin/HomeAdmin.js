@@ -45,7 +45,7 @@ export default function HomeAdmin({ user }) {
     { key: 'Đà Nẵng', value: 500 },
     { key: 'Thanh Hoá', value: 600 },
   ];
-
+  
   return (
     <div className="admin-home">
       <div className="barchart">
@@ -75,9 +75,9 @@ export default function HomeAdmin({ user }) {
 
         <Tabs value="hanoi">
           <TabsHeader>
-            {data01.map(({ label, value }) => (
-              <Tab key={value} value={value}>
-                {label}
+            {data.map((data) => (
+              <Tab key={data[0].id} value={data[0].id}>
+                {data[0].name}
               </Tab>
             ))}
           </TabsHeader>
@@ -88,9 +88,9 @@ export default function HomeAdmin({ user }) {
               unmount: { y: 250 },
             }}
           >
-            {data01.map(({ value, desc }) => (
-              <TabPanel key={value} value={value}>
-                {desc}
+            {data.map(( data) => (
+              <TabPanel key={data[0].id} value={data[0].id}>
+                {"Hello"}
               </TabPanel>
             ))}
           </TabsBody>
