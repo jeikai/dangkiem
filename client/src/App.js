@@ -11,6 +11,7 @@ import Stats from "./Stats/Stats";
 import Form from "./Form/Form";
 import AccountRegister from "./AccountRegister/AccountRegister";
 import data_navbar from "./data_navbar";
+import Upload from "./Upload/Upload";
 function App() {
   const [login, setLogin] = useState({
     user: localStorage.getItem("user"),
@@ -46,6 +47,7 @@ function App() {
                   <Routes>
                     <Route path="/" element={<HomeAdmin user={JSON.parse(login.user)}/>} />
                     <Route path="/signup" element={<AccountRegister />} />
+                    <Route path="/upload" element={<Upload />} />
                   </Routes>
                 </CSSTransition>
               </TransitionGroup>
