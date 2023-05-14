@@ -39,7 +39,7 @@ let initWebRoutes = (app) => {
     router.get('/api/expired/:id', statsController.handleGetExpiredData);
     router.get('/api/history/:id', registerFormController.handleGetRegister);
     router.get('/api/historyCucdangkiem', registerFormController.handleGetRegisterCucDangKiem)
-
+    router.post('/api/create-user', userController.createUser)
     return app.use("/", router);
 }
 

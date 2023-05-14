@@ -7,4 +7,4 @@ export const getHistoryData = `${host}/api/history`;
 export const getExpiredData = `${host}/api/expired`; 
 export const getUnexpiredData = `${host}/api/unexpired`; 
 export const getHistoryDataCucDangKiem = `${host}/api/historyCucdangkiem`; 
-
+export const createUser = `${host}/api/create-user`;

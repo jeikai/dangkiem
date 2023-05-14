@@ -41,7 +41,6 @@ export default function Form({ user }) {
   let handleOnblur = async (e) => {
     e.preventDefault();
     let value = e.target.value;
-    console.log(value);
     let data = await axios.post(formRoute, { plateNumber: value });
     console.log(data);
     if (data.data.errCode != 0) {

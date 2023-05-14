@@ -15,7 +15,7 @@ let createUser = async (data) => {
         }
     })
 };
-
+ 
 let createRegisterForm = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -34,5 +34,6 @@ let createRegisterForm = async (data) => {
 
 
 module.exports = {
-    createRegisterForm: createRegisterForm
+    createRegisterForm: createRegisterForm,
+    createUser: createUser
 };
