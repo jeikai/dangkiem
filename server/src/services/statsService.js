@@ -16,11 +16,11 @@ let getRegisterData = (userId) => {
   return new Promise(async (resolve, reject) => {
     try {
       let register = await db.Register.findAll({
-        attributes: ["registerDate", "expireDate", "carId"],
+        attributes: ["registerDate", "expireDate", "carId", "id"],
         where: { userId: userId },
         raw: true,
         include: [
-          {
+          { 
             model: db.Car,
             as: "Car",
             attributes: ["plateNumber"]

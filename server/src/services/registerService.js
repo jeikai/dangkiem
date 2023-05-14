@@ -6,22 +6,23 @@ let handleRegister = async (plateNumber) => {
   return new Promise(async (resolve, reject) => {
     try {
       let data = {};
+      console.log(plateNumber)
       let car = await findCar(plateNumber);
       if (!car) {
         data.errCode = 1;
-        data.errMessage = "plate number isn't exist";
+        data.errMessage = "Biển số xe không tồn tại";
         data.data = {};
         resolve(data);
       } else {
         let driver = await findDriver(car.driverId);
         if (!driver) {
           data.errCode = 2;
-          data.errMessage = "can't find driver name";
+          data.errMessage = "Biển số xe không tồn tại";
           data.data = {};
           resolve(data);
         } else {
           data.errCode = 0;
-          data.errMessage = "success";
+          data.errMessage = "Điền đơn thành công";
           // console.log(getRegisterDate(car.registerDate));
           data.data = {
             driverName: driver.driverName,
@@ -53,7 +54,7 @@ let createRegister = async (data) => {
   if (!car)
     return {
       errCode: 1,
-      errMessage: "The plate number can't exist",
+      errMessage: "Biển số xe không tồn tại",
     };
 
   return new Promise(async (resolve, reject) => {
@@ -64,7 +65,7 @@ let createRegister = async (data) => {
         registerDate: registrationDate,
         expireDate: expirationDate,
       });
-      console.log(data.registrationDate);
+      // console.log(data.registrationDate);
       resolve({
         errCode: 0,
         errMessage: "Create register success"
@@ -117,6 +118,7 @@ let getRegistrationDate = () => {
   let year = date.getFullYear();
   let month = "";
   let day = "";
+  let hour = ""
   if (date.getMonth() < 10) month = "0" + (date.getMonth() + 1);
   else month = date.getMonth() + 1;
   if (date.getDate() < 10) day = "0" + date.getDate();
@@ -192,7 +194,7 @@ let getRegisterData = (userId) => {
   return new Promise(async (resolve, reject) => {
     try {
       let register = await db.Register.findAll({
-        attributes: ["registerDate", "expireDate", "carId"],
+        attributes: ["registerDate", "expireDate", "carId", "id"],
         where: { userId: userId },
         raw: true,
         include: [

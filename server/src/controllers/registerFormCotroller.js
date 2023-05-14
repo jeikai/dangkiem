@@ -1,10 +1,19 @@
 import registerService from "../services/registerService";
 
 let createRegister = async (req, res) => {
-
-    console.log(req.body);
-    let data = await registerService.createRegister(req.body);
-    return data;
+    try {
+        console.log(req.body);
+        let data = await registerService.createRegister(req.body);
+        return res.status(200).json({
+            data: data,
+            message: data.errMessage,
+            errMessage: "Dang kiem thanh cong"
+        });
+    } catch(e) {
+        return res.json({
+            error: "Khong the dang kiem"
+        })
+    }
 
 }
 

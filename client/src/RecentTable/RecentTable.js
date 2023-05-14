@@ -1,25 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Input } from "@material-tailwind/react";
 import { Card, Typography } from "@material-tailwind/react";
 //import './RecentTable.scss';
 
-function RecentTable({ data }) {
+function RecentTable({ data, print }) {
   const [plateSearch, setPlateSearch] = useState('');
   const [dateSearch, setDateSearch] = useState('');
-  const [placeSearch, setPlaceSearch] = useState('');
+  const [expiredSearch, setExpiredSearch] = useState('');
 
-  const TABLE_HEAD = ["ID", "Biển số xe", "Ngày đăng kiểm", "Ngày hết hạn", "Nơi đăng kiểm", ""];
+  const TABLE_HEAD = ["ID", "Biển số xe", "Ngày đăng kiểm", "Ngày hết hạn", ""];
 
   let TABLE_ROWS = data
     .filter((item) => {
-      return placeSearch === ''
+      return expiredSearch === ''
         ? item
-        : item['User.address'].toLowerCase().includes(placeSearch.toLowerCase());
+        : item.expireDate.toLowerCase().includes(expiredSearch.toLowerCase());
     })
     .filter((item) => {
-      // console.log("item['Car.plateNumber']");
-      // console.log(item['Car.plateNumber']);
-      // console.log(typeof (item['Car.plateNumber']));
+
       return plateSearch === ''
         ? item
         : item['Car.plateNumber'].includes(plateSearch.toUpperCase());
@@ -45,14 +43,14 @@ function RecentTable({ data }) {
           className='' />
         <Input
           variant="outlined"
-          label="Tìm kiếm theo nơi đăng kiểm"
-          onChange={(e) => setPlaceSearch(e.target.value)}
+          label="Tìm kiếm theo ngày hết hạn"
+          onChange={(e) => setExpiredSearch(e.target.value)}
           className='' />
 
       </div>
 
       <Card className='overflow-scroll h-full w-full mt-6'>
-        <table className="w-full min-w-max table-auto text-left" >
+        <table className="w-full min-w-max table-auto text-left" ref={print}>
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
@@ -77,7 +75,7 @@ function RecentTable({ data }) {
                 <tr key={data.carId}>
                   <td className={classes}>
                     <Typography variant="small" color="blue-gray" className="font-normal">
-                      {data.carId}
+                      {data.id}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -93,11 +91,6 @@ function RecentTable({ data }) {
                   <td className={classes}>
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       {data.expireDate}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography variant="small" color="blue-gray" className="font-normal">
-                      {data['User.address']}
                     </Typography>
                   </td>
                   <td className={classes}>

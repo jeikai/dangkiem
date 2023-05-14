@@ -7,7 +7,7 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   BarChart,
   Bar,
@@ -27,6 +27,7 @@ import { getStatsData, getUnexpiredData, getExpiredData } from '../utils/routes'
 
 export default function ({ user }) {
   const [month_expired, setExpired] = useState([])
+  const [forecast, setForecast] = useState([])
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
   useEffect(() => {
@@ -47,6 +48,7 @@ export default function ({ user }) {
   useEffect(() => {
     async function Data() {
       const data = await axios.get(`${getStatsData}/${user.id}`);
+      setForecast(data.data.forecast)
       setExpired(data.data.month_expired);
     }
     Data();
@@ -56,12 +58,11 @@ export default function ({ user }) {
   for (let i = 0; i < 12; i++) {
     chartData_2.push({
       name: 'Tháng' + (i + 1),
+      'dự báo': forecast[i],
       'hết hạn': month_expired[i],
       amt: 2400,
     });
   }
-  console.log(chartData_2)
-
 
   const data = [
     {
@@ -70,12 +71,12 @@ export default function ({ user }) {
       desc: data2,
     },
     {
-      label: "Sắp hết hạn",
+      label: "Hết hạn",
       value: "react",
       desc: data3,
     },
   ];
-
+  console.log(data)
   return (
     <div className="stats ">
       <div className="barchart">
@@ -91,6 +92,7 @@ export default function ({ user }) {
             <Tooltip />
             <Legend />
             <Bar dataKey="hết hạn" fill="#8884d8" />
+            <Bar dataKey="dự báo" fill="#82ca9d" />
           </BarChart>
         </ResponsiveContainer>
       </div>

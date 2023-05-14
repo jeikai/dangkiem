@@ -13,6 +13,7 @@ import { useReactToPrint } from 'react-to-print';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default function Form({ user }) {
+  const [check, setCheck] = useState();
   const toastOptions = {
     position: 'bottom-right',
     autoClose: 5000,
@@ -39,11 +40,20 @@ export default function Form({ user }) {
   };
   let handleOnblur = async (e) => {
     e.preventDefault();
-    let value = document.querySelector('#plateNumber').value;
+    let value = e.target.value;
+    console.log(value);
     let data = await axios.post(formRoute, { plateNumber: value });
+    console.log(data);
+    if (data.data.errCode != 0) {
+      toast.error(data.data.errMessage, toastOptions);
+      setCheck(false);
+    } else {
+      toast.success(data.data.errMessage, toastOptions);
+      setCheck(true);
+    }
+
     let formIfo = data.data.data;
     if (data.data.errCode === 0) {
-      // document.querySelector('#owner').value = formIfo.driverName;
       setData({
         plateNumber: value,
         owner: formIfo.driverName,
@@ -55,28 +65,76 @@ export default function Form({ user }) {
         registerDate: formIfo.registerDate,
         useage: formIfo.purpose,
         inspectionPlace: user.name,
-      })
+      });
     }
   };
   const generatePDF = useReactToPrint({
     content: () => componentPDF.current,
   });
+  const handleValidation = (
+    owner,
+    registrationDate,
+    expirationDate,
+    manufacture,
+    vehicleType,
+    color,
+    registerDate,
+    useage,
+    inspectionPlace
+  ) => {
+    if (!check) {
+      toast.error('Biển số xe không tồn tại', toastOptions);
+      return false;
+    } else if (
+      !owner ||
+      !registrationDate ||
+      !expirationDate ||
+      !manufacture ||
+      !vehicleType ||
+      !color ||
+      !registerDate ||
+      !useage ||
+      !inspectionPlace
+    ) {
+      toast.error('Bạn phải điền full', toastOptions);
+      return false;
+    }
+    return true;
+  };
   let handleSubmit = async (e) => {
     e.preventDefault();
-    let plateNumber = document.querySelector('#plateNumber').value;
+    let plateNumber = data.plateNumber;
     // ten trung tam dang kiem
-    let name = document.querySelector('#inspectionPlace').value;
-    let registrationDate = document.querySelector('#registrationDate').value;
-    let expirationDate = document.querySelector('#expirationDate').value;
-    console.log(`${plateNumber} ${name} ${registrationDate} ${expirationDate}`);
-    let data = await axios.post(createRegistationRoute, {
-      plateNumber: plateNumber,
-      id: user.id,
-      registrationDate: registrationDate,
-      expirationDate: expirationDate,
-    });
-    toast.error('Đăng kiểm thành công', toastOptions);
-    console.log(data);
+    let name = data.inspectionPlace;
+    let registrationDate = data.registrationDate;
+    let expirationDate = data.expirationDate;
+    let owner = data.owner;
+    let manufacture = data.manufacture;
+    let vehicleType = data.vehicleType;
+    let color = data.color;
+    let registerDate = data.registerDate;
+    let usage = data.useage;
+    if (
+      handleValidation(
+        owner,
+        registrationDate,
+        expirationDate,
+        manufacture,
+        vehicleType,
+        color,
+        registerDate,
+        usage,
+        name
+      )
+    ) {
+      toast.success('Đăng kiểm thành công', toastOptions);
+      let regis = await axios.post(createRegistationRoute, {
+        plateNumber: plateNumber,
+        id: user.id,
+        registrationDate: registrationDate,
+        expirationDate: expirationDate,
+      });
+    }
   };
 
   return (
