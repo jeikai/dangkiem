@@ -3,8 +3,9 @@ import './AccountRegister.scss';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { createUser } from '../utils/routes';
+import { createUser, userRoute } from '../utils/routes';
 export default function () {
+  const [check, setCheck] = useState()
   const toastOptions = {
     position: 'bottom-right',
     autoClose: 5000,
@@ -26,7 +27,15 @@ export default function () {
   const handleOnblur = async (e) => {
     e.preventDefault();
     let value = e.target.value;
-    
+    let res = await axios.post(userRoute, {
+      username: value
+    })
+    if ( res.data.errCode == 1) {
+      setCheck(false)
+      toast.error("Tên đăng nhập đã tồn tại", toastOptions)
+    } else {
+      setCheck(true)
+    }
   }
   const handleValidation = () => {
     const {center, username, password, repass, address} = data
@@ -37,14 +46,17 @@ export default function () {
     else if ( password != repass) {
       toast.error("Mật khẩu không trùng khớp", toastOptions)
       return false;
+    } else if (!check) {
+      toast.error("Tên đăng nhập đã tồn tại", toastOptions)
+      return false;
     }
     return true
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
     const {center, username, password, address} = data
-    toast.success("Đăng ký thành công", toastOptions)
     if ( handleValidation()) {
+      toast.success("Đăng ký thành công", toastOptions)
       const regis = await axios.post(createUser, {
         name: center,
         username: username,
@@ -77,6 +89,7 @@ export default function () {
               name="username"
               id="username"
               onChange={(e) => handleChange(e)}
+              onBlur={(e) => handleOnblur(e)}
             ></input>
             <label for="username">Tên đăng nhập</label>
           </div>

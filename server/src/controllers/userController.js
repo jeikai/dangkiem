@@ -36,6 +36,12 @@ let handleRegister = async (req, res) => {
     let data = await registerService.handleRegister(plateNumber);
     return res.status(200).json(data);
 }
+let handleUser = async (req, res) => {
+    let username = req.body.username;
+    console.log(username)
+    let data = await createDB.handleUser(username);
+    return res.status(200).json(data);
+}
 let createUser = async (req, res) => {
     let dulieu = {
         name: req.body.name,
@@ -50,5 +56,6 @@ let createUser = async (req, res) => {
 module.exports = {
     handleLogin: handleLogin,
     handleRegister: handleRegister,
-    createUser: createUser
+    createUser: createUser,
+    handleUser: handleUser
 }

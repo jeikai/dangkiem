@@ -8,3 +8,4 @@ export const getExpiredData = `${host}/api/expired`;
 export const getUnexpiredData = `${host}/api/unexpired`; 
 export const getHistoryDataCucDangKiem = `${host}/api/historyCucdangkiem`; 
 export const createUser = `${host}/api/create-user`;
+export const userRoute = `${host}/api/user`;
