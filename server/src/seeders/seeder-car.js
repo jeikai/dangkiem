@@ -4,7 +4,7 @@ module.exports = {
     up: async (queryInterface, Sequelize) => {
         return queryInterface.bulkInsert('Cars', [
             {
-                driverId: 16,
+                driverId: 1,
                 plateNumber: 'XYZ-5678',
                 manufacture: 'Honda',
                 model: 'Civic',
@@ -17,7 +17,7 @@ module.exports = {
             },
 
             {
-                driverId: 17,
+                driverId: 2,
                 plateNumber: 'DEF-9012',
                 manufacture: 'Mazda',
                 model: 'CX-5',
@@ -30,7 +30,7 @@ module.exports = {
             },
 
             {
-                driverId: 18,
+                driverId: 3,
                 plateNumber: 'GHI-3456',
                 manufacture: 'Ford',
                 model: 'Focus',
@@ -43,7 +43,7 @@ module.exports = {
             },
 
             {
-                driverId: 19,
+                driverId: 4,
                 plateNumber: 'JKL-7890',
                 manufacture: 'Toyota',
                 model: 'Corolla',
@@ -56,7 +56,7 @@ module.exports = {
             },
 
             {
-                driverId: 20,
+                driverId: 5,
                 plateNumber: 'MNO-1234',
                 manufacture: 'Honda',
                 model: 'Accord',
@@ -69,7 +69,7 @@ module.exports = {
             },
 
             {
-                driverId: 21,
+                driverId: 6,
                 plateNumber: 'PQR-5678',
                 manufacture: 'Nissan',
                 model: 'Altima',
@@ -82,7 +82,7 @@ module.exports = {
             },
 
             {
-                driverId: 22,
+                driverId: 7,
                 plateNumber: 'STU-9012',
                 manufacture: 'Hyundai',
                 model: 'Sonata',
@@ -95,7 +95,7 @@ module.exports = {
             },
 
             {
-                driverId: 23,
+                driverId: 8,
                 plateNumber: 'VWX-3456',
                 manufacture: 'Toyota',
                 model: 'Rav4',
@@ -108,7 +108,7 @@ module.exports = {
             },
 
             {
-                driverId: 24,
+                driverId: 9,
                 plateNumber: 'YZA-7890',
                 manufacture: 'Honda',
                 model: 'Pilot',
@@ -121,7 +121,7 @@ module.exports = {
             },
 
             {
-                driverId: 25,
+                driverId: 10,
                 plateNumber: 'BCD-1234',
                 manufacture: 'Mitsubishi',
                 model: 'Outlander',
@@ -134,7 +134,7 @@ module.exports = {
             },
 
             {
-                driverId: 26,
+                driverId: 11,
                 plateNumber: 'EFG-5678',
                 manufacture: 'Toyota',
                 model: 'Vios',
@@ -147,7 +147,7 @@ module.exports = {
             },
 
             {
-                driverId: 27,
+                driverId: 12,
                 plateNumber: 'HIJ-9012',
                 manufacture: 'Honda',
                 model: 'City',
@@ -160,7 +160,7 @@ module.exports = {
             },
 
             {
-                driverId: 28,
+                driverId: 13,
                 plateNumber: 'KLM-3456',
                 manufacture: 'Ford',
                 model: 'Ranger',
@@ -173,7 +173,7 @@ module.exports = {
             },
 
             {
-                driverId: 29,
+                driverId: 14,
                 plateNumber: 'NOP-7890',
                 manufacture: 'Mazda',
                 model: '3',
@@ -186,7 +186,7 @@ module.exports = {
             },
 
             {
-                driverId: 30,
+                driverId: 15,
                 plateNumber: 'QRS-1234',
                 manufacture: 'Toyota',
                 model: 'Innova',
@@ -199,7 +199,7 @@ module.exports = {
             },
 
             {
-                driverId: 31,
+                driverId: 16,
                 plateNumber: 'TUV-5678',
                 manufacture: 'Nissan',
                 model: 'Sentra',
@@ -212,7 +212,7 @@ module.exports = {
             },
 
             {
-                driverId: 32,
+                driverId: 17,
                 plateNumber: 'WXY-9012',
                 manufacture: 'Hyundai',
                 model: 'Tucson',
@@ -225,7 +225,7 @@ module.exports = {
             },
 
             {
-                driverId: 33,
+                driverId: 1,
                 plateNumber: 'ZAB-3456',
                 manufacture: 'Toyota',
                 model: 'Fortuner',
@@ -238,7 +238,7 @@ module.exports = {
             },
 
             {
-                driverId: 34,
+                driverId: 2,
                 plateNumber: 'CDE-7890',
                 manufacture: 'Honda',
                 model: 'Fit',
@@ -251,7 +251,7 @@ module.exports = {
             },
 
             {
-                driverId: 35,
+                driverId: 3,
                 plateNumber: 'FGH-1234',
                 manufacture: 'Mitsubishi',
                 model: 'Xpander',
@@ -263,7 +263,7 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
-                driverId: 36,
+                driverId: 4,
                 plateNumber: 'IJK-5678',
                 manufacture: 'Toyota',
                 model: 'Corolla',
@@ -276,7 +276,7 @@ module.exports = {
             },
 
             {
-                driverId: 37,
+                driverId: 5,
                 plateNumber: 'LMN-9012',
                 manufacture: 'Ford',
                 model: 'Explorer',
@@ -289,7 +289,7 @@ module.exports = {
             },
 
             {
-                driverId: 38,
+                driverId: 6,
                 plateNumber: 'OPQ-3456',
                 manufacture: 'Hyundai',
                 model: 'Accent',
@@ -302,7 +302,7 @@ module.exports = {
             },
 
             {
-                driverId: 39,
+                driverId: 7,
                 plateNumber: 'RST-7890',
                 manufacture: 'Kia',
                 model: 'Sorento',
@@ -315,7 +315,7 @@ module.exports = {
             },
 
             {
-                driverId: 40,
+                driverId: 8,
                 plateNumber: 'UVW-1234',
                 manufacture: 'Mazda',
                 model: 'CX-5',
@@ -328,8 +328,8 @@ module.exports = {
             },
 
             {
-                driverId: 16,
-                plateNumber: 'XYZ-5678',
+                driverId: 9,
+                plateNumber: 'XYZ-5978',
                 manufacture: 'Toyota',
                 model: 'Yaris',
                 color: 'Silver',
@@ -341,7 +341,7 @@ module.exports = {
             },
 
             {
-                driverId: 17,
+                driverId: 10,
                 plateNumber: 'ABC-9012',
                 manufacture: 'Honda',
                 model: 'Civic',
@@ -354,7 +354,7 @@ module.exports = {
             },
 
             {
-                driverId: 18,
+                driverId: 11,
                 plateNumber: 'DEF-3456',
                 manufacture: 'Nissan',
                 model: 'Kicks',
@@ -367,7 +367,7 @@ module.exports = {
             },
 
             {
-                driverId: 19,
+                driverId: 12,
                 plateNumber: 'GHI-7890',
                 manufacture: 'Hyundai',
                 model: 'Santa Fe',
@@ -380,7 +380,7 @@ module.exports = {
             },
 
             {
-                driverId: 20,
+                driverId: 13,
                 plateNumber: 'JKL-1234',
                 manufacture: 'Toyota',
                 model: 'RAV4',

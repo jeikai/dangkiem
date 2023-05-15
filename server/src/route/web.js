@@ -26,7 +26,7 @@ let initWebRoutes = (app) => {
   router.post("/postCrud", homeController.postCRUD);
   router.get("/uploadfile", homeController.getUploadFilePage);
   router.post(
-    "/postfile",
+    "/api/postfile",
     upload.single("file"),
     uploadFileController.handleUploadFile
   );
