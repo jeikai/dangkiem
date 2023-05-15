@@ -13,9 +13,8 @@ let handleLogin = (username, password) => {
                     raw: true
                 });
                 if (user) {
-                    comparePassword(password);
-                    // let check = await bcrypt.compareSync(password, user.password);
-                    let check = (password === user.password);
+                    let check = await bcrypt.compareSync(password, user.password);
+                    // let check = (password === user.password);
                     if (check) {
                         userData.errCode = 0;
                         userData.errMessage = "login success";
@@ -41,15 +40,6 @@ let handleLogin = (username, password) => {
     })
 }
 
-let comparePassword = (password) => {
-    return new Promise((resolve, reject) => {
-        try {
-
-        } catch (error) {
-            reject(error);
-        }
-    })
-}
 let checkUsername = (uname) => {
     return new Promise(async (resolve, reject) => {
         try {
