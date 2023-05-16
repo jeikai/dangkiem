@@ -18,11 +18,19 @@ function RecentTable({ data }) {
     () => [
       {
         Header: "ID",
-        accessor: "User.address",
+        accessor: "id",
+      },
+      {
+        Header: "Chủ sở hữu",
+        accessor: "driverName",
+      },
+      {
+        Header: "Số điện thoại",
+        accessor: "phoneNumber",
       },
       {
         Header: "Biển số xe",
-        accessor: "Car.plateNumber",
+        accessor: "plateNumber",
       },
       {
         Header: "Ngày đăng kiểm",

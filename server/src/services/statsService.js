@@ -20,28 +20,31 @@ let getRegisterData = (userId) => {
         where: { userId: userId },
         raw: true,
         include: [
-          { 
+          {
             model: db.Car,
             as: "Car",
-            attributes: ["plateNumber"]
+            attributes: ["plateNumber"],
+            include: [
+              {
+                model: db.Driver,
+                attributes: ["driverName", "phoneNumber"],
+              },
+            ],
           },
-          {
-            model: db.User,
-            attributes: ["address"]
-          }
         ],
       });
-      let data = []
+      let data = [];
       register.map((register) => {
         data.push({
           plateNumber: register["Car.plateNumber"],
-          address: register["User.address"],
           carId: register.carId,
           id: register.id,
           registerDate: register.registerDate,
-          expireDate: register.expireDate
-        })
-      })
+          expireDate: register.expireDate,
+          driverName: register["Car.Driver.driverName"],
+          phoneNumber: register["Car.Driver.phoneNumber"],
+        });
+      });
       resolve(data);
     } catch (error) {
       reject.log(error);

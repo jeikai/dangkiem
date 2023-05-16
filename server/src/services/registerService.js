@@ -6,7 +6,7 @@ let handleRegister = async (plateNumber) => {
   return new Promise(async (resolve, reject) => {
     try {
       let data = {};
-      console.log(plateNumber)
+      console.log(plateNumber);
       let car = await findCar(plateNumber);
       if (!car) {
         data.errCode = 1;
@@ -68,7 +68,7 @@ let createRegister = async (data) => {
       // console.log(data.registrationDate);
       resolve({
         errCode: 0,
-        errMessage: "Create register success"
+        errMessage: "Create register success",
       });
     } catch (error) {
       reject(error);
@@ -78,29 +78,28 @@ let createRegister = async (data) => {
 
 let deleteRegister = async (id) => {
   let register = await db.Register.findOne({
-    where: { id: id }
+    where: { id: id },
   });
-  if (!register) return {
-    errCode: 1,
-    errMessage: "register id doesn't exist"
-  }
+  if (!register)
+    return {
+      errCode: 1,
+      errMessage: "register id doesn't exist",
+    };
   return new Promise(async (resolve, reject) => {
     try {
       await db.Register.destroy({
-        where: { id: id }
-      })
+        where: { id: id },
+      });
 
       resolve({
         errCode: 0,
-        errMessage: `deleted register have id : ${id}`
-      })
+        errMessage: `deleted register have id : ${id}`,
+      });
     } catch (error) {
-      reject(error)
+      reject(error);
     }
-
-
-  })
-}
+  });
+};
 
 let getRegisterDate = (date) => {
   let year = date.getFullYear();
@@ -118,7 +117,7 @@ let getRegistrationDate = () => {
   let year = date.getFullYear();
   let month = "";
   let day = "";
-  let hour = ""
+  let hour = "";
   if (date.getMonth() < 10) month = "0" + (date.getMonth() + 1);
   else month = date.getMonth() + 1;
   if (date.getDate() < 10) day = "0" + date.getDate();
@@ -202,14 +201,28 @@ let getRegisterData = (userId) => {
             model: db.Car,
             as: "Car",
             attributes: ["plateNumber"],
-          },
-          {
-            model: db.User,
-            attributes: ["address"],
+            include: [
+              {
+                model: db.Driver,
+                attributes: ["driverName", "phoneNumber"],
+              },
+            ],
           },
         ],
       });
-      resolve(register);
+      let data = [];
+      register.map((register) => {
+        data.push({
+          plateNumber: register["Car.plateNumber"],
+          carId: register.carId,
+          id: register.id,
+          registerDate: register.registerDate,
+          expireDate: register.expireDate,
+          driverName: register["Car.Driver.driverName"],
+          phoneNumber: register["Car.Driver.phoneNumber"],
+        });
+      });
+      resolve(data);
     } catch (error) {
       reject.log(error);
     }
@@ -218,16 +231,16 @@ let getRegisterData = (userId) => {
 let handleGetRegisterCucDangKiem = async () => {
   let data1 = await getRegisterDataCucDangKiem();
   let data2 = await getTrungTamDangKiem();
-  let data3 = []
+  let data3 = [];
   for (let i = 0; i < data2.length; i++) {
-    let data = []
-    data.push(data2[i])
+    let data = [];
+    data.push(data2[i]);
     for (let j = 0; j < data1.length; j++) {
       if (data2[i].id == data1[j].userId) {
-        data.push(data1[j])
+        data.push(data1[j]);
       }
     }
-    data3.push(data)
+    data3.push(data);
   }
   if (!data3)
     return {
@@ -244,14 +257,14 @@ let getTrungTamDangKiem = () => {
       let data = await db.User.findAll({
         attributes: ["id", "name"],
         where: { rolebit: 0 },
-        raw: true
-      })
-      resolve(data)
+        raw: true,
+      });
+      resolve(data);
     } catch (error) {
       reject.log(error);
     }
   });
-}
+};
 let getRegisterDataCucDangKiem = () => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -279,5 +292,5 @@ module.exports = {
   createRegister: createRegister,
   handleGetRegister: handleGetRegister,
   handleGetRegisterCucDangKiem: handleGetRegisterCucDangKiem,
-  deleteRegister: deleteRegister
+  deleteRegister: deleteRegister,
 };
