@@ -72,33 +72,35 @@ let handleStats = async (req, res) => {
 let handleGetExpiredData = async (req, res) => {
   let userId = req.params.id;
   let data = await statsService.handleStats(userId);
+  let data2= []
   for (let i = 0; i < data.length; i++) {
     let a = new Date(data[i].expireDate);
-    if (Convert(Time() - a) < 0) {
-      delete data[i];
+    if (Convert(Time() - a) > 0) {
+      data2.push(data[i])
     }
   }
   // console.log(data.length)
   return res.status(200).json({
     errCode: 0,
     errMessage: "get data success",
-    data: data,
+    data: data2,
   });
 };
 let handleGetUnexpiredData = async (req, res) => {
   let userId = req.params.id;
   let data = await statsService.handleStats(userId);
+  let data2 = []
   for (let i = 0; i < data.length; i++) {
     let a = new Date(data[i].expireDate);
-    if (Convert(Time() - a) >= 0) {
-      delete data[i];
+    if (Convert(Time() - a) < 0) {
+      data2.push(data[i])
     }
   }
-  // console.log(data.length)
+
   return res.status(200).json({
     errCode: 0,
     errMessage: "get data success",
-    data: data,
+    data: data2,
   });
 };
 module.exports = {

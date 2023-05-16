@@ -31,7 +31,18 @@ let getRegisterData = (userId) => {
           }
         ],
       });
-      resolve(register);
+      let data = []
+      register.map((register) => {
+        data.push({
+          plateNumber: register["Car.plateNumber"],
+          address: register["User.address"],
+          carId: register.carId,
+          id: register.id,
+          registerDate: register.registerDate,
+          expireDate: register.expireDate
+        })
+      })
+      resolve(data);
     } catch (error) {
       reject.log(error);
     }
