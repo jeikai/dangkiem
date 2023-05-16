@@ -40,7 +40,7 @@ export default function Form({ user }) {
   };
   let handleOnblur = async (e) => {
     e.preventDefault();
-    let value = e.target.value;
+    let value = document.getElementById("plateNumber").value;
     let data = await axios.post(formRoute, { plateNumber: value });
     console.log(data);
     if (data.data.errCode != 0) {
@@ -139,28 +139,40 @@ export default function Form({ user }) {
   return (
     <>
       <Card color="transparent" shadow={false} className="m-10">
-        <Typography variant="h2" color="blue">
+        <Typography variant="h2" className="text-gray-100">
           Điền vào biễu mẫu đăng kiểm xe
         </Typography>
-        <Typography color="gray" className="mt-1 font-normal">
+        <Typography className="text-gray-300 mt-1 font-normal">
           Nhập thông tin xe cần đăng kiểm
         </Typography>
         <form
           onSubmit={(e) => handleSubmit(e)}
           className="mt-8 mb-2 w-full max-w-4xl mx-auto"
         >
-          <div className="mb-4 grid gap-10 grid-cols-1 md:grid-cols-2 w-full">
-            <Input
-              size="lg"
-              label="Biển số xe"
-              id="plateNumber"
-              name="plateNumber"
-              onBlur={(e) => handleOnblur(e)}
-              required={true}
-            />
+          <div className=" mb-4 grid gap-10 grid-cols-1 md:grid-cols-2 w-full">
+            <div className="relative flex w-full">
+              <Input
+                size="lg"
+                label="Biển số xe"
+                id="plateNumber"
+                name="plateNumber"
+                className="pr-20"
+                color='white'
+                required={true}
+              />
+              <Button
+                size="sm"
+                className="!absolute right-1 top-1 rounded"
+                onClick={(e) => handleOnblur(e)}
+              >
+                Tìm kiếm
+              </Button>
+
+            </div>
             <Input
               readOnly={true}
               defaultValue={data.owner}
+              className='text-red-600'
               size="lg"
               label="Chủ sở hữu"
               id="owner"
@@ -171,12 +183,14 @@ export default function Form({ user }) {
               type="date"
               defaultValue={data.registrationDate}
               size="lg"
+              color='white'
               label="Ngày đăng kiểm"
               id="registrationDate"
               name="registrationDate"
             />
             <Input
               type="date"
+              color='white'
               defaultValue={data.expirationDate}
               size="lg"
               label="Ngày hết hạn"
@@ -186,6 +200,7 @@ export default function Form({ user }) {
             <Input
               readOnly={true}
               defaultValue={data.manufacture}
+              className='text-red-600'
               size="lg"
               label="Nhà sản xuất"
               id="manufacturer"
@@ -194,6 +209,7 @@ export default function Form({ user }) {
             <Input
               readOnly={true}
               defaultValue={data.vehicleType}
+              className='text-red-600'
               size="lg"
               label="Kiểu xe"
               id="vehicleType"
@@ -202,6 +218,7 @@ export default function Form({ user }) {
             <Input
               readOnly={true}
               defaultValue={data.color}
+              className='text-red-600'
               size="lg"
               label="Màu sắc"
               id="color"
@@ -210,6 +227,7 @@ export default function Form({ user }) {
             <Input
               readOnly={true}
               defaultValue={data.registerDate}
+              className='text-red-600'
               size="lg"
               label="Ngày đăng kí"
               id="registerDate"
@@ -218,6 +236,7 @@ export default function Form({ user }) {
             <Input
               readOnly={true}
               defaultValue={data.useage}
+              className='text-red-600'
               size="lg"
               label="Mục đích sử dụng"
               id="usage"
@@ -226,6 +245,7 @@ export default function Form({ user }) {
             <Input
               readOnly={true}
               defaultValue={data.inspectionPlace}
+              className='text-red-600'
               size="lg"
               label="Nơi đăng kiểm"
               id="inspectionPlace"

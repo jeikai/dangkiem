@@ -1,100 +1,83 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   Typography,
-  Tabs,
-  TabsHeader,
-  TabsBody,
-  Tab,
-  TabPanel,
-} from '@material-tailwind/react';
+  Select, Option
+} from "@material-tailwind/react";
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
-import './HomeAdmin.scss';
 import { getHistoryDataCucDangKiem } from '../utils/routes';
-import RecentTable from '../RecentTable/RecentTable';
+import AdminTable from '../HomeAdmin/AdminTable/AdminTable';
 
 export default function HomeAdmin({ user }) {
+
   const [data, setData] = useState([]);
+
+  const [selected, setSelected] = React.useState(0);
+  const setSelectedItem = (value) => setSelected(value);
+  const [tableData, setTableData] = React.useState([]);
   useEffect(() => {
     async function Data() {
       const regis = await axios.get(getHistoryDataCucDangKiem);
       console.log(regis.data.data);
       setData(regis.data.data);
+      setTableData(regis.data.data[0].slice(1));
     }
     Data();
   }, []);
-  const data01 = [
-    {
-      label: 'Hà Nội 1',
-      value: 'hanoi',
-      desc: 'ban lay data table cua tung trung tam',
-    },
-    {
-      label: 'Đà Nẵng',
-      value: 'danang',
-      desc: 'ban lay data table cua tung trung tam ta',
-    },
-    {
-      label: 'Thanh Hoá',
-      value: 'thanhhoa',
-      desc: 'ban lay data table cua tung trung tam',
-    },
-  ];
-  const data011 = [
-    { key: 'Hà Nội 1', value: 400 },
-    { key: 'Đà Nẵng', value: 500 },
-    { key: 'Thanh Hoá', value: 600 },
-  ];
-  
+
+  const chartData = data.map(item => {
+    return { name: item[0].name, value: item.length - 1 }
+  })
+
   return (
     <div className="admin-home">
-      <div className="barchart">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart width={400} height={400}>
-            <Pie
-              dataKey="value"
-              isAnimationActive={false}
-              data={data011}
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              fill="#8884d8"
-              label
-            />
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
 
-      <div className="centers">
-        <div className="centers-header">
-          <Typography variant="h2" color="blue" textGradient>
+
+      <div className="centers flex flex-col justify-center items-center" >
+        <div className="centers-header p-10">
+          <Typography variant="h2" className="text-gray-100" textGradient>
             Danh sách các trung tâm đăng kiểm
           </Typography>
         </div>
 
-        <Tabs value="hanoi">
-          <TabsHeader>
-            {data.map((data) => (
-              <Tab key={data[0].id} value={data[0].id}>
-                {data[0].name}
-              </Tab>
-            ))}
-          </TabsHeader>
-          <TabsBody
-            animate={{
-              initial: { y: 250 },
-              mount: { y: 0 },
-              unmount: { y: 250 },
-            }}
-          >
-            {data.map(( data) => (
-              <TabPanel key={data[0].id} value={data[0].id}>
-                {"Hello"}
-              </TabPanel>
-            ))}
-          </TabsBody>
-        </Tabs>
+        <div className="h-52 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart width="100%" height="100%">
+              <Pie
+                dataKey="value"
+                isAnimationActive={false}
+                data={chartData}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+              />
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className=' w-full max-w-7xl h-full m-10' >
+          <div className='w-11/12 max-w-4xl ml-10 mb-10'>
+            <Select className="bg-blue-gray-50/10 text-gray-50 p-4 w-full" size='lg' label='Chọn trung tâm đăng kiểm'>
+              {data.map((item, index) => {
+                return (
+                  <Option onClick={() => {
+                    setSelectedItem(index);
+                    setTableData(data[index].slice(1))
+                  }}>
+                    {item[0].name}
+                  </Option>
+
+                )
+              })}
+            </Select>
+
+          </div>
+
+
+          <AdminTable propData={tableData} />
+        </div>
       </div>
     </div>
   );

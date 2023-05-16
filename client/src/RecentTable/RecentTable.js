@@ -1,113 +1,100 @@
 import React, { useState, useRef } from 'react';
-import { Input } from "@material-tailwind/react";
-import { Card, Typography } from "@material-tailwind/react";
-//import './RecentTable.scss';
+import { useTable } from 'react-table'
+import { Card, Typography, Button } from "@material-tailwind/react";
+import { useDownloadExcel } from 'react-export-table-to-excel'
 
-function RecentTable({ data, print }) {
-  const [plateSearch, setPlateSearch] = useState('');
-  const [dateSearch, setDateSearch] = useState('');
-  const [expiredSearch, setExpiredSearch] = useState('');
+function RecentTable({ data }) {
 
-  const TABLE_HEAD = ["ID", "Biển số xe", "Ngày đăng kiểm", "Ngày hết hạn", ""];
+  const tableref = useRef(null)
+  const { onDownload } = useDownloadExcel({
+    currentTableRef: tableref.current,
+    filename: 'regis-infor',
+    sheet: 'regis-data'
+  })
 
-  let TABLE_ROWS = data
-    .filter((item) => {
-      return expiredSearch === ''
-        ? item
-        : item.expireDate.toLowerCase().includes(expiredSearch.toLowerCase());
-    })
-    .filter((item) => {
-
-      return plateSearch === ''
-        ? item
-        : item['Car.plateNumber'].includes(plateSearch.toUpperCase());
-    })
-    .filter((item) => {
-      return dateSearch === ''
-        ? item
-        : item.registerDate.toLowerCase().includes(dateSearch.toLowerCase());
-    })
   console.log(data)
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "ID",
+        accessor: "User.address",
+      },
+      {
+        Header: "Biển số xe",
+        accessor: "Car.plateNumber",
+      },
+      {
+        Header: "Ngày đăng kiểm",
+        accessor: "registerDate",
+      },
+      {
+        Header: "Ngày hết hạn",
+        accessor: "expireDate",
+      },
+    ],
+    []
+  )
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable({ columns, data })
+
   return (
     <form>
-      <div className="mt-10 flex flex-col lg:flex-row gap-2">
-        <Input
-          variant="outlined"
-          label="Tìm kiếm theo biển số xe"
-          onChange={(e) => setPlateSearch(e.target.value)}
-          className='' />
-        <Input
-          variant="outlined"
-          label="Tìm kiếm theo ngày đăng kiểm"
-          onChange={(e) => setDateSearch(e.target.value)}
-          className='' />
-        <Input
-          variant="outlined"
-          label="Tìm kiếm theo ngày hết hạn"
-          onChange={(e) => setExpiredSearch(e.target.value)}
-          className='' />
+      <Button className='mt-3 bg-indigo-300' onClick={onDownload}>Download data</Button>
 
-      </div>
+      <Card className="overflow-scroll h-full w-full">
 
-      <Card className='overflow-scroll h-full w-full mt-6'>
-        <table className="w-full min-w-max table-auto text-left" ref={print}>
+        <table {...getTableProps()} className='w-full'>
           <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+            {headerGroups.map(headerGroup => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map(column => (
+                  <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                    {...column.getHeaderProps()}
                   >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      {column.render('Header')}
+                    </Typography>
+                  </th>
+                ))}
+              </tr>
+            ))}
           </thead>
-          <tbody>
-            {TABLE_ROWS.map((data, index) => {
-              const isLast = index === TABLE_ROWS.length - 1;
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row, index) => {
+              prepareRow(row)
+              const isLast = index === data.length - 1;
               const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-
               return (
-                <tr key={data.carId}>
-                  <td className={classes}>
-                    <Typography variant="small" color="blue-gray" className="font-normal">
-                      {data.id}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography variant="small" color="blue-gray" className="font-normal">
-                      {data["Car.plateNumber"]}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography variant="small" color="blue-gray" className="font-normal">
-                      {data.registerDate}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography variant="small" color="blue-gray" className="font-normal">
-                      {data.expireDate}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography as="a" href="#" variant="small" color="blue" className="font-medium">
-                      Sửa lượt đăng kiểm
-                    </Typography>
-                  </td>
+                <tr {...row.getRowProps()}>
+                  {row.cells.map(cell => {
+                    return (
+                      <td className={classes}
+                        {...cell.getCellProps()}
+                      >
+                        <Typography variant="small" color="blue-gray" className="font-normal">
+
+                          {cell.render('Cell')}
+                        </Typography>
+                      </td>
+                    )
+                  })}
                 </tr>
-              );
+              )
             })}
           </tbody>
         </table>
-
       </Card>
-
-
-
     </form>
   );
 }

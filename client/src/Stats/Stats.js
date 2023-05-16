@@ -47,9 +47,9 @@ export default function ({ user }) {
   }, [user]);
   useEffect(() => {
     async function Data() {
-      const data = await axios.get(`${getStatsData}/${user.id}`);
-      setForecast(data.data.forecast)
-      setExpired(data.data.month_expired);
+      const serverdata = await axios.get(`${getStatsData}/${user.id}`);
+      setForecast(serverdata.data.forecast)
+      setExpired(serverdata.data.month_expired);
     }
     Data();
   }, [user]);
@@ -76,6 +76,7 @@ export default function ({ user }) {
       desc: data3,
     },
   ];
+  console.log("in stats")
   console.log(data)
   return (
     <div className="stats ">
@@ -112,11 +113,13 @@ export default function ({ user }) {
             unmount: { y: 250 },
           }}
         >
-          {data.map(({ value, desc }) => (
-            <TabPanel key={value} value={value}>
-              <RecentTable data={desc} />
-            </TabPanel>
-          ))}
+          {data.map(({ value, desc }) => {
+            return (
+              <TabPanel key={value} value={value}>
+                <RecentTable data={desc} />
+              </TabPanel>
+            )
+          })}
         </TabsBody>
       </Tabs>
     </div>

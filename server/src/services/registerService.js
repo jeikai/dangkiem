@@ -82,7 +82,7 @@ let deleteRegister = async (id) => {
   });
   if (!register) return {
     errCode: 1,
-    errMessage: "register id isn't exist"
+    errMessage: "register id doesn't exist"
   }
   return new Promise(async (resolve, reject) => {
     try {
@@ -219,11 +219,11 @@ let handleGetRegisterCucDangKiem = async () => {
   let data1 = await getRegisterDataCucDangKiem();
   let data2 = await getTrungTamDangKiem();
   let data3 = []
-  for (let i =0; i< data2.length; i++) {
+  for (let i = 0; i < data2.length; i++) {
     let data = []
     data.push(data2[i])
-    for ( let j = 0; j< data1.length; j++) {
-      if ( data2[i].id == data1[j].userId) {
+    for (let j = 0; j < data1.length; j++) {
+      if (data2[i].id == data1[j].userId) {
         data.push(data1[j])
       }
     }
@@ -243,7 +243,7 @@ let getTrungTamDangKiem = () => {
     try {
       let data = await db.User.findAll({
         attributes: ["id", "name"],
-        where: { rolebit: 0},
+        where: { rolebit: 0 },
         raw: true
       })
       resolve(data)
