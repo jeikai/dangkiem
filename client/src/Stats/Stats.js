@@ -79,7 +79,7 @@ export default function ({ user }) {
   console.log("in stats")
   console.log(data)
   return (
-    <div className="stats ">
+    <div className="p-10 flex flex-col items-center">
       <div className="barchart">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -98,7 +98,7 @@ export default function ({ user }) {
         </ResponsiveContainer>
       </div>
 
-      <Tabs value="html">
+      <Tabs value="html" className='w-full max-w-6xl'>
         <TabsHeader>
           {data.map(({ label, value }) => (
             <Tab key={value} value={value}>

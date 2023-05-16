@@ -17,12 +17,12 @@ function RecentTable({ data }) {
   const columns = React.useMemo(
     () => [
       {
-        Header: "ID",
-        accessor: "User.address",
+        Header: "Biển số xe",
+        accessor: "plateNumber",
       },
       {
-        Header: "Biển số xe",
-        accessor: "Car.plateNumber",
+        Header: "Địa chỉ",
+        accessor: "address",
       },
       {
         Header: "Ngày đăng kiểm",

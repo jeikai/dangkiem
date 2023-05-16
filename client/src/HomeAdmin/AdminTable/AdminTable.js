@@ -12,12 +12,12 @@ export default function AdminTable({ propData }) {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Địa chỉ",
-        accessor: "User.name",
+        Header: "Tên trung tâm",
+        accessor: "name",
       },
       {
-        Header: "Tên trung tâm",
-        accessor: "User.address",
+        Header: "Địa chỉ",
+        accessor: "address",
       },
       {
         Header: "Ngày đăng kiểm",

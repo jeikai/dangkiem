@@ -209,7 +209,18 @@ let getRegisterData = (userId) => {
           },
         ],
       });
-      resolve(register);
+      let data = [];
+      register.map((register) => {
+        data.push({
+          plateNumber: register["Car.plateNumber"],
+          address: register["User.address"],
+          carId: register.carId,
+          id: register.id,
+          registerDate: register.registerDate,
+          expireDate: register.expireDate
+        })
+      })
+      resolve(data);
     } catch (error) {
       reject.log(error);
     }
@@ -268,9 +279,20 @@ let getRegisterDataCucDangKiem = () => {
           },
         ],
       });
-      resolve(register);
+      let data = [];
+      register.map((register) => {
+        data.push({
+          address: register["User.address"],
+          name: register["User.name"],
+          carId: register.carId,
+          userId: register.userId,
+          registerDate: register.registerDate,
+          expireDate: register.expireDate
+        })
+      })
+      resolve(data);
     } catch (error) {
-      reject.log(error);
+      console.log(error);
     }
   });
 };
