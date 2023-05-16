@@ -10,7 +10,7 @@ import {
   Checkbox,
 } from "@material-tailwind/react";
 
-import { useTable, useFilters, usePagination } from 'react-table'
+import { useTable, useFilters, usePagination, useSortBy } from 'react-table'
 
 export default function Table({ columns, propData }) {
   const data = React.useMemo(
@@ -65,10 +65,11 @@ export default function Table({ columns, propData }) {
     {
       columns,
       data,
-      initialState: { pageIndex: 0 },
+      initialState: { pageIndex: 0, sortBy: [{ id: 'registerDate', desc: true }] },
       defaultColumn, // Be sure to pass the defaultColumn option
     },
     useFilters, // useFilters!
+    useSortBy,
     usePagination,
   )
 
