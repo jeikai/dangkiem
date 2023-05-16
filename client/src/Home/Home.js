@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Typography } from '@material-tailwind/react';
 //import "./Home.scss";
-import RecentTable from '../RecentTable/RecentTable';
+import Table from '../Table/Table';
 import axios from 'axios';
 import { getHistoryData } from '../utils/routes';
 export default function ({ user }) {
@@ -15,8 +15,37 @@ export default function ({ user }) {
     }
     Data();
   }, [user]);
-  console.log("in home.js: ")
-  console.log(data);
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "ID",
+        accessor: "id",
+      },
+      {
+        Header: "Chủ sở hữu",
+        accessor: "driverName",
+      },
+      {
+        Header: "Số điện thoại",
+        accessor: "phoneNumber",
+      },
+      {
+        Header: "Biển số xe",
+        accessor: "plateNumber",
+      },
+      {
+        Header: "Ngày đăng kiểm",
+        accessor: "registerDate",
+      },
+      {
+        Header: "Ngày hết hạn",
+        accessor: "expireDate",
+      },
+    ],
+    []
+  )
+
   return (
     <div className="p-10">
       <Typography variant="h2" className="text-gray-100" textGradient>
@@ -25,7 +54,7 @@ export default function ({ user }) {
       </Typography>
 
       <div className="table-container">
-        <RecentTable data={data} />
+        <Table columns={columns} propData={data} />
       </div>
     </div>
   );

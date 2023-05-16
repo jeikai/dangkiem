@@ -20,7 +20,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import axios from 'axios';
-import RecentTable from '../RecentTable/RecentTable';
+import Table from '../Table/Table';
 import { getStatsData, getUnexpiredData, getExpiredData } from '../utils/routes';
 
 
@@ -76,8 +76,35 @@ export default function ({ user }) {
       desc: data3,
     },
   ];
-  console.log("in stats")
-  console.log(data)
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "ID",
+        accessor: "id",
+      },
+      {
+        Header: "Chủ sở hữu",
+        accessor: "driverName",
+      },
+      {
+        Header: "Số điện thoại",
+        accessor: "phoneNumber",
+      },
+      {
+        Header: "Biển số xe",
+        accessor: "plateNumber",
+      },
+      {
+        Header: "Ngày đăng kiểm",
+        accessor: "registerDate",
+      },
+      {
+        Header: "Ngày hết hạn",
+        accessor: "expireDate",
+      },
+    ],
+    []
+  )
   return (
     <div className="p-10 flex flex-col items-center">
       <div className="barchart">
@@ -116,7 +143,7 @@ export default function ({ user }) {
           {data.map(({ value, desc }) => {
             return (
               <TabPanel key={value} value={value}>
-                <RecentTable data={desc} />
+                <Table columns={columns} propData={desc} />
               </TabPanel>
             )
           })}

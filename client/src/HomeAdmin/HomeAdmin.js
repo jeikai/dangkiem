@@ -6,7 +6,7 @@ import {
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
 import { getHistoryDataCucDangKiem } from '../utils/routes';
-import AdminTable from '../HomeAdmin/AdminTable/AdminTable';
+import Table from '../Table/Table';
 
 export default function HomeAdmin({ user }) {
 
@@ -28,6 +28,28 @@ export default function HomeAdmin({ user }) {
   const chartData = data.map(item => {
     return { name: item[0].name, value: item.length - 1 }
   })
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Tên trung tâm",
+        accessor: "name",
+      },
+      {
+        Header: "Địa chỉ",
+        accessor: "address",
+      },
+      {
+        Header: "Ngày đăng kiểm",
+        accessor: "registerDate", // accessor is the "key" in the data
+      },
+      {
+        Header: "Ngày hết hạn",
+        accessor: "expireDate", // accessor is the "key" in the data
+      },
+    ],
+    []
+  )
 
   return (
     <div className="admin-home">
@@ -76,7 +98,7 @@ export default function HomeAdmin({ user }) {
           </div>
 
 
-          <AdminTable propData={tableData} />
+          <Table columns={columns} propData={tableData} />
         </div>
       </div>
     </div>
