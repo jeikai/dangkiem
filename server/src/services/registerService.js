@@ -248,7 +248,7 @@ let handleGetRegisterCucDangKiem = async () => {
       errMessage: "can't get data from database",
       data: {},
     };
-
+  console.log(data3)
   return data3;
 };
 let getTrungTamDangKiem = () => {
@@ -273,12 +273,20 @@ let getRegisterDataCucDangKiem = () => {
         raw: true,
         include: [
           {
-            model: db.User,
-            attributes: ["address", "name"],
-            // where: {
-            //   userId: userId
-            // }
+            model: db.Car,
+            as: "Car",
+            attributes: ["plateNumber"],
+            include: [
+              {
+                model: db.Driver,
+                attributes: ["driverName", "phoneNumber"],
+              },
+            ],
           },
+          {
+            model: db.User,
+            attributes: ["id"]
+          }
         ],
       });
       let data = [];
@@ -289,7 +297,10 @@ let getRegisterDataCucDangKiem = () => {
           carId: register.carId,
           userId: register.userId,
           registerDate: register.registerDate,
-          expireDate: register.expireDate
+          expireDate: register.expireDate,
+          plateNumber: register["Car.plateNumber"],
+          driverName: register["Car.Driver.driverName"],
+          phoneNumber: register["Car.Driver.phoneNumber"],
         })
       })
       resolve(data);
