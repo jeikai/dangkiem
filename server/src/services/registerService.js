@@ -101,6 +101,71 @@ let deleteRegister = async (id) => {
   });
 };
 
+let updateRegister = (id, data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let register = await findRegister(id);
+      if (!register) {
+        resolve({
+          errCode: 1,
+          errMessage: "register id isn't exist"
+        })
+      } else {
+        await db.Register.update(
+          { registerDate: data.registerDate, expireDate: data.expireDate },
+          { where: { id: id } }
+        )
+        resolve({
+          errCode: 0,
+          errMessage: "update register success"
+        })
+      }
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let updateDriver = (id, data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let driver = await findDriver(id);
+      if (!driver) {
+        resolve({
+          errCode: 1,
+          errMessage: "driver id isn't exist"
+        })
+      } else {
+        await db.Driver.update(
+          { driverName: data.driverName, phoneNumber: data.phoneNumber },
+          { where: { id: id } }
+        )
+
+        resolve({
+          errCode: 0,
+          errMessage: "update driver success"
+        })
+      }
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+
+let findRegister = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let register = await db.Register.findOne({
+        where: { id: id }
+      })
+      resolve(register)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 let getRegisterDate = (date) => {
   let year = date.getFullYear();
   let month = "";
@@ -315,4 +380,5 @@ module.exports = {
   handleGetRegister: handleGetRegister,
   handleGetRegisterCucDangKiem: handleGetRegisterCucDangKiem,
   deleteRegister: deleteRegister,
+  updateRegister: updateRegister
 };

@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     Car.init({
+        // id: DataTypes.INTEGER,
         driverId: DataTypes.INTEGER,
         plateNumber: DataTypes.STRING,
         manufacture: DataTypes.STRING,
