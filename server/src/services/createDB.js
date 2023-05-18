@@ -44,7 +44,6 @@ let createUser = async (data) => {
 };
 
 let hashUserPassword = (password) => {
-  console.log("toi o day");
   return new Promise(async (resolve, reject) => {
     try {
       console.log("ma hoa mat khau");
@@ -54,6 +53,55 @@ let hashUserPassword = (password) => {
       reject(error);
     }
   })
+};
+
+let createCar = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let car = await findCar(data.plateNumber);
+      console.log('-------------------');
+      console.log(car);
+      console.log('-------------------');
+      if (car) {
+        resolve({
+          errCode: 1,
+          errMessage: "Plate number is already exist"
+        })
+      } else {
+        await db.Car.create({
+          driverId: data.driverId,
+          plateNumber: data.plateNumber,
+          manufacture: data.manufacture,
+          model: data.model,
+          color: data.color,
+          registerDate: data.registerDate,
+          registerCity: data.registerCity,
+          purpose: data.purpose
+        })
+
+        resolve({
+          errCode: 0,
+          errMessage: "add car success"
+        })
+      }
+
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let findCar = (pNumber) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let car = await db.Car.findOne({
+        where: { plateNumber: pNumber },
+      });
+      resolve(car);
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
 let createRegisterForm = async (data) => {
@@ -75,4 +123,5 @@ module.exports = {
   createRegisterForm: createRegisterForm,
   createUser: createUser,
   handleUser: handleUser,
+  createCar: createCar
 };

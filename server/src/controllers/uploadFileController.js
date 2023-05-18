@@ -1,5 +1,6 @@
 import fs from "fs"
 import registerService from "../services/registerService"
+import createDB from "../services/createDB"
 
 let handleUploadFile = (req, res) => {
     let path = req.file.path;
@@ -24,17 +25,23 @@ let handleUploadFile = (req, res) => {
 
         for (let i = 1; i < obj.length; i++) {
             let data = {
-                plateNumber: obj[i][0],
-                id: obj[i][1],
-                registrationDate: obj[i][2],
-                expirationDate: obj[i][3]
+                driverId: obj[i][0],
+                plateNumber: obj[i][1],
+                manufacture: obj[i][2],
+                model: obj[i][3],
+                color: obj[i][4],
+                registerDate: obj[i][5],
+                registerCity: obj[i][6],
+                purpose: obj[i][7]
             }
 
-            registerService.createRegister(data);
+            createDB.createCar(data);
         }
     });
 
-    res.status(200).send("upload file succeed")
+    return res.status(200).json({
+        message: "upload file success"
+    })
 
 }
 

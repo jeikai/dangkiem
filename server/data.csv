@@ -1,3 +1,2 @@
-platenumber,userid,registerDate,expireDate
-XYZ-5678,2,6/2/2023,6/2/2024
-DEF-9012,2,8/3/2023,8/3/2024
+driverId,plateNumber,manufacture,model,color,registerDate,registerCity,purpose
+13,JKL-5678,Toyota,RAV-5,black,2020-01-14,Ha Noi,Personal
