@@ -10,3 +10,4 @@ export const getHistoryDataCucDangKiem = `${host}/api/historyCucdangkiem`;
 export const createUser = `${host}/api/create-user`;
 export const userRoute = `${host}/api/user`;
 export const uploadRoute = `${host}/api/postfile`;
+export const deleteRegister = `${host}/api/delete-register`;

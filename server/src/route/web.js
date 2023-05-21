@@ -39,11 +39,12 @@ let initWebRoutes = (app) => {
   router.post("/api/user", userController.handleUser);
   router.post("/api/create-register", registerFormController.createRegister);
   router.delete(
-    "/api/delete-register/:id",
+    "/api/delete-register/:id", 
     registerFormController.deleteRegister
   );
   router.put("/api/update-register/:id", registerFormController.updateRegister)
   router.put("/api/update-driver/:id", registerFormController.updateDriver)
+  
   router.get("/api/stats/:id", statsController.handleStats);
   router.get("/api/unexpired/:id", statsController.handleGetUnexpiredData);
   router.get("/api/expired/:id", statsController.handleGetExpiredData);
