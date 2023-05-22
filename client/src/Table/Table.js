@@ -14,7 +14,6 @@ import { deleteRegister, updateRegister } from '../utils/routes';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 export default function Table({ columns, propData }) {
   const data = React.useMemo(() => propData);
   const toastOptions = {
@@ -108,13 +107,20 @@ export default function Table({ columns, propData }) {
     }
   };
   const handleValidation = () => {
-    if (!selectedRegis.id || !selectedRegis.driverName || !selectedRegis.plateNumber || !selectedRegis.registerDate || !selectedRegis.phoneNumber || !selectedRegis.expireDate) {
+    if (
+      !selectedRegis.id ||
+      !selectedRegis.driverName ||
+      !selectedRegis.plateNumber ||
+      !selectedRegis.registerDate ||
+      !selectedRegis.phoneNumber ||
+      !selectedRegis.expireDate
+    ) {
       toast.error('Không được để trống', toastOptions);
       return false;
     }
     return true;
   };
-  console.log(selectedRegis)
+  console.log(selectedRegis);
   const handleChange = (event) => {
     setSelectedRegis({
       ...selectedRegis,
@@ -230,10 +236,6 @@ export default function Table({ columns, propData }) {
             })}
           </tbody>
         </table>
-        {/* 
-        Pagination can be built however you'd like. 
-        This is just a very basic UI implementation:
-      */}
         <div className="pagination p-2">
           <button
             className="p-2 hover:bg-blue-gray-50"

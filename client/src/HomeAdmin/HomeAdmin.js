@@ -32,12 +32,20 @@ export default function HomeAdmin({ user }) {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Tên trung tâm",
-        accessor: "name",
+        Header: "ID",
+        accessor: "carId",
       },
       {
-        Header: "Địa chỉ",
-        accessor: "address",
+        Header: "Chủ sở hữu",
+        accessor: "driverName",
+      },
+      {
+        Header: "Số điện thoại",
+        accessor: "phoneNumber",
+      },
+      {
+        Header: "Biển số xe",
+        accessor: "plateNumber",
       },
       {
         Header: "Ngày đăng kiểm",
