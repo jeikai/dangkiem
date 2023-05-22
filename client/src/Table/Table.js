@@ -10,7 +10,7 @@ import {
   Checkbox,
 } from '@material-tailwind/react';
 import { useTable, useFilters, usePagination, useSortBy } from 'react-table';
-import { deleteRegister } from '../utils/routes';
+import { deleteRegister, updateRegister } from '../utils/routes';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -99,13 +99,30 @@ export default function Table({ columns, propData }) {
   };
   const handleDelete = async (id) => {
     const data = await axios.delete(`${deleteRegister}/${id}`);
-    toast.success("Xoá thành công", toastOptions);
+    toast.success('Xoá thành công', toastOptions);
   };
-  const handleUpdate = async () => {
-    console.log("haha")
-  }
+  const handleUpdate = async (id) => {
+    if (handleValidation()) {
+      const data = await axios.put(`${updateRegister}/${id}`, selectedRegis);
+      toast.success(data.data.errMessage, toastOptions);
+    }
+  };
+  const handleValidation = () => {
+    if (!selectedRegis.id || !selectedRegis.driverName || !selectedRegis.plateNumber || !selectedRegis.registerDate || !selectedRegis.phoneNumber || !selectedRegis.expireDate) {
+      toast.error('Không được để trống', toastOptions);
+      return false;
+    }
+    return true;
+  };
+  console.log(selectedRegis)
+  const handleChange = (event) => {
+    setSelectedRegis({
+      ...selectedRegis,
+      [event.target.name]: event.target.value,
+    });
+    console.log(selectedRegis.id);
+  };
   const dialogRef = useRef(null);
-  
   return (
     <div>
       <div className="w-500px">
@@ -122,14 +139,19 @@ export default function Table({ columns, propData }) {
                   <Input
                     label={key}
                     size="lg"
+                    name={value}
                     defaultValue={selectedRegis[value]}
+                    onChange={(e) => handleChange(e)}
                   />
                 );
               })}
             </CardBody>
             <CardFooter className="pt-0">
-              <Button variant="gradient" fullWidth
-                onClick={handleUpdate}>
+              <Button
+                variant="gradient"
+                fullWidth
+                onClick={() => handleUpdate(selectedRegis.id)}
+              >
                 Sửa lượt đăng kiểm này
               </Button>
               <div className="flex justify-center bg-red-600/50 rounded-lg my-2 p-2">

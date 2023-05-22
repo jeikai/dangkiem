@@ -105,45 +105,25 @@ let updateRegister = (id, data) => {
   return new Promise(async (resolve, reject) => {
     try {
       let register = await findRegister(id);
-      if (!register) {
+      let driver = await findDriver(data.carId);
+      if (!register || !driver) {
         resolve({
           errCode: 1,
-          errMessage: "register id isn't exist"
+          errMessage: "Đăng kiểm hoặc chủ sở hữu không tồn tại"
         })
       } else {
         await db.Register.update(
           { registerDate: data.registerDate, expireDate: data.expireDate },
           { where: { id: id } }
         )
-        resolve({
-          errCode: 0,
-          errMessage: "update register success"
-        })
-      }
-    } catch (error) {
-      reject(error)
-    }
-  })
-}
 
-let updateDriver = (id, data) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let driver = await findDriver(id);
-      if (!driver) {
-        resolve({
-          errCode: 1,
-          errMessage: "driver id isn't exist"
-        })
-      } else {
         await db.Driver.update(
           { driverName: data.driverName, phoneNumber: data.phoneNumber },
-          { where: { id: id } }
+          { where: { id: data.carId } }
         )
-
         resolve({
           errCode: 0,
-          errMessage: "update driver success"
+          errMessage: "Cập nhập thành công"
         })
       }
     } catch (error) {
@@ -151,7 +131,6 @@ let updateDriver = (id, data) => {
     }
   })
 }
-
 
 let findRegister = (id) => {
   return new Promise(async (resolve, reject) => {
@@ -380,5 +359,5 @@ module.exports = {
   handleGetRegister: handleGetRegister,
   handleGetRegisterCucDangKiem: handleGetRegisterCucDangKiem,
   deleteRegister: deleteRegister,
-  updateRegister: updateRegister
+  updateRegister: updateRegister,
 };

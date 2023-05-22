@@ -43,7 +43,6 @@ let initWebRoutes = (app) => {
     registerFormController.deleteRegister
   );
   router.put("/api/update-register/:id", registerFormController.updateRegister)
-  router.put("/api/update-driver/:id", registerFormController.updateDriver)
   
   router.get("/api/stats/:id", statsController.handleStats);
   router.get("/api/unexpired/:id", statsController.handleGetUnexpiredData);

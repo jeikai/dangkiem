@@ -24,13 +24,6 @@ let updateRegister = async (req, res) => {
     return res.status(200).json(results);
 }
 
-let updateDriver = async (req, res) => {
-    let id = req.params.id;
-    let data = req.body;
-    let results = await registerService.updateDriver(id, data);
-    return res.status(200).json(results);
-}
-
 let deleteRegister = async (req, res) => {
     let data = await registerService.deleteRegister(req.params.id);
     return res.status(200).json(data)
@@ -59,5 +52,4 @@ module.exports = {
     handleGetRegisterCucDangKiem: handleGetRegisterCucDangKiem,
     deleteRegister: deleteRegister,
     updateRegister: updateRegister,
-    updateDriver: updateDriver
 }

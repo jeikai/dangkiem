@@ -11,3 +11,4 @@ export const createUser = `${host}/api/create-user`;
 export const userRoute = `${host}/api/user`;
 export const uploadRoute = `${host}/api/postfile`;
 export const deleteRegister = `${host}/api/delete-register`;
+export const updateRegister = `${host}/api/update-register`;
