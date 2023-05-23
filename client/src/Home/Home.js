@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Typography } from '@material-tailwind/react';
-//import "./Home.scss";
-import Table from '../Table/Table';
+import {
+  Button,
+} from '@material-tailwind/react';
 import axios from 'axios';
 import { getHistoryData } from '../utils/routes';
 import { useDownloadExcel } from 'react-export-table-to-excel'
 import Print from '../Table/Export';
+import Table from '../Table/Table';
+import Chatbot from '../Chatbot/Chatbot';
 export default function ({ user }) {
   const tableref = useRef(null)
-  const {onDownload} = useDownloadExcel({
+  const { onDownload } = useDownloadExcel({
     currentTableRef: tableref.current,
     filename: 'regis-infor',
     sheet: 'regis-data'
@@ -25,9 +28,13 @@ export default function ({ user }) {
 
   const columns = React.useMemo(
     () => [
+      // {
+      //   Header: "ID",
+      //   accessor: "id",
+      // },
       {
-        Header: "ID",
-        accessor: "id",
+        Header: "Ngày đăng kiểm",
+        accessor: "registerDate",
       },
       {
         Header: "Chủ sở hữu",
@@ -42,10 +49,6 @@ export default function ({ user }) {
         accessor: "plateNumber",
       },
       {
-        Header: "Ngày đăng kiểm",
-        accessor: "registerDate",
-      },
-      {
         Header: "Ngày hết hạn",
         accessor: "expireDate",
       },
@@ -53,22 +56,19 @@ export default function ({ user }) {
     []
   )
   return (
-    <div className="p-10">
+    <div className="p-10 max-w-fit mx-auto">
+      <Chatbot />
       <Typography variant="h2" className="text-gray-100" textGradient>
         <i className="fa-solid fa-clock-rotate-left  mr-3"></i>
         Đăng kiểm gần đây
       </Typography>
-      <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-        onClick={onDownload}>
-        <svg
-          class="fill-current w-4 h-4 mr-2"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-        >
-          <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-        </svg>
-        <span>Download data</span>
-      </button>
+      <Button
+        variant="gradient"
+        onClick={onDownload}
+        className='my-1'
+      >
+        Tải xuống dữ liệu
+      </Button>
       <div className="table-container">
         <Print print={tableref} columns={columns} propData={data}></Print>
         <Table columns={columns} propData={data} />

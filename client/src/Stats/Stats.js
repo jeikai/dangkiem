@@ -147,7 +147,7 @@ export default function ({ user }) {
         </ResponsiveContainer>
       </div>
 
-      <Tabs value="html" className="w-full max-w-6xl">
+      <Tabs value="html" className='w-full max-w-fit'>
         <TabsHeader>
           {data.map(({ label, value }) => (
             <Tab key={value} value={value}>

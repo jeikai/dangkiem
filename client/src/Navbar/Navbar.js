@@ -60,13 +60,13 @@ export default function Example({ user, data }) {
 
   const logout = () => {
     localStorage.clear();
-    window.location.replace("http://localhost:3000/login");
+    window.location.replace("http://localhost:3000/");
   }
 
   return (
     <>
       <Navbar className="sticky inset-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4">
-        <div className="flex items-center justify-between text-blue-gray-900">
+        <div className="flex items-center justify-between text-blue-gray-900 max-w-7xl mx-auto">
           <div className="flex items-center justify-between text-blue-900">
             <img src="/img/logo.png" className="w-10 mr-3" />
             <Link
@@ -83,7 +83,7 @@ export default function Example({ user, data }) {
               size="sm"
               className="hidden lg:inline-block"
               color="red"
-              onClick={() => logout()} to={"/login"} end
+              onClick={() => logout()} to={"/"} end
             >
               <span>Đăng xuất</span>
             </Button>
@@ -128,7 +128,7 @@ export default function Example({ user, data }) {
         </div>
         <MobileNav open={openNav}>
           {navList}
-          <Button variant="gradient" size="sm" fullWidth className="mb-2" color="red" onClick={() => logout()} to={"/login"} end>
+          <Button variant="gradient" size="sm" fullWidth className="mb-2" color="red" onClick={() => logout()} to={"/"} end>
             <span>Đăng xuất</span>
           </Button>
         </MobileNav>
