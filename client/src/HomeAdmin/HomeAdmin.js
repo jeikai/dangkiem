@@ -12,7 +12,7 @@ export default function HomeAdmin({ user }) {
 
   const [data, setData] = useState([]);
 
-  const [selected, setSelected] = React.useState(0);
+  const [selected, setSelected] = React.useState(null);
   const setSelectedItem = (value) => setSelected(value);
   const [tableData, setTableData] = React.useState([]);
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function HomeAdmin({ user }) {
       const regis = await axios.get(getHistoryDataCucDangKiem);
       console.log(regis.data.data);
       setData(regis.data.data);
-      setTableData(regis.data.data[0].slice(1));
+      // setTableData(regis.data.data[0].slice(1));
     }
     Data();
   }, []);
@@ -31,9 +31,13 @@ export default function HomeAdmin({ user }) {
 
   const columns = React.useMemo(
     () => [
+      // {
+      //   Header: "ID",
+      //   accessor: "carId",
+      // },
       {
-        Header: "ID",
-        accessor: "carId",
+        Header: "Ngày đăng kiểm",
+        accessor: "registerDate", // accessor is the "key" in the data
       },
       {
         Header: "Chủ sở hữu",
@@ -48,10 +52,6 @@ export default function HomeAdmin({ user }) {
         accessor: "plateNumber",
       },
       {
-        Header: "Ngày đăng kiểm",
-        accessor: "registerDate", // accessor is the "key" in the data
-      },
-      {
         Header: "Ngày hết hạn",
         accessor: "expireDate", // accessor is the "key" in the data
       },
@@ -60,7 +60,7 @@ export default function HomeAdmin({ user }) {
   )
 
   return (
-    <div className="admin-home">
+    <div className="admin-home max-w-fit mx-auto">
 
 
       <div className="centers flex flex-col justify-center items-center" >
@@ -106,7 +106,7 @@ export default function HomeAdmin({ user }) {
           </div>
 
 
-          <Table columns={columns} propData={tableData} />
+          {selected != null && <Table columns={columns} propData={tableData} admin={true} />}
         </div>
       </div>
     </div>

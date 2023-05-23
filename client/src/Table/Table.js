@@ -2,19 +2,16 @@ import React, { useRef, useState } from 'react';
 import { Card, Typography, Select, Option } from '@material-tailwind/react';
 import {
   Button,
-  Dialog,
-  CardHeader,
   CardBody,
   CardFooter,
   Input,
-  Checkbox,
 } from '@material-tailwind/react';
 import { useTable, useFilters, usePagination, useSortBy } from 'react-table';
 import { deleteRegister, updateRegister } from '../utils/routes';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export default function Table({ columns, propData }) {
+export default function Table({ columns, propData, admin = false }) {
   const data = React.useMemo(() => propData);
   const toastOptions = {
     position: 'bottom-right',
@@ -132,49 +129,54 @@ export default function Table({ columns, propData }) {
   return (
     <div>
       <div className="w-500px">
-        <dialog ref={dialogRef} className="rounded-lg">
-          <Card className="mx-auto w-full max-w-[24rem]">
-            <Typography variant="h3" color="Blue" className="p-10">
-              Chỉnh sửa lượt đăng kiểm
-            </Typography>
-            <CardBody className="flex flex-col gap-4">
-              {columns.map((item) => {
-                const key = item.Header;
-                const value = item.accessor;
-                return (
-                  <Input
-                    label={key}
-                    size="lg"
-                    name={value}
-                    defaultValue={selectedRegis[value]}
-                    onChange={(e) => handleChange(e)}
-                  />
-                );
-              })}
-            </CardBody>
-            <CardFooter className="pt-0">
-              <Button
-                variant="gradient"
-                fullWidth
-                onClick={() => handleUpdate(selectedRegis.id)}
-              >
-                Sửa lượt đăng kiểm này
-              </Button>
-              <div className="flex justify-center bg-red-600/50 rounded-lg my-2 p-2">
+        <dialog
+          ref={dialogRef}
+          className="mx-auto bg-transparent"
+        >
+          <div>
+            <Card className="w-full max-w-[24rem] ">
+              <Typography variant="h3" color="Blue" className="p-10">
+                Chỉnh sửa lượt đăng kiểm
+              </Typography>
+              <CardBody className="flex flex-col gap-4">
+                {columns.map((item) => {
+                  const key = item.Header;
+                  const value = item.accessor;
+                  return (
+                    <Input
+                      label={key}
+                      size="lg"
+                      name={value}
+                      defaultValue={selectedRegis[value]}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  );
+                })}
+              </CardBody>
+              <CardFooter className="pt-0">
+                <Button
+                  variant="gradient"
+                  fullWidth
+                  onClick={() => handleUpdate(selectedRegis.id)}
+                >
+                  Sửa lượt đăng kiểm này
+                </Button>
+
                 <Button
                   variant="gradient"
                   color="red"
-                  className="ml-1 font-bold"
+                  fullWidth
+                  className='mt-2'
                   onClick={() => handleDelete(selectedRegis.id)}
                 >
                   Xoá lượt đăng kiểm này
                 </Button>
-              </div>
-              <div className="flex justify-end">
-                <Button onClick={() => dialogRef.current.close()}>Đóng</Button>
-              </div>
-            </CardFooter>
-          </Card>
+                <div className="flex justify-end mt-3">
+                  <Button onClick={() => dialogRef.current.close()}>Đóng</Button>
+                </div>
+              </CardFooter>
+            </Card>
+          </div>
         </dialog>
       </div>
       <Card className="overflow-scroll h-full w-full">
@@ -215,7 +217,9 @@ export default function Table({ columns, propData }) {
                   {...row.getRowProps()}
                   className="hover:cursor-pointer hover:bg-blue-gray-50/50"
                   onClick={() => {
-                    handleClickRegis(row.original);
+                    if (admin == false) {
+                      handleClickRegis(row.original);
+                    }
                   }}
                 >
                   {row.cells.map((cell) => {

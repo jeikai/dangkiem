@@ -12,6 +12,7 @@ import Form from "./Form/Form";
 import AccountRegister from "./AccountRegister/AccountRegister";
 import data_navbar from "./data_navbar";
 import Upload from "./Upload/Upload";
+// import Chatbot from './Chatbot/Chatbot'
 function App() {
   const [login, setLogin] = useState({
     user: localStorage.getItem("user"),
@@ -22,7 +23,7 @@ function App() {
     <>
       {login.user == null ?
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
         </Routes>
         :
         login.user != null && JSON.parse(login.user).rolebit == 0 ?
@@ -45,7 +46,7 @@ function App() {
               <TransitionGroup>
                 <CSSTransition key={location.key} classNames="sliding" timeout={500}>
                   <Routes>
-                    <Route path="/" element={<HomeAdmin user={JSON.parse(login.user)}/>} />
+                    <Route path="/" element={<HomeAdmin user={JSON.parse(login.user)} />} />
                     <Route path="/signup" element={<AccountRegister />} />
                     <Route path="/upload" element={<Upload />} />
                   </Routes>

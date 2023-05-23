@@ -38,7 +38,7 @@ const Upload = () => {
   };
 
   return (
-    <div>
+    <div className='max-w-7xl mx-auto'>
       <Typography variant="h1" className="text-white p-10">Upload file danh sách các xe đã đăng ký lên hệ thống</Typography>
       <Typography className="px-10 text-gray-300">
         File phải có định dạng xlsx hoặc csv

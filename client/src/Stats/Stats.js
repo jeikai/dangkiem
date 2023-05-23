@@ -78,9 +78,13 @@ export default function ({ user }) {
   ];
   const columns = React.useMemo(
     () => [
+      // {
+      //   Header: "ID",
+      //   accessor: "id",
+      // },
       {
-        Header: "ID",
-        accessor: "id",
+        Header: "Ngày đăng kiểm",
+        accessor: "registerDate",
       },
       {
         Header: "Chủ sở hữu",
@@ -93,10 +97,6 @@ export default function ({ user }) {
       {
         Header: "Biển số xe",
         accessor: "plateNumber",
-      },
-      {
-        Header: "Ngày đăng kiểm",
-        accessor: "registerDate",
       },
       {
         Header: "Ngày hết hạn",
@@ -125,7 +125,7 @@ export default function ({ user }) {
         </ResponsiveContainer>
       </div>
 
-      <Tabs value="html" className='w-full max-w-6xl'>
+      <Tabs value="html" className='w-full max-w-fit'>
         <TabsHeader>
           {data.map(({ label, value }) => (
             <Tab key={value} value={value}>
