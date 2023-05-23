@@ -37,7 +37,7 @@ let handleStats = async (req, res) => {
     let a = new Date(data[i].expireDate);
     let b = new Date(data[i].registerDate);
     for (let j = 0; j < 12; j++) {
-      if (a.getMonth() == j) {
+      if (a.getMonth() == j && Time().getFullYear() == a.getFullYear()) {
         if (Convert(Time() - a) >= 0) {
           ++month_expired[j];
         }

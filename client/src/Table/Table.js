@@ -120,7 +120,6 @@ export default function Table({ columns, propData }) {
     }
     return true;
   };
-  console.log(selectedRegis);
   const handleChange = (event) => {
     setSelectedRegis({
       ...selectedRegis,

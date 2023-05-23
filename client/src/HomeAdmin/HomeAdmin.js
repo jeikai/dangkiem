@@ -28,7 +28,7 @@ export default function HomeAdmin({ user }) {
   const chartData = data.map(item => {
     return { name: item[0].name, value: item.length - 1 }
   })
-
+  console.log(chartData)
   const columns = React.useMemo(
     () => [
       {

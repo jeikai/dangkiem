@@ -5,9 +5,13 @@ import initWebRoute from "./route/web";
 import connectDB from "./config/connectDB"
 import createDB from "./services/createDB"
 import cors from 'cors'
+import { createJWT, verifyToken } from './middleware/JWTActions'
 require('dotenv').config();
 
 
+//test JWT
+createJWT()
+verifyToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE2ODQ4NTczNjB9.pRo56A0O4IARUH_ms5viStgmK7p0iCjrqHJJDDJfXzw")
 let app = express();
 app.use(cors({ origin: true }));
 
