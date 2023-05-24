@@ -10,7 +10,7 @@ import {
 import axios from 'axios';
 import { uploadRoute } from "../utils/routes";
 
-const Upload = () => {
+const Upload = ({token}) => {
   const [file, setFile] = useState(null);
 
   const handleFileInputChange = (e) => {

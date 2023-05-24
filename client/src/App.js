@@ -75,7 +75,7 @@ function App() {
                   element={<HomeAdmin user={login} />}
                 />
                 <Route path="/signup" element={<AccountRegister token={token} />} />
-                <Route path="/upload" element={<Upload />} />
+                <Route path="/upload" element={<Upload token={token}/>} />
               </Routes>
             </CSSTransition>
           </TransitionGroup>

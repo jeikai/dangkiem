@@ -61,18 +61,20 @@ export default function ({ user, token }) {
     chartData_2.push({
       name: 'Tháng' + (i + 1),
       'dự báo': forecast[i],
-      'hết hạn': month_expired[i],
+      'Sắp hết hạn': month_expired[i],
       amt: 2400,
     });
   }
+  console.log(month_expired)
   const chartData_3 = [];
   for (let i = 0; i < 4; i++) {
     let dubao = forecast[i*3] + forecast[i*3+ 1] + forecast[i*3 + 2];
     let hethan = month_expired[i*3] + month_expired[i*3+ 1] + month_expired[i*3+ 2]
+    console.log(dubao, hethan)
     chartData_3.push({
       name: 'Quý' + (i + 1),
       'dự báo': dubao,
-      'hết hạn': hethan,
+      'Sắp hết hạn': hethan,
       amt: 2400,
     });
     // i = i*3 - 1
@@ -84,17 +86,17 @@ export default function ({ user, token }) {
       desc: data2,
     },
     {
-      label: 'Hết hạn',
+      label: 'Sắp hết hạn',
       value: 'react',
       desc: data3,
     },
   ];
   const columns = React.useMemo(
     () => [
-      {
-        Header: 'ID',
-        accessor: 'id',
-      },
+      // {
+      //   Header: 'ID',
+      //   accessor: 'id',
+      // },
       {
         Header: 'Chủ sở hữu',
         accessor: 'driverName',
@@ -128,7 +130,7 @@ export default function ({ user, token }) {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="hết hạn" fill="#8884d8" />
+            <Bar dataKey="Sắp hết hạn" fill="#8884d8" />
             <Bar dataKey="dự báo" fill="#82ca9d" />
           </BarChart>
         </ResponsiveContainer>
@@ -141,7 +143,7 @@ export default function ({ user, token }) {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="hết hạn" fill="#8884d8" />
+            <Bar dataKey="Sắp hết hạn" fill="#8884d8" />
             <Bar dataKey="dự báo" fill="#82ca9d" />
           </BarChart>
         </ResponsiveContainer>

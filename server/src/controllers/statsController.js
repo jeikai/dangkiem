@@ -26,6 +26,7 @@ let handleStats = async (req, res) => {
   let month_expired = [];
   let forecast = [];
   let count = [];
+  let registerd = [];
   for (let i = 0; i < 12; i++) {
     month_expired[i] = 0;
     forecast[i] = 0;
@@ -38,7 +39,7 @@ let handleStats = async (req, res) => {
     let b = new Date(data[i].registerDate);
     for (let j = 0; j < 12; j++) {
       if (a.getMonth() == j && Time().getFullYear() == a.getFullYear()) {
-        if (Convert(Time() - a) >= 0) {
+        if (Convert(a - Time()) <= 30 && Convert (a- Time()) >= 0) {
           ++month_expired[j];
         }
       }
@@ -62,6 +63,7 @@ let handleStats = async (req, res) => {
     forecast[i] = TrungBinhCong(count[i+3], count[i+3-1], count[i+3-2])
     forecast[i] = Math.round(forecast[i])
   }
+  console.log(month_expired)
   return res.status(200).json({
     errCode: 0,
     errMessage: "get data success",
@@ -75,7 +77,7 @@ let handleGetExpiredData = async (req, res) => {
   let data2= []
   for (let i = 0; i < data.length; i++) {
     let a = new Date(data[i].expireDate);
-    if (Convert(Time() - a) > 0) {
+    if (Convert(a - Time()) <= 30 && Convert(a - Time()) >= 0) {
       data2.push(data[i])
     }
   }
@@ -103,6 +105,7 @@ let handleGetUnexpiredData = async (req, res) => {
     data: data2,
   });
 };
+
 module.exports = {
   handleStats: handleStats,
   handleGetExpiredData: handleGetExpiredData,
