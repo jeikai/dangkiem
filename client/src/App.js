@@ -14,17 +14,17 @@ import data_navbar from './data_navbar';
 import Upload from './Upload/Upload';
 import axios from 'axios';
 import { verifyRoute } from './utils/routes';
-// import Chatbot from './Chatbot/Chatbot'
+import Chatbot from './Chatbot/Chatbot'
 function App() {
   const [token, setToken] = useState({
     user: localStorage.getItem('user'),
   });
   const location = useLocation();
   const [login, setLogin] = useState()
-  useEffect( () => {
+  useEffect(() => {
     async function Data() {
-        const data = await axios.post(verifyRoute, { data: token.user})
-        setLogin(data.data)
+      const data = await axios.post(verifyRoute, { data: token.user })
+      setLogin(data.data)
     }
     Data()
   }, [token])
@@ -37,6 +37,7 @@ function App() {
       ) : login != null && login.rolebit == 0 ? (
         <>
           <Navbar user={login} data={data_navbar[0]} />
+          <Chatbot />
           <TransitionGroup>
             <CSSTransition
               key={location.key}
@@ -46,15 +47,15 @@ function App() {
               <Routes>
                 <Route
                   path="/"
-                  element={<Home user={login} token={token.user}/>}
+                  element={<Home user={login} token={token.user} />}
                 />
                 <Route
                   path="/stats"
-                  element={<Stats user={login} token={token.user}/>}
+                  element={<Stats user={login} token={token.user} />}
                 />
                 <Route
                   path="form"
-                  element={<Form user={login} token={token.user}/>}
+                  element={<Form user={login} token={token.user} />}
                 />
               </Routes>
             </CSSTransition>
@@ -63,6 +64,7 @@ function App() {
       ) : login != null && login.rolebit == 1 ? (
         <>
           <Navbar user={login} data={data_navbar[1]} />
+          <Chatbot />
           <TransitionGroup>
             <CSSTransition
               key={location.key}

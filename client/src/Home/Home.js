@@ -8,7 +8,6 @@ import { getHistoryData } from '../utils/routes';
 import { useDownloadExcel } from 'react-export-table-to-excel'
 import Print from '../Table/Export';
 import Table from '../Table/Table';
-import Chatbot from '../Chatbot/Chatbot';
 export default function ({ user, token }) {
   const tableref = useRef(null)
   const { onDownload } = useDownloadExcel({
@@ -57,7 +56,6 @@ export default function ({ user, token }) {
   )
   return (
     <div className="p-10 max-w-fit mx-auto">
-      <Chatbot />
       <Typography variant="h2" className="text-gray-100" textGradient>
         <i className="fa-solid fa-clock-rotate-left  mr-3"></i>
         Đăng kiểm gần đây
@@ -71,7 +69,7 @@ export default function ({ user, token }) {
       </Button>
       <div className="table-container">
         <Print print={tableref} columns={columns} propData={data}></Print>
-        <Table columns={columns} propData={data} token={token}/>
+        <Table columns={columns} propData={data} token={token} />
       </div>
     </div>
   );
