@@ -5,7 +5,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createUser, userRoute } from '../utils/routes';
-export default function () {
+export default function ({token}) {
   const [check, setCheck] = useState()
   const toastOptions = {
     position: 'bottom-right',
@@ -64,6 +64,7 @@ export default function () {
         password: password,
         rolebit: 0,
         address: address,
+        token: token
       });
     }
   };

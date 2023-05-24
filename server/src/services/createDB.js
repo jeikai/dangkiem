@@ -1,6 +1,6 @@
 import db from "../models/index";
 import bcrypt from 'bcryptjs';
-
+import { verifyToken } from "../middleware/JWTActions";
 const salt = bcrypt.genSaltSync(10);
 
 let handleUser = async (username) => {
@@ -30,6 +30,7 @@ let createUser = async (data) => {
     try {
       let hashPasswordFromBcrypt = await hashUserPassword(data.password);
       console.log(hashPasswordFromBcrypt);
+      verifyToken(data.token)
       await db.User.create({
         name: data.name,
         username: data.username,

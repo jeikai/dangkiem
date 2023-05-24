@@ -19,8 +19,9 @@ let createRegister = async (req, res) => {
 
 let updateRegister = async (req, res) => {
     let id = req.params.id;
-    let data = req.body;
-    let results = await registerService.updateRegister(id, data);
+    let data = req.body.selectedRegis;
+    let token = req.body.token;
+    let results = await registerService.updateRegister(id, data, token);
     return res.status(200).json(results);
 }
 

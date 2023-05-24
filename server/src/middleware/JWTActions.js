@@ -2,12 +2,11 @@ import jwt from "jsonwebtoken"
 require("dotenv").config()
 
 let key = process.env.JWT_SECRET
-const createJWT = () => {
-    let payload = { foo: 'bar'};
+const createJWT = (data) => {
+    let payload = data;
     let token = null;
     try {
-        token = jwt.sign( payload, key)
-        console.log(token)
+        token = jwt.sign( payload, key, {expiresIn: '10h'})
     } catch(e) {
         console.log(e)
     }
@@ -22,6 +21,7 @@ const verifyToken = (token) => {
     } catch (e) {
         console.log(e)
     }
+    console.log(data)
     return data;
 }
 module.exports = {

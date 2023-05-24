@@ -11,7 +11,7 @@ import { deleteRegister, updateRegister } from '../utils/routes';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export default function Table({ columns, propData, admin = false }) {
+export default function Table({ columns, propData, admin = false, token }) {
   const data = React.useMemo(() => propData);
   const toastOptions = {
     position: 'bottom-right',
@@ -99,7 +99,7 @@ export default function Table({ columns, propData, admin = false }) {
   };
   const handleUpdate = async (id) => {
     if (handleValidation()) {
-      const data = await axios.put(`${updateRegister}/${id}`, selectedRegis);
+      const data = await axios.put(`${updateRegister}/${id}`, {selectedRegis, token: token});
       toast.success(data.data.errMessage, toastOptions);
     }
   };

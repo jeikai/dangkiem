@@ -12,7 +12,7 @@ import { formRoute, createRegistationRoute } from '../utils/routes';
 import { useReactToPrint } from 'react-to-print';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export default function Form({ user }) {
+export default function Form({ user, token }) {
   const [check, setCheck] = useState();
   const toastOptions = {
     position: 'bottom-right',
@@ -132,6 +132,7 @@ export default function Form({ user }) {
         id: user.id,
         registrationDate: registrationDate,
         expirationDate: expirationDate,
+        token: token
       });
     }
   };

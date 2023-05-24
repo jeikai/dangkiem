@@ -1,5 +1,5 @@
 import db from "../models/index";
-
+import { verifyToken } from '../middleware/JWTActions'
 const registerTime = 12; // 12 month
 
 let handleRegister = async (plateNumber) => {
@@ -49,7 +49,8 @@ let createRegister = async (data) => {
   let id = data.id;
   let registrationDate = data.registrationDate;
   let expirationDate = data.expirationDate;
-
+  let token = data.token;
+  verifyToken(token)
   let car = await findCar(plateNumber);
   if (!car)
     return {
@@ -101,11 +102,12 @@ let deleteRegister = async (id) => {
   });
 };
 
-let updateRegister = (id, data) => {
+let updateRegister = (id, data, token) => {
   return new Promise(async (resolve, reject) => {
     try {
       let register = await findRegister(id);
       let driver = await findDriver(data.carId);
+      verifyToken(token)
       if (!register || !driver) {
         resolve({
           errCode: 1,

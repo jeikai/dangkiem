@@ -55,7 +55,7 @@ export default function Login() {
       } else {
         localStorage.setItem(
           "user",
-          JSON.stringify(data.data.userData)
+          data.data.userData
         );
         navigate('/')
         window.location.reload();

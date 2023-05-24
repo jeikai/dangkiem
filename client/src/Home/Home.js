@@ -9,7 +9,7 @@ import { useDownloadExcel } from 'react-export-table-to-excel'
 import Print from '../Table/Export';
 import Table from '../Table/Table';
 import Chatbot from '../Chatbot/Chatbot';
-export default function ({ user }) {
+export default function ({ user, token }) {
   const tableref = useRef(null)
   const { onDownload } = useDownloadExcel({
     currentTableRef: tableref.current,
@@ -71,7 +71,7 @@ export default function ({ user }) {
       </Button>
       <div className="table-container">
         <Print print={tableref} columns={columns} propData={data}></Print>
-        <Table columns={columns} propData={data} />
+        <Table columns={columns} propData={data} token={token}/>
       </div>
     </div>
   );

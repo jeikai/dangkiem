@@ -1,63 +1,90 @@
-import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-import "./App.css";
-import Login from "./Login/Login";
-import Navbar from "./Navbar/Navbar";
-import Home from "./Home/Home";
-import HomeAdmin from "./HomeAdmin/HomeAdmin"
-import Stats from "./Stats/Stats";
-import Form from "./Form/Form";
-import AccountRegister from "./AccountRegister/AccountRegister";
-import data_navbar from "./data_navbar";
-import Upload from "./Upload/Upload";
+import { Routes, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import './App.css';
+import Login from './Login/Login';
+import Navbar from './Navbar/Navbar';
+import Home from './Home/Home';
+import HomeAdmin from './HomeAdmin/HomeAdmin';
+import Stats from './Stats/Stats';
+import Form from './Form/Form';
+import AccountRegister from './AccountRegister/AccountRegister';
+import data_navbar from './data_navbar';
+import Upload from './Upload/Upload';
+import axios from 'axios';
+import { verifyRoute } from './utils/routes';
 // import Chatbot from './Chatbot/Chatbot'
 function App() {
-  const [login, setLogin] = useState({
-    user: localStorage.getItem("user"),
+  const [token, setToken] = useState({
+    user: localStorage.getItem('user'),
   });
   const location = useLocation();
-
+  const [login, setLogin] = useState()
+  useEffect( () => {
+    async function Data() {
+        const data = await axios.post(verifyRoute, { data: token.user})
+        setLogin(data.data)
+    }
+    Data()
+  }, [token])
   return (
     <>
-      {login.user == null ?
+      {login == null ? (
         <Routes>
           <Route path="/" element={<Login />} />
         </Routes>
-        :
-        login.user != null && JSON.parse(login.user).rolebit == 0 ?
-          <>
-            <Navbar user={JSON.parse(login.user)} data={data_navbar[0]} />
-            <TransitionGroup>
-              <CSSTransition key={location.key} classNames="sliding" timeout={500}>
-                <Routes>
-                  <Route path="/" element={<Home user={JSON.parse(login.user)} />} />
-                  <Route path="/stats" element={<Stats user={JSON.parse(login.user)} />} />
-                  <Route path="form" element={<Form user={JSON.parse(login.user)} />} />
-                </Routes>
-              </CSSTransition>
-            </TransitionGroup>
-          </>
-          :
-          login.user != null && JSON.parse(login.user).rolebit == 1 ?
-            <>
-              <Navbar user={JSON.parse(login.user)} data={data_navbar[1]} />
-              <TransitionGroup>
-                <CSSTransition key={location.key} classNames="sliding" timeout={500}>
-                  <Routes>
-                    <Route path="/" element={<HomeAdmin user={JSON.parse(login.user)} />} />
-                    <Route path="/signup" element={<AccountRegister />} />
-                    <Route path="/upload" element={<Upload />} />
-                  </Routes>
-                </CSSTransition>
-              </TransitionGroup>
-            </>
-            :
-            <>
-              404 NOT FOUND
-            </>
-      }
+      ) : login != null && login.rolebit == 0 ? (
+        <>
+          <Navbar user={login} data={data_navbar[0]} />
+          <TransitionGroup>
+            <CSSTransition
+              key={location.key}
+              classNames="sliding"
+              timeout={500}
+            >
+              <Routes>
+                <Route
+                  path="/"
+                  element={<Home user={login} token={token.user}/>}
+                />
+                <Route
+                  path="/stats"
+                  element={<Stats user={login} token={token.user}/>}
+                />
+                <Route
+                  path="form"
+                  element={<Form user={login} token={token.user}/>}
+                />
+              </Routes>
+            </CSSTransition>
+          </TransitionGroup>
+        </>
+      ) : login != null && login.rolebit == 1 ? (
+        <>
+          <Navbar user={login} data={data_navbar[1]} />
+          <TransitionGroup>
+            <CSSTransition
+              key={location.key}
+              classNames="sliding"
+              timeout={500}
+            >
+              <Routes>
+                <Route
+                  path="/"
+                  element={<HomeAdmin user={login} />}
+                />
+                <Route path="/signup" element={<AccountRegister token={token} />} />
+                <Route path="/upload" element={<Upload />} />
+              </Routes>
+            </CSSTransition>
+          </TransitionGroup>
+        </>
+      ) : (
+        <>
+          <h1 style={{ color: 'white' }}>404 NOT FOUND</h1>
+        </>
+      )}
     </>
   );
 }

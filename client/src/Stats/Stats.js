@@ -27,7 +27,7 @@ import {
   getExpiredData,
 } from '../utils/routes';
 
-export default function ({ user }) {
+export default function ({ user, token }) {
   const [month_expired, setExpired] = useState([]);
   const [forecast, setForecast] = useState([]);
   const [data2, setData2] = useState([]);
@@ -165,7 +165,7 @@ export default function ({ user }) {
           {data.map(({ value, desc }) => {
             return (
               <TabPanel key={value} value={value}>
-                <Table columns={columns} propData={desc} />
+                <Table columns={columns} propData={desc} token={token} />
               </TabPanel>
             );
           })}

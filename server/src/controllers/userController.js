@@ -1,6 +1,7 @@
 import loginService from "../services/loginService";
 import registerService from "../services/registerService"
 import createDB from "../services/createDB"
+import {createJWT, verifyToken} from '../middleware/JWTActions'
 let handleLogin = async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
@@ -10,7 +11,7 @@ let handleLogin = async (req, res) => {
             errCode: 1,
             message: "missing username or password",
             status: false 
-        })
+        }) 
     }
 
     let userData = await loginService.handleLogin(username, password);
@@ -19,7 +20,7 @@ let handleLogin = async (req, res) => {
         return res.status(200).json({
             errCode: userData.errCode,
             message: userData.errMessage,
-            userData: userData.data ? userData.data : {},
+            userData: userData.data ? createJWT(userData.data) : {},
             status: true
         });
     } else {
@@ -48,14 +49,22 @@ let createUser = async (req, res) => {
         username: req.body.username,
         password: req.body.password,
         rolebit: req.body.rolebit,
-        address: req.body.address
+        address: req.body.address,
+        token: req.body.token
     }
     let data = await createDB.createUser(dulieu)
     return res.status(200).json({data, status: true});
+}
+
+let handleVerify = async (req, res) => {
+    let data = req.body.data
+    data = verifyToken(data)
+    return res.status(200).json(data);
 }
 module.exports = {
     handleLogin: handleLogin,
     handleRegister: handleRegister,
     createUser: createUser,
-    handleUser: handleUser
+    handleUser: handleUser,
+    handleVerify: handleVerify
 }
