@@ -1,13 +1,14 @@
 import jwt from "jsonwebtoken"
 require("dotenv").config()
 
-let key = process.env.JWT_SECRET
+let key = "jeikai"
 const createJWT = (data) => {
     let payload = data;
     let token = null;
     try {
-        token = jwt.sign( payload, key, {expiresIn: '10h'})
-    } catch(e) {
+        token = jwt.sign(payload, key, { expiresIn: '10h' })
+        console.log(token)
+    } catch (e) {
         console.log(e)
     }
     return token;

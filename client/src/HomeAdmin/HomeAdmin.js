@@ -3,7 +3,18 @@ import {
   Typography,
   Select, Option
 } from "@material-tailwind/react";
-import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+  PieChart, Pie,
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 import axios from 'axios';
 import { getHistoryDataCucDangKiem } from '../utils/routes';
 import Table from '../Table/Table';
@@ -61,7 +72,23 @@ export default function HomeAdmin({ user }) {
 
   return (
     <div className="admin-home max-w-fit mx-auto">
+      <div className='charts'>
+        <div>
+          <Typography color='white' variant="h5" >Danh sách xe đã được đăng kiểm, sắp hết hạn đăng kiểm theo tháng</Typography>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart width="100%" height="100%" data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="hết hạn" fill="#8884d8" />
+              <Bar dataKey="dự báo" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
 
+        </div>
+      </div>
 
       <div className="centers flex flex-col justify-center items-center" >
         <div className="centers-header p-10">

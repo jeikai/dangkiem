@@ -1,14 +1,15 @@
 import React from 'react';
-import './Stats.scss';
 import {
   Tabs,
   TabsHeader,
   TabsBody,
   Tab,
   TabPanel,
+  Typography
 } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import {
+  PieChart, Pie,
   BarChart,
   Bar,
   Cell,
@@ -67,8 +68,8 @@ export default function ({ user, token }) {
   }
   const chartData_3 = [];
   for (let i = 0; i < 4; i++) {
-    let dubao = forecast[i*3] + forecast[i*3+ 1] + forecast[i*3 + 2];
-    let hethan = month_expired[i*3] + month_expired[i*3+ 1] + month_expired[i*3+ 2]
+    let dubao = forecast[i * 3] + forecast[i * 3 + 1] + forecast[i * 3 + 2];
+    let hethan = month_expired[i * 3] + month_expired[i * 3 + 1] + month_expired[i * 3 + 2]
     chartData_3.push({
       name: 'Quý' + (i + 1),
       'dự báo': dubao,
@@ -89,6 +90,17 @@ export default function ({ user, token }) {
       desc: data3,
     },
   ];
+
+  const dangkiem_nam = [
+    { name: 'Group A', value: 400 },
+    { name: 'Group B', value: 300 },
+    { name: 'Group C', value: 300 },
+    { name: 'Group D', value: 200 },
+  ];
+
+
+
+
   const columns = React.useMemo(
     () => [
       {
@@ -120,31 +132,70 @@ export default function ({ user, token }) {
   );
   return (
     <div className="p-10 flex flex-col items-center">
-      <div className="barchart">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart width="100%" height="100%" data={chartData_2}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="hết hạn" fill="#8884d8" />
-            <Bar dataKey="dự báo" fill="#82ca9d" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-      <div className="barchart">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart width="100%" height="100%" data={chartData_3}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="hết hạn" fill="#8884d8" />
-            <Bar dataKey="dự báo" fill="#82ca9d" />
-          </BarChart>
-        </ResponsiveContainer>
+      <div className="barcharts w-full h-fit grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div>
+          <Typography color='white' variant="h5" >Danh sách xe đã được đăng kiểm, sắp hết hạn đăng kiểm theo tháng</Typography>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart width="100%" height="100%" data={chartData_2}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="hết hạn" fill="#8884d8" />
+              <Bar dataKey="dự báo" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+
+        </div>
+        <div>
+          <Typography color='white' variant="h5" >Danh sách xe đã được đăng kiểm theo năm</Typography>
+          <ResponsiveContainer width="100%" height={250}>
+            <PieChart width="100%" height="100%">
+              <Pie
+                dataKey="value"
+                isAnimationActive={false}
+                data={dangkiem_nam}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+              />
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+
+        </div>
+        <div>
+          <Typography color='white' variant="h5" >Danh sách xe đã được đăng kiểm theo quý</Typography>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart width="100%" height="100%" data={chartData_3}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="hết hạn" fill="#8884d8" />
+              <Bar dataKey="dự báo" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div>
+          <Typography color='white' variant="h5" >Dự báo số lượng xe sẽ đăng kiểm lại, đăng kiểm mới theo tháng</Typography>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart width="100%" height="100%" data={chartData_2}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="hết hạn" fill="#8884d8" />
+              <Bar dataKey="dự báo" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
       </div>
 
       <Tabs value="html" className='w-full max-w-fit'>
