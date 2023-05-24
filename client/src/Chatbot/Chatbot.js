@@ -1,20 +1,12 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import {
-    IconButton, Card,
-    SpeedDial,
-    SpeedDialHandler,
-    SpeedDialContent,
-    SpeedDialAction,
+    Card,
     Typography,
     Button,
     CardBody,
     CardFooter,
 } from "@material-tailwind/react";
-import {
-    PlusIcon,
-    ChatBubbleBottomCenterIcon
-} from "@heroicons/react/24/outline";
+
 
 export default function Chatbot() {
     const labelProps = {
@@ -36,7 +28,7 @@ export default function Chatbot() {
                 <div>
                     <Card className="w-full max-w-[24rem] ">
                         <Typography variant="h3" color="Blue" className="p-10">
-                            Chỉnh sửa lượt đăng kiểm
+                            Trò chuyện với chatbot
                         </Typography>
                         <CardBody className="flex flex-col gap-4">
                             this is chatbot
@@ -49,23 +41,8 @@ export default function Chatbot() {
                     </Card>
                 </div>
             </dialog>
-            <div className="fixed bottom-3 right-3">
-                <SpeedDial>
-                    <SpeedDialHandler>
-                        <IconButton size="lg" className="rounded-full">
-                            <PlusIcon className="h-5 w-5 transition-transform group-hover:rotate-45" />
-                        </IconButton>
-                    </SpeedDialHandler>
-                    <SpeedDialContent>
-                        <SpeedDialAction className="relative" onClick={() => {
-                            dialogRef.current.showModal();
-                        }}>
-                            <ChatBubbleBottomCenterIcon className="h-5 w-5" />
-                            <Typography {...labelProps}>Chatbot</Typography>
-                        </SpeedDialAction>
-
-                    </SpeedDialContent>
-                </SpeedDial>
+            <div className="fixed bottom-3 right-3 z-10">
+                <Button className='rounded-full p-3' onClick={() => dialogRef.current.showModal()}>Chatbot</Button>
             </div>
         </>
 
