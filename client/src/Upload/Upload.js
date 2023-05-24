@@ -7,10 +7,19 @@ import {
   ArrowPathIcon,
   BookmarkIcon,
 } from "@heroicons/react/24/outline";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from 'axios';
 import { uploadRoute } from "../utils/routes";
 
 const Upload = () => {
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
   const [file, setFile] = useState(null);
 
   const handleFileInputChange = (e) => {
@@ -24,14 +33,15 @@ const Upload = () => {
     formData.append('file', file);
 
     try {
-      console.log("submit form");
+      // console.log("submit form");
       const response = await axios.post(uploadRoute, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      console.log(response.data); // Handle the response from the server
+      toast.success(response.data.message, toastOptions);
+      console.log(response.data.message);
+      // Handle the response from the server
     } catch (error) {
       console.error(error);
     }
@@ -50,6 +60,7 @@ const Upload = () => {
             <CloudArrowUpIcon strokeWidth={2} className="h-5 w-5" /> Upload Files
           </Button>
         )}
+        <ToastContainer />
       </form>
     </div>
   );

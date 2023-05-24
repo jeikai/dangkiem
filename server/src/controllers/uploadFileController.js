@@ -34,13 +34,13 @@ let handleUploadFile = (req, res) => {
                 registerCity: obj[i][6],
                 purpose: obj[i][7]
             }
-
-            createDB.createCar(data);
+            if (data.plateNumber !== "")
+                createDB.createCar(data);
         }
     });
 
     return res.status(200).json({
-        message: "upload file success"
+        message: "Cập nhật dữ liệu thành công"
     })
 
 }
