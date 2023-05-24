@@ -144,7 +144,7 @@ export default function ({ user, token }) {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="hết hạn" fill="#8884d8" />
+              <Bar dataKey="Sắp hết hạn" fill="#8884d8" />
               <Bar dataKey="dự báo" fill="#82ca9d" />
             </BarChart>
           </ResponsiveContainer>
@@ -178,7 +178,7 @@ export default function ({ user, token }) {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="hết hạn" fill="#8884d8" />
+              <Bar dataKey="Sắp hết hạn" fill="#8884d8" />
               <Bar dataKey="dự báo" fill="#82ca9d" />
             </BarChart>
           </ResponsiveContainer>
