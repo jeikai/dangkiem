@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import {
     Card,
     Typography,
@@ -7,10 +6,7 @@ import {
     CardBody,
     CardFooter,
 } from "@material-tailwind/react";
-import {
-    PlusIcon,
-    ChatBubbleBottomCenterIcon
-} from "@heroicons/react/24/outline";
+
 
 export default function Chatbot() {
     const labelProps = {
