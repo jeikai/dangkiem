@@ -129,7 +129,7 @@ export default function Table({ columns, propData, admin = false, token }) {
     <div>
       <div className="w-500px">
         <Transition.Root show={open} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={setOpen}>
+          <Dialog as="div" className="relative z-40" onClose={setOpen}>
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -220,7 +220,7 @@ export default function Table({ columns, propData, admin = false, token }) {
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <th
-                    className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                    className="border-b border-blue-gray-100 bg-blue-gray-50 w-auto md:p-4"
                     {...column.getHeaderProps()}
                   >
                     <Typography

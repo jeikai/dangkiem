@@ -48,11 +48,28 @@ $primary-color: #216bb4;
         color: rgb(120, 140, 185);
       }
 
+      .content p {
+
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+      }
+
       .sign {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         text-align: center;
         height: 200px;
+        padding: 1rem;
+
+        div {
+          p.font-bold {
+            font-weight: bold;
+          }
+
+          p.italic {
+            font-style: italic;
+          }
+        }
       }
     }
   }

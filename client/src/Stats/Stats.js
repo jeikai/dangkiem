@@ -5,6 +5,7 @@ import {
   TabsBody,
   Tab,
   TabPanel,
+  Carousel,
   Typography
 } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
@@ -87,6 +88,14 @@ export default function ({ user, token }) {
       amt: 2400,
     });
   }
+  const dangkiem_nam = [];
+  for (let i = 0; i < registerByYear.length; i++) {
+    dangkiem_nam.push({
+      name: registerByYear[i][0],
+      value: registerByYear[i][1],
+      amt: 2400,
+    });
+  }
   const data = [
     {
       label: 'Chưa hết hạn',
@@ -100,14 +109,7 @@ export default function ({ user, token }) {
     },
   ];
 
-  const dangkiem_nam = [];
-  for (let i = 0; i < registerByYear.length; i++) {
-    dangkiem_nam.push({
-      name: registerByYear[i][0],
-      value: registerByYear[i][1],
-      amt: 2400,
-    });
-  }
+
   const columns = React.useMemo(
     () => [
       {
@@ -135,25 +137,25 @@ export default function ({ user, token }) {
   );
 
   return (
-    <div className="p-10 flex flex-col items-center">
-      <div className="barcharts w-full h-fit grid grid-cols-1 md:grid-cols-2 gap-2">
-        <div>
-          <Typography color='white' variant="h5" >Thống kê xe sắp hết hạn và dự báo lượng xe đăng kiểm theo tháng năm {new Date().getFullYear()}</Typography>
-          <ResponsiveContainer width="100%" height={250}>
+    <div className="p-1 md:p-10 flex flex-col items-center max-w-screen-xl mx-auto">
+      <Carousel className="rounded-xl w-full h-96 bg-black/40 my-2">
+        <div className='p-1 flex flex-col justify-center items-center'>
+          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe sắp hết hạn và dự báo lượng xe đăng kiểm theo tháng năm {new Date().getFullYear()}</Typography>
+          <ResponsiveContainer width="100%" height={250} >
             <BarChart width="100%" height="100%" data={dubao_saphethan}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="Sắp hết hạn" fill="#8884d8" />
-              <Bar dataKey="dự báo" fill="#82ca9d" />
+              <Bar dataKey="Sắp hết hạn" fill="#4890F8" />
+              <Bar dataKey="dự báo" fill="#A663EA" />
             </BarChart>
           </ResponsiveContainer>
 
         </div>
-        <div>
-          <Typography color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo năm</Typography>
+        <div className='p-1 flex flex-col justify-center items-center'>
+          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo năm</Typography>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart width="100%" height="100%">
               <Pie
@@ -170,9 +172,9 @@ export default function ({ user, token }) {
             </PieChart>
           </ResponsiveContainer>
 
-        </div>
-        <div>
-          <Typography color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo quý</Typography>
+        </div >
+        <div className='p-1 flex flex-col justify-center items-center'>
+          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo quý</Typography>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart width="100%" height="100%" data={DK_quy}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -184,8 +186,8 @@ export default function ({ user, token }) {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div>
-          <Typography color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo tháng</Typography>
+        <div className='p-1 flex flex-col justify-center items-center'>
+          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo tháng</Typography>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart width="100%" height="100%" data={DK_thang}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -198,7 +200,8 @@ export default function ({ user, token }) {
           </ResponsiveContainer>
         </div>
 
-      </div>
+      </Carousel>
+
 
       <Tabs value="html" className='w-full max-w-fit'>
         <TabsHeader>
