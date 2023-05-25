@@ -9,7 +9,7 @@ import {
 } from '@material-tailwind/react';
 import './Chatbot.scss';
 import { IoMdSend } from "react-icons/io";
-const API_KEY = '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';
+const API_KEY = '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';
 const systemMessage = {
     role: 'system',
     content:
