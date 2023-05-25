@@ -1,9 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { Card, Typography, Select, Option } from '@material-tailwind/react';
+import React, { Fragment, useRef, useState } from 'react';
+import { Card, Typography } from '@material-tailwind/react';
+import { Dialog, Transition } from '@headlessui/react'
 import {
   Button,
-  CardBody,
-  CardFooter,
   Input,
 } from '@material-tailwind/react';
 import { useTable, useFilters, usePagination, useSortBy } from 'react-table';
@@ -79,6 +78,8 @@ export default function Table({ columns, propData, admin = false, token }) {
   );
 
   const [open, setOpen] = React.useState(false);
+  const cancelButtonRef = useRef(null)
+
   const [selectedRegis, setSelectedRegis] = useState(() => {
     const initialState = {};
 
@@ -90,8 +91,7 @@ export default function Table({ columns, propData, admin = false, token }) {
   });
   const handleClickRegis = (rowData) => {
     setSelectedRegis(rowData);
-
-    dialogRef.current.showModal();
+    setOpen(true)
   };
   const handleDelete = async (id) => {
     const data = await axios.delete(`${deleteRegister}/${id}`);
@@ -99,7 +99,7 @@ export default function Table({ columns, propData, admin = false, token }) {
   };
   const handleUpdate = async (id) => {
     if (handleValidation()) {
-      const data = await axios.put(`${updateRegister}/${id}`, {selectedRegis, token: token});
+      const data = await axios.put(`${updateRegister}/${id}`, { selectedRegis, token: token });
       toast.success(data.data.errMessage, toastOptions);
     }
   };
@@ -124,59 +124,94 @@ export default function Table({ columns, propData, admin = false, token }) {
     });
     console.log(selectedRegis.id);
   };
-  const dialogRef = useRef(null);
+
   return (
     <div>
       <div className="w-500px">
-        <dialog
-          ref={dialogRef}
-          className="mx-auto bg-transparent"
-        >
-          <div>
-            <Card className="w-full max-w-[24rem] ">
-              <Typography variant="h3" color="Blue" className="p-10">
-                Chỉnh sửa lượt đăng kiểm
-              </Typography>
-              <CardBody className="flex flex-col gap-4">
-                {columns.map((item) => {
-                  const key = item.Header;
-                  const value = item.accessor;
-                  return (
-                    <Input
-                      label={key}
-                      size="lg"
-                      name={value}
-                      defaultValue={selectedRegis[value]}
-                      onChange={(e) => handleChange(e)}
-                    />
-                  );
-                })}
-              </CardBody>
-              <CardFooter className="pt-0">
-                <Button
-                  variant="gradient"
-                  fullWidth
-                  onClick={() => handleUpdate(selectedRegis.id)}
-                >
-                  Sửa lượt đăng kiểm này
-                </Button>
+        <Transition.Root show={open} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={setOpen}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            </Transition.Child>
 
-                <Button
-                  variant="gradient"
-                  color="red"
-                  fullWidth
-                  className='mt-2'
-                  onClick={() => handleDelete(selectedRegis.id)}
+            <div className="fixed inset-0 z-10 overflow-y-auto">
+              <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                  enterTo="opacity-100 translate-y-0 sm:scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                  leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
-                  Xoá lượt đăng kiểm này
-                </Button>
-                <div className="flex justify-end mt-3">
-                  <Button onClick={() => dialogRef.current.close()}>Đóng</Button>
-                </div>
-              </CardFooter>
-            </Card>
-          </div>
-        </dialog>
+                  <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                      <div >
+                        <Typography variant="h3" color="blue" className="pb-10 flex justify-center">
+                          Chỉnh sửa lượt đăng kiểm
+                        </Typography>
+                        <div className="flex flex-col gap-4">
+                          {columns.map((item) => {
+                            const key = item.Header;
+                            const value = item.accessor;
+                            return (
+                              <Input
+                                label={key}
+                                size="lg"
+                                name={value}
+                                defaultValue={selectedRegis[value]}
+                                onChange={(e) => handleChange(e)}
+                              />
+                            );
+                          })}
+                        </div>
+                        <Button
+                          className='mt-10'
+                          variant="gradient"
+                          fullWidth
+                          onClick={() => handleUpdate(selectedRegis.id)}
+                        >
+                          Sửa lượt đăng kiểm này
+                        </Button>
+
+                        <Button
+                          variant="gradient"
+                          color="red"
+                          fullWidth
+                          className='mt-2'
+                          onClick={() => handleDelete(selectedRegis.id)}
+                        >
+                          Xoá lượt đăng kiểm này
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+
+                      <button
+                        type="button"
+                        className="mt-1 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                        onClick={() => setOpen(false)}
+                        ref={cancelButtonRef}
+                      >
+                        Đóng
+                      </button>
+                    </div>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition.Root>
+
       </div>
       <Card className="overflow-scroll h-full w-full">
         <table {...getTableProps()} className="w-full">
