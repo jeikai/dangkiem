@@ -11,6 +11,8 @@ import './Chatbot.scss';
 import { IoMdSend } from 'react-icons/io';
 import axios from 'axios';
 import { getChatbotData } from '../utils/routes';
+
+
 export default function Chatbot({ user }) {
   const [message_steps, setMessage] = useState({
     message_dubao: '',
@@ -22,13 +24,20 @@ export default function Chatbot({ user }) {
       const data = await axios.get(`${getChatbotData}/${user.id}`);
       setMessage({
         message_dubao: '',
-
         message_car: data.data.car,
         message_registerByMonth: '',
       });
     }
     Data();
   }, [user]);
+
+  let data_traing = [
+    ['hi', 'Chào ngày mới tốt lành'],
+    ['tên', 'gì', 'Tôi tên là Google, trợ lý của bạn'],
+    ['xe', 'đăng ký', 'bao', 'nhiêu']
+  ];
+
+
   const scrollRef = useRef();
   const [messages, setMessages] = useState([
     {
@@ -57,7 +66,6 @@ export default function Chatbot({ user }) {
     const newMessages = [...messages, newMessage];
 
     setMessages(newMessages);
-    // await processMessageToChatGPT(newMessages);
     await solveData(newMessages);
   };
   function setResult(data_before, data) {
@@ -87,10 +95,8 @@ export default function Chatbot({ user }) {
   }
   async function solveData(chatMessages) {
     let input = chatMessages[chatMessages.length - 1].message;
-    let data_traing = [
-      ['hi', 'Chào ngày mới tốt lành'],
-      ['tên', 'gì', 'Tôi tên là Google, trợ lý của bạn'],
-    ];
+    input = input.toLowerCase() 
+    console.log(input)
     let check = false;
     for (let i = 0; i < data_traing.length; i++) {
       for (let j = 0; j < data_traing[i].length; j++) {
