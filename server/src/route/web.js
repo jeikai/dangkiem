@@ -20,6 +20,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+let login = true;
+
 let initWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
   router.get("/crud", homeController.getCRUD);
@@ -57,4 +59,5 @@ let initWebRoutes = (app) => {
   return app.use("/", router);
 };
 
-module.exports = initWebRoutes;
+if (login === true)
+  module.exports = initWebRoutes;
