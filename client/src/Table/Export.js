@@ -1,7 +1,6 @@
 import React from 'react';
 
 function Print({ print, columns, propData }) {
-  console.log(columns, propData);
   return (
     <div style={{ display: 'none' }}>
       <table ref={print}>
