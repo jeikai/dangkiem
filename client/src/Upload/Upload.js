@@ -39,7 +39,12 @@ const Upload = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      toast.success(response.data.message, toastOptions);
+      if (response.data.errCode === 0) {
+        toast.success(response.data.errMessage, toastOptions);
+      } else if (response.data.errCode === 1) {
+        toast.error(response.data.errMessage, toastOptions);
+      }
+
       console.log(response.data.message);
       // Handle the response from the server
     } catch (error) {
@@ -51,7 +56,7 @@ const Upload = () => {
     <div className='max-w-7xl mx-auto'>
       <Typography variant="h1" className="text-white p-10">Upload file danh sách các xe đã đăng ký lên hệ thống</Typography>
       <Typography className="px-10 text-gray-300">
-        File phải có định dạng xlsx hoặc csv
+        File phải có định dạng csv
       </Typography>
       <form onSubmit={handleSubmit} className='flex flex-col justify-start p-10 w-80'>
         <input className="custom-file-input" type="file" onChange={handleFileInputChange} accept=".csv,.xlsx" />
