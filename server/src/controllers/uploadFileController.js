@@ -3,6 +3,12 @@ import registerService from "../services/registerService"
 import createDB from "../services/createDB"
 
 let handleUploadFile = (req, res) => {
+    if (req.file.originalname.split('.').pop() !== "csv") {
+        return res.status(200).json({
+            errCode: 1,
+            errMessage: "File không đúng định dạng"
+        })
+    }
     let path = req.file.path;
     console.log(path);
 
@@ -40,7 +46,8 @@ let handleUploadFile = (req, res) => {
     });
 
     return res.status(200).json({
-        message: "Cập nhật dữ liệu thành công"
+        errCode: 0,
+        errMessage: "Cập nhật dữ liệu thành công"
     })
 
 }

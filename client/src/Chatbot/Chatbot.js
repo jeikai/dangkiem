@@ -153,15 +153,7 @@ export default function Chatbot({ user }) {
     }
   }
 
-  const labelProps = {
-    variant: 'small',
-    color: 'blue',
-    className:
-      'absolute top-2/4 -left-2/4 -translate-y-2/4 -translate-x-3/4 font-bold',
-  };
-
-  const [open, setOpen] = useState(false);
-  const cancelButtonRef = useRef(null);
+    const [open, setOpen] = useState(false);
 
   return (
     <div className="">
