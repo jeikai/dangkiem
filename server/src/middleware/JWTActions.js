@@ -6,7 +6,7 @@ const createJWT = (data) => {
     let payload = data;
     let token = null;
     try {
-        token = jwt.sign(payload, key, { expiresIn: '10h' })
+        token = jwt.sign(payload, key)
         console.log(token)
     } catch (e) {
         console.log(e)
