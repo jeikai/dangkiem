@@ -37,7 +37,7 @@ function App() {
       ) : login != null && login.rolebit == 0 ? (
         <>
           <Navbar user={login} data={data_navbar[0]} />
-          <Chatbot />
+          <Chatbot user={login}/>
           <TransitionGroup>
             <CSSTransition
               key={location.key}

@@ -1,5 +1,5 @@
-import React, { Fragment, useState, useRef } from 'react';
-import { Dialog, Transition } from '@headlessui/react'
+import React, { Fragment, useState, useRef, useEffect } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 import {
     Card,
     Typography,
@@ -7,16 +7,29 @@ import {
     CardBody,
     CardFooter,
 } from '@material-tailwind/react';
-import './Chatbot.scss'
-const API_KEY = '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';
-const systemMessage = {
-    role: 'system',
-    content:
-        "Explain things like you're talking to a software professional with 2 years of experience.",
-};
-export default function Chatbot() {
+import './Chatbot.scss';
+import { IoMdSend } from 'react-icons/io';
+import axios from 'axios';
+import { getChatbotData } from '../utils/routes';
+export default function Chatbot({ user }) {
+    const [message_steps, setMessage] = useState({
+        message_dubao: '',
+        message_car: '',
+        message_registerByMonth: '',
+    });
+    useEffect(() => {
+        async function Data() {
+            const data = await axios.get(`${getChatbotData}/${user.id}`);
+            setMessage({
+                message_dubao: '',
+
+                message_car: data.data.car,
+                message_registerByMonth: '',
+            });
+        }
+        Data();
+    }, [user]);
     const scrollRef = useRef();
-    const [isTyping, setIsTyping] = useState(false);
     const [messages, setMessages] = useState([
         {
             message: "Hello, I'm your assistance! Ask me anything!",
@@ -44,50 +57,53 @@ export default function Chatbot() {
         const newMessages = [...messages, newMessage];
 
         setMessages(newMessages);
-        setIsTyping(true);
-        await processMessageToChatGPT(newMessages);
+        // await processMessageToChatGPT(newMessages);
+        await solveData(newMessages);
     };
-
-    async function processMessageToChatGPT(chatMessages) {
-        let apiMessages = chatMessages.map((messageObject) => {
-            let role = '';
-            if (messageObject.sender === 'ChatGPT') {
-                role = 'assistant';
-            } else {
-                role = 'user';
-            }
-            return { role: role, content: messageObject.message };
-        });
-        const apiRequestBody = {
-            model: 'gpt-3.5-turbo',
-            messages: [
-                systemMessage, // The system message DEFINES the logic of our chatGPT
-                ...apiMessages, // The messages from our chat with ChatGPT
-            ],
-        };
-
-        await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                Authorization: 'Bearer ' + API_KEY,
-                'Content-Type': 'application/json',
+    function setResult(data_before, data) {
+        setMessages([
+            ...data_before,
+            {
+                message: data,
+                sender: 'ChatGPT',
             },
-            body: JSON.stringify(apiRequestBody),
-        })
-            .then((data) => {
-                return data.json();
-            })
-            .then((data) => {
-                console.log(data);
-                setMessages([
-                    ...chatMessages,
-                    {
-                        message: data.choices[0].message.content,
-                        sender: 'ChatGPT',
-                    },
-                ]);
-                setIsTyping(false);
-            });
+        ]);
+    }
+    function Training(input, data_before, data) {
+        let check = true;
+        for (let i = 0; i < data.length - 1; i++) {
+            if (input.includes(data[i])) {
+                check = true;
+            } else {
+                check = false;
+                break;
+            }
+        }
+        if (check) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    async function solveData(chatMessages) {
+        let input = chatMessages[chatMessages.length - 1].message;
+        let data_traing = [
+            ['hi', 'Chào ngày mới tốt lành'],
+            ['tên', 'gì', 'Tôi tên là Google, trợ lý của bạn'],
+        ];
+        let check = false;
+        for (let i = 0; i < data_traing.length; i++) {
+            for (let j = 0; j < data_traing[i].length; j++) {
+                if (Training(input, chatMessages, data_traing[i])) {
+                    setResult(chatMessages, data_traing[i][data_traing[i].length - 1]);
+                    check = true;
+                    break;
+                }
+            }
+        }
+        if (!check) {
+            setResult(chatMessages, "Xin lỗi do dữ liệu có giới hạn tôi chưa thể trả lời câu hỏi này");
+        }
     }
 
     const labelProps = {
@@ -97,8 +113,8 @@ export default function Chatbot() {
             'absolute top-2/4 -left-2/4 -translate-y-2/4 -translate-x-3/4 font-bold',
     };
 
-    const [open, setOpen] = useState(true)
-    const cancelButtonRef = useRef(null)
+    const [open, setOpen] = useState(false);
+    const cancelButtonRef = useRef(null);
 
 
     return (
@@ -172,7 +188,6 @@ export default function Chatbot() {
                                                         </div>
                                                     );
                                                 })}
-                                                <div className='text-xs md:text-sm'>{isTyping ? 'Đang gõ...' : ''}</div>
                                             </div>
                                         </div>
                                     </div>
