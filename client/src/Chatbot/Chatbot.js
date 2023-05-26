@@ -106,15 +106,7 @@ export default function Chatbot({ user }) {
         }
     }
 
-    const labelProps = {
-        variant: 'small',
-        color: 'blue',
-        className:
-            'absolute top-2/4 -left-2/4 -translate-y-2/4 -translate-x-3/4 font-bold',
-    };
-
     const [open, setOpen] = useState(false);
-    const cancelButtonRef = useRef(null);
 
 
     return (
@@ -179,7 +171,7 @@ export default function Chatbot({ user }) {
                                                                     }`}
                                                             >
                                                                 <div className="flex flex-col space-y-2 text-xs md:text-sm max-w-xs mx-2 order-2 items-start">
-                                                                    <div><span className={`${message.sender == 'user' ? "px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white " : 'px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600'}`}>{message.message}</span></div>
+                                                                    <div><span className={`${message.sender == 'user' ? "px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white break-all" : 'px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600'}`}>{message.message}</span></div>
                                                                 </div>
                                                                 {message.sender != 'user' && <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" className="w-6 h-6 rounded-full order-1"></img>
                                                                 }
@@ -201,7 +193,7 @@ export default function Chatbot({ user }) {
                                                 placeholder="Nhập"
                                                 value={input}
                                                 onChange={(e) => handleChange(e)}
-                                                className="basis-3/4 w-full text-xs md:text-sm focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-200 rounded-md py-3" />
+                                                className="basis-3/4 w-full text-xs md:text-sm p-2 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-200 rounded-md py-3" />
                                             <div className="grow absolute right-0 items-center inset-y-0 flex">
                                                 <button type="button" className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-gray-600">
