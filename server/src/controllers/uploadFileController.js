@@ -1,16 +1,29 @@
 import fs from "fs"
 import registerService from "../services/registerService"
 import createDB from "../services/createDB"
+import { log } from "console"
 
 let handleUploadFile = (req, res) => {
     if (req.file.originalname.split('.').pop() !== "csv") {
         return res.status(200).json({
             errCode: 1,
-            errMessage: "File không đúng định dạng"
+            errMessage: "File không đúng định dạng csv"
         })
     }
     let path = req.file.path;
-    console.log(path);
+    // console.log(path);
+
+    let ok = true;
+    let template = [
+        'driverId',
+        'plateNumber',
+        'manufacture',
+        'model',
+        'color',
+        'registerDate',
+        'registerCity',
+        'purpose'
+    ];
 
     fs.readFile(path, function (err, data) {
 
@@ -29,26 +42,43 @@ let handleUploadFile = (req, res) => {
             console.log(obj[i]);
         }
 
-        for (let i = 1; i < obj.length; i++) {
-            let data = {
-                driverId: obj[i][0],
-                plateNumber: obj[i][1],
-                manufacture: obj[i][2],
-                model: obj[i][3],
-                color: obj[i][4],
-                registerDate: obj[i][5],
-                registerCity: obj[i][6],
-                purpose: obj[i][7]
+
+
+        if (obj[0] !== template) {
+            console.log("filr khon dung cau truc");
+            ok = false;
+            console.log(ok);
+        }
+
+
+        if (ok) {
+            for (let i = 1; i < obj.length; i++) {
+                let data = {
+                    driverId: obj[i][0],
+                    plateNumber: obj[i][1],
+                    manufacture: obj[i][2],
+                    model: obj[i][3],
+                    color: obj[i][4],
+                    registerDate: obj[i][5],
+                    registerCity: obj[i][6],
+                    purpose: obj[i][7]
+                }
+                if (data.plateNumber !== "")
+                    createDB.createCar(data);
             }
-            if (data.plateNumber !== "")
-                createDB.createCar(data);
+
+            return res.status(200).json({
+                errCode: 0,
+                errMessage: "Cập nhật dữ liệu thành công"
+            })
+
+        } else {
+            return res.status(200).json({
+                errCode: 2,
+                errMessage: "File không đúng cấu trúc"
+            })
         }
     });
-
-    return res.status(200).json({
-        errCode: 0,
-        errMessage: "Cập nhật dữ liệu thành công"
-    })
 
 }
 
