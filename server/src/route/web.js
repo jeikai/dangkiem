@@ -4,7 +4,7 @@ import userController from "../controllers/userController";
 import registerFormController from "../controllers/registerFormCotroller";
 import statsController from "../controllers/statsController";
 import uploadFileController from "../controllers/uploadFileController";
-
+import chatbotController from "../controllers/chatbotController"
 const multer = require("multer");
 import path from "path";
 
@@ -56,6 +56,7 @@ let initWebRoutes = (app) => {
     registerFormController.handleGetRegisterCucDangKiem
   );
   router.post("/api/create-user", userController.createUser);
+  router.get("/api/chatbot/:id", chatbotController.handleChat)
   return app.use("/", router);
 };
 

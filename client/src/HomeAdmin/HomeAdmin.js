@@ -5,7 +5,7 @@ import {
   Select, Option
 } from "@material-tailwind/react";
 import {
-  PieChart, Pie,
+  PieChart, Pie, Cell,
   BarChart,
   Bar,
   XAxis,
@@ -35,6 +35,7 @@ export default function HomeAdmin({ user }) {
     Data();
   }, []);
   // data bieu do tron so luong dkiem cua cac trung tam
+  const randomColors = ['#C437DD', '#DCB897', '#89F367', '#7BDACF', '#23B2D3', '#F7A985', '#C05CB6', '#76596D', '#7E4F75', '#C41638', '#C71440', '#32D3D3', '#BD0351', '#682B2A', '#41CD27', '#616584', '#225DF1', '#50B455', '#42E0F1', '#C51F6C', '#702E58', '#AA07CB', '#38FDD6', '#BF7BAD', '#F5C0D4', '#BE62CE', '#298260', '#A0420C', '#F9C13F', '#99780E']
   const chartData = data.map(item => {
     return { name: item[0].name, value: item.length - 1 }
   })
@@ -127,22 +128,32 @@ export default function HomeAdmin({ user }) {
 
       <div className="centers flex flex-col justify-center items-center" >
 
-        <div className="h-52 w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart width="100%" height="100%">
-              <Pie
-                dataKey="value"
-                isAnimationActive={false}
-                data={chartData}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                label
-              />
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+        <div className="m-4 h-56 w-full">
+          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê số lượng xe đã được đăng kiểm theo từng trung tâm</Typography>
+          <div >
+
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart width="100%" height="100%">
+                <Pie
+                  dataKey="value"
+                  isAnimationActive={false}
+                  data={chartData}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  fill="#8884d8"
+                  label
+                >
+                  {chartData.map((item, index) => {
+                    return (
+                      <Cell key={`cell-${index}`} fill={randomColors[index]} />
+                    )
+                  })}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
 
         <div className=' w-full max-w-7xl h-full m-10' >
