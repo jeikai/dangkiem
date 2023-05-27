@@ -1,5 +1,4 @@
 import express from "express";
-import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
 import registerFormController from "../controllers/registerFormCotroller";
 import statsController from "../controllers/statsController";
@@ -23,18 +22,12 @@ const upload = multer({ storage: storage });
 let login = true;
 
 let initWebRoutes = (app) => {
-  router.get("/", homeController.getHomePage);
-  router.get("/crud", homeController.getCRUD);
-  router.post("/postCrud", homeController.postCRUD);
-  router.get("/uploadfile", homeController.getUploadFilePage);
+
   router.post(
     "/api/postfile",
     upload.single("file"),
     uploadFileController.handleUploadFile
   );
-
-  router.post("/post-rud", homeController.displayPostCRUD);
-  router.get("/get-crud", homeController.displayGetCRUD);
 
   router.post("/api/login", userController.handleLogin);
   router.post("/api/verify", userController.handleVerify);
