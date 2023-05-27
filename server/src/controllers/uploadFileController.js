@@ -42,14 +42,13 @@ let handleUploadFile = (req, res) => {
             console.log(obj[i]);
         }
 
-
-
-        if (obj[0] !== template) {
-            console.log("filr khon dung cau truc");
-            ok = false;
-            console.log(ok);
+        for (let i = 0; i < 8; i++) {
+            if (template[i] !== obj[0][i]) {
+                console.log(obj[0][i]);
+                ok = false;
+                break;
+            }
         }
-
 
         if (ok) {
             for (let i = 1; i < obj.length; i++) {
