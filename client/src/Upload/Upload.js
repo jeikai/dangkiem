@@ -33,19 +33,15 @@ const Upload = () => {
     formData.append('file', file);
 
     try {
-      // console.log("submit form");
-      const response = await axios.post(uploadRoute, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(uploadRoute, formData);
+      console.log(response);
       if (response.data.errCode === 0) {
         toast.success(response.data.errMessage, toastOptions);
-      } else if (response.data.errCode === 1) {
+      } else if (response.data.errCode === 1 || response.data.errCode === 2) {
         toast.error(response.data.errMessage, toastOptions);
       }
 
-      console.log(response.data.message);
+      
       // Handle the response from the server
     } catch (error) {
       console.error(error);
@@ -58,7 +54,7 @@ const Upload = () => {
       <Typography className="px-10 text-gray-300">
         File phải có định dạng csv
       </Typography>
-      <form onSubmit={handleSubmit} className='flex flex-col justify-start p-10 w-80'>
+      <form onSubmit={handleSubmit} className='flex flex-col justify-start p-10 w-80' encType='multipart/form-data'>
         <input className="custom-file-input" type="file" onChange={handleFileInputChange} accept=".csv,.xlsx" />
         {file && (
           <Button variant="gradient" type="submit" className="flex items-center gap-3 mt-10">

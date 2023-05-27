@@ -45,7 +45,7 @@ let handleUploadFile = (req, res) => {
 
 
         if (obj[0] !== template) {
-            console.log("filr khon dung cau truc");
+            console.log("file khong dung cau truc");
             ok = false;
             console.log(ok);
         }
@@ -61,7 +61,7 @@ let handleUploadFile = (req, res) => {
                     color: obj[i][4],
                     registerDate: obj[i][5],
                     registerCity: obj[i][6],
-                    purpose: obj[i][7]
+                    purpose: obj[i][7] 
                 }
                 if (data.plateNumber !== "")
                     createDB.createCar(data);
