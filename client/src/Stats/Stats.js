@@ -6,14 +6,14 @@ import {
   Tab,
   TabPanel,
   Carousel,
-  Typography,
+  Typography
 } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import {
-  PieChart,
-  Pie,
+  PieChart, Pie,
   BarChart,
   Bar,
+  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -22,44 +22,89 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import axios from 'axios';
-import Table from '../Table/Table';
+import Table from '../Table';
 import {
   getStatsData,
   getUnexpiredData,
   getExpiredData,
-} from '../utils/routes';
+} from '../../utils/routes';
 
 export default function ({ user, token }) {
-  const [dubaoSaphethan, setDubao_Saphethan] = useState([]);
-  const [registerByMonth, setregisterByMonth] = useState([]);
-  const [registerByQuy, setregisterByQuy] = useState([]);
-  const [registerByYear, setregisterByYear] = useState([]);
+  const [month_expired, setExpired] = useState([]);
+  const [forecast, setForecast] = useState([]);
+  const [registerByMonth, setregisterByMonth] = useState([])
+  const [registerByQuy, setregisterByQuy] = useState([])
+  const [registerByYear, setregisterByYear] = useState([])
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
 
-  const fetchData = async () => {
-    const regis3 = await axios.get(`${getExpiredData}/${user.id}`);
-    setData3(regis3.data.data);
-    const regis2 = await axios.get(`${getUnexpiredData}/${user.id}`);
-    setData2(regis2.data.data);
-  }
-  // Lấy ra dữ liệu sắp hết hạn, chưa hết hạn
+  // Lấy ra dữ liệu sắp hết hạn
   useEffect(() => {
-    fetchData();
+    async function Data() {
+      const regis = await axios.get(`${getExpiredData}/${user.id}`);
+      setData3(regis.data.data);
+    }
+    Data();
+  }, [user]);
+
+  // Lấy ra dữ liệu chưa hết hạn
+  useEffect(() => {
+    async function Data() {
+      const regis = await axios.get(`${getUnexpiredData}/${user.id}`);
+      setData2(regis.data.data);
+    }
+    Data();
   }, [user]);
 
   // Lấy dữ liệu thống kê cho biểu đồ
   useEffect(() => {
     async function Data() {
       const serverdata = await axios.get(`${getStatsData}/${user.id}`);
-      console.log(serverdata);
-      setregisterByMonth(serverdata.data.registerByMonth);
-      setregisterByQuy(serverdata.data.registerByQuy);
-      setregisterByYear(serverdata.data.registerByYear);
-      setDubao_Saphethan(serverdata.data.dubao_saphethan);
+      setregisterByMonth(serverdata.data.registerByMonth)
+      setregisterByQuy(serverdata.data.registerByQuy)
+      setregisterByYear(serverdata.data.registerByYear)
+      setForecast(serverdata.data.forecast);
+      setExpired(serverdata.data.month_expired);
     }
     Data();
   }, [user]);
+  //Set giá trị mảng 1 chiều cho biểu đồ dự báo và sắp hết hạn
+  const dubao_saphethan = [];
+  for (let i = 0; i < 12; i++) {
+    dubao_saphethan.push({
+      name: 'Tháng' + (i + 1),
+      'dự báo': forecast[i],
+      'Sắp hết hạn': month_expired[i],
+      amt: 2400,
+    });
+  }
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo tháng
+  const DK_thang = [];
+  for (let i = 0; i < registerByMonth.length; i++) {
+    DK_thang.push({
+      name: registerByMonth[i][0],
+      'Đã đăng ký': registerByMonth[i][1],
+      amt: 2400,
+    });
+  }
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo quý
+  const DK_quy = [];
+  for (let i = 0; i < registerByQuy.length; i++) {
+    DK_quy.push({
+      name: registerByQuy[i][0],
+      'Đã đăng ký': registerByQuy[i][1],
+      amt: 2400,
+    });
+  }
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo năm
+  const dangkiem_nam = [];
+  for (let i = 0; i < registerByYear.length; i++) {
+    dangkiem_nam.push({
+      name: registerByYear[i][0],
+      value: registerByYear[i][1],
+      amt: 2400,
+    });
+  }
   const data = [
     {
       label: 'Chưa hết hạn',
@@ -72,6 +117,7 @@ export default function ({ user, token }) {
       desc: data3,
     },
   ];
+
 
   const columns = React.useMemo(
     () => [
@@ -102,13 +148,10 @@ export default function ({ user, token }) {
   return (
     <div className="p-1 md:p-10 flex flex-col items-center max-w-screen-xl mx-auto">
       <Carousel className="rounded-xl w-full h-96 bg-black/40 my-2">
-        <div className="p-1 flex flex-col justify-center items-center">
-          <Typography className="p-2 text-center" color="white" variant="h5">
-            Thống kê xe sắp hết hạn và dự báo lượng xe đăng kiểm theo tháng năm{' '}
-            {new Date().getFullYear()}
-          </Typography>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart width="100%" height="100%" data={dubaoSaphethan}>
+        <div className='p-1 flex flex-col justify-center items-center'>
+          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe sắp hết hạn và dự báo lượng xe đăng kiểm theo tháng năm {new Date().getFullYear()}</Typography>
+          <ResponsiveContainer width="100%" height={250} >
+            <BarChart width="100%" height="100%" data={dubao_saphethan}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
@@ -118,17 +161,16 @@ export default function ({ user, token }) {
               <Bar dataKey="dự báo" fill="#A663EA" />
             </BarChart>
           </ResponsiveContainer>
+
         </div>
-        <div className="p-1 flex flex-col justify-center items-center">
-          <Typography className="p-2 text-center" color="white" variant="h5">
-            Thống kê xe đã được đăng kiểm theo năm
-          </Typography>
+        <div className='p-1 flex flex-col justify-center items-center'>
+          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo năm</Typography>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart width="100%" height="100%">
               <Pie
                 dataKey="value"
                 isAnimationActive={false}
-                data={registerByYear}
+                data={dangkiem_nam}
                 cx="50%"
                 cy="50%"
                 outerRadius={80}
@@ -138,13 +180,12 @@ export default function ({ user, token }) {
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
-        </div>
-        <div className="p-1 flex flex-col justify-center items-center">
-          <Typography className="p-2 text-center" color="white" variant="h5">
-            Thống kê xe đã được đăng kiểm theo quý
-          </Typography>
+
+        </div >
+        <div className='p-1 flex flex-col justify-center items-center'>
+          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo quý</Typography>
           <ResponsiveContainer width="100%" height={250}>
-            <BarChart width="100%" height="100%" data={registerByQuy}>
+            <BarChart width="100%" height="100%" data={DK_quy}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
@@ -154,12 +195,10 @@ export default function ({ user, token }) {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div className="p-1 flex flex-col justify-center items-center">
-          <Typography className="p-2 text-center" color="white" variant="h5">
-            Thống kê xe đã được đăng kiểm theo tháng
-          </Typography>
+        <div className='p-1 flex flex-col justify-center items-center'>
+          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo tháng</Typography>
           <ResponsiveContainer width="100%" height={250}>
-            <BarChart width="100%" height="100%" data={registerByMonth}>
+            <BarChart width="100%" height="100%" data={DK_thang}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
@@ -169,9 +208,11 @@ export default function ({ user, token }) {
             </BarChart>
           </ResponsiveContainer>
         </div>
+
       </Carousel>
 
-      <Tabs value="html" className="w-full max-w-fit">
+
+      <Tabs value="html" className='w-full max-w-fit'>
         <TabsHeader>
           {data.map(({ label, value }) => (
             <Tab key={value} value={value}>
@@ -189,7 +230,7 @@ export default function ({ user, token }) {
           {data.map(({ value, desc }) => {
             return (
               <TabPanel key={value} value={value}>
-                <Table columns={columns} propData={desc} token={token} fetchData={fetchData} />
+                <Table columns={columns} propData={desc} token={token} />
               </TabPanel>
             );
           })}
