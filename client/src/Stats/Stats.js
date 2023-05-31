@@ -6,11 +6,12 @@ import {
   Tab,
   TabPanel,
   Carousel,
-  Typography
+  Typography,
 } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import {
-  PieChart, Pie,
+  PieChart,
+  Pie,
   BarChart,
   Bar,
   Cell,
@@ -29,7 +30,7 @@ import {
   getExpiredData,
 } from '../utils/routes';
 
-export default function ({ user, token }) {
+export default function({ user, token }) {
   const [dubaoSaphethan, setDubao_Saphethan] = useState([]);
   const [registerByMonth, setregisterByMonth] = useState([]);
   const [registerByQuy, setregisterByQuy] = useState([]);
@@ -56,16 +57,16 @@ export default function ({ user, token }) {
   }, [user]);
 
   // Lấy dữ liệu thống kê cho biểu đồ
+  const fetchData = async () => {
+    const serverdata = await axios.get(`${getStatsData}/${user.id}`);
+    console.log(serverdata);
+    setregisterByMonth(serverdata.data.registerByMonth);
+    setregisterByQuy(serverdata.data.registerByQuy);
+    setregisterByYear(serverdata.data.registerByYear);
+    setDubao_Saphethan(serverdata.data.dubao_saphethan);
+  };
   useEffect(() => {
-    async function Data() {
-      const serverdata = await axios.get(`${getStatsData}/${user.id}`);
-      console.log(serverdata);
-      setregisterByMonth(serverdata.data.registerByMonth);
-      setregisterByQuy(serverdata.data.registerByQuy);
-      setregisterByYear(serverdata.data.registerByYear);
-      setDubao_Saphethan(serverdata.data.dubao_saphethan);
-    }
-    Data();
+    fetchData();
   }, [user]);
   const data = [
     {
@@ -79,7 +80,6 @@ export default function ({ user, token }) {
       desc: data3,
     },
   ];
-
 
   const columns = React.useMemo(
     () => [
@@ -110,9 +110,12 @@ export default function ({ user, token }) {
   return (
     <div className="p-1 md:p-10 flex flex-col items-center max-w-screen-xl mx-auto">
       <Carousel className="rounded-xl w-full h-96 bg-black/40 my-2">
-        <div className='p-1 flex flex-col justify-center items-center'>
-          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe sắp hết hạn và dự báo lượng xe đăng kiểm theo tháng năm {new Date().getFullYear()}</Typography>
-          <ResponsiveContainer width="100%" height={250} >
+        <div className="p-1 flex flex-col justify-center items-center">
+          <Typography className="p-2 text-center" color="white" variant="h5">
+            Thống kê xe sắp hết hạn và dự báo lượng xe đăng kiểm theo tháng năm{' '}
+            {new Date().getFullYear()}
+          </Typography>
+          <ResponsiveContainer width="100%" height={250}>
             <BarChart width="100%" height="100%" data={dubaoSaphethan}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
@@ -123,10 +126,11 @@ export default function ({ user, token }) {
               <Bar dataKey="dự báo" fill="#A663EA" />
             </BarChart>
           </ResponsiveContainer>
-
         </div>
-        <div className='p-1 flex flex-col justify-center items-center'>
-          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo năm</Typography>
+        <div className="p-1 flex flex-col justify-center items-center">
+          <Typography className="p-2 text-center" color="white" variant="h5">
+            Thống kê xe đã được đăng kiểm theo năm
+          </Typography>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart width="100%" height="100%">
               <Pie
@@ -142,10 +146,11 @@ export default function ({ user, token }) {
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
-
-        </div >
-        <div className='p-1 flex flex-col justify-center items-center'>
-          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo quý</Typography>
+        </div>
+        <div className="p-1 flex flex-col justify-center items-center">
+          <Typography className="p-2 text-center" color="white" variant="h5">
+            Thống kê xe đã được đăng kiểm theo quý
+          </Typography>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart width="100%" height="100%" data={registerByQuy}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -157,8 +162,10 @@ export default function ({ user, token }) {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div className='p-1 flex flex-col justify-center items-center'>
-          <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo tháng</Typography>
+        <div className="p-1 flex flex-col justify-center items-center">
+          <Typography className="p-2 text-center" color="white" variant="h5">
+            Thống kê xe đã được đăng kiểm theo tháng
+          </Typography>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart width="100%" height="100%" data={registerByMonth}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -170,11 +177,9 @@ export default function ({ user, token }) {
             </BarChart>
           </ResponsiveContainer>
         </div>
-
       </Carousel>
 
-
-      <Tabs value="html" className='w-full max-w-fit'>
+      <Tabs value="html" className="w-full max-w-fit">
         <TabsHeader>
           {data.map(({ label, value }) => (
             <Tab key={value} value={value}>

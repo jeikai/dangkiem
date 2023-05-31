@@ -34,7 +34,7 @@ CREATE TABLE `cars` (
   `manufacture` varchar(255) DEFAULT NULL,
   `model` varchar(255) DEFAULT NULL,
   `color` varchar(255) DEFAULT NULL,
-  `registerDate` date DEFAULT NULL,
+  `registerDate` datetime DEFAULT NULL,
   `registerCity` varchar(255) DEFAULT NULL,
   `purpose` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
@@ -383,6 +383,7 @@ CREATE TABLE `users` (
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `rolebit` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
@@ -392,12 +393,13 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `password`, `rolebit`, `address`, `createdAt`, `updatedAt`) VALUES
-(1, 'Cục đăng kiểm Việt Nam', 'cucdangkiemvn', '$2a$10$U6QY6LNxyz7F7Jythy8X1uZO6PIT4/WDA6omiHnpJiafW0i4VnoOq', '1', 'Số 80 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội.', '2023-05-15 15:28:46', '2023-05-15 15:28:46'),
-(2, 'Trung tâm đăng kiểm Hà Nội 1', 'hanoi1', '$2a$10$U6QY6LNxyz7F7Jythy8X1u6uF26ouIGL1SlwEk46TmZxxUtrur9O2', '0', 'Số 1, Lê Đức Thọ, phường Mỹ Đình 2, quận Nam Từ Liêm, Hà Nội', '2023-05-15 15:28:46', '2023-05-15 15:28:46'),
-(3, 'Trung tâm đăng kiểm Hà Nội 2', 'ttdkhanoi2', '$2a$10$U6QY6LNxyz7F7Jythy8X1uP214Gjo2TPqUcAzHQlRTRR2zrRNw0a6', '0', 'Số 10, ngõ 61, đường Nguyễn Chánh, phường Trung Hòa, quận Cầu Giấy, Hà Nội.', '2023-05-15 15:28:46', '2023-05-15 15:28:46'),
-(4, 'Trung tâm đăng kiểm thành phố Hồ Chí Minh 1', 'hcm1', '$2a$10$U6QY6LNxyz7F7Jythy8X1uKuw3KhL2haJ4YckDQqQZUFwbOCuxi9i', '0', 'Số 151 đường D1, phường 25, quận Bình Thạnh, TP. Hồ Chí Minh.', '2023-05-15 15:28:46', '2023-05-15 15:28:46'),
-(5, 'Trung tâm đăng kiểm thành phố Đà nẵng', 'ttdkdn', '$2a$10$U6QY6LNxyz7F7Jythy8X1uV7cmibtz4hszIxQP2DXr9O8cbSpyrnK', '0', 'Số 41-43 đường Duy Tân, quận Hải Châu, thành phố Đà Nẵng.', '2023-05-15 15:28:46', '2023-05-15 15:28:46');
+INSERT INTO `users` (`id`, `name`, `username`, `password`, `rolebit`, `email`, `address`, `createdAt`, `updatedAt`) VALUES
+(1, 'Cục đăng kiểm Việt Nam', 'cucdangkiemvn', '$2a$10$U6QY6LNxyz7F7Jythy8X1uZO6PIT4/WDA6omiHnpJiafW0i4VnoOq', '1', 'cucdangkiemvn@gmail.com', 'Số 80 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội.', '2023-05-31 05:27:08', '2023-05-31 05:27:08'),
+(2, 'Trung tâm đăng kiểm Hà Nội 1', 'hanoi1', '$2a$10$U6QY6LNxyz7F7Jythy8X1u6uF26ouIGL1SlwEk46TmZxxUtrur9O2', '0', 'thuyennv140103@gmail.com', 'Số 1, Lê Đức Thọ, phường Mỹ Đình 2, quận Nam Từ Liêm, Hà Nội', '2023-05-31 05:27:08', '2023-05-31 05:27:08'),
+(3, 'Trung tâm đăng kiểm Hà Nội 2', 'ttdkhanoi2', '$2a$10$U6QY6LNxyz7F7Jythy8X1uP214Gjo2TPqUcAzHQlRTRR2zrRNw0a6', '0', 'hanoi2@gmail.com', 'Số 10, ngõ 61, đường Nguyễn Chánh, phường Trung Hòa, quận Cầu Giấy, Hà Nội.', '2023-05-31 05:27:08', '2023-05-31 05:27:08'),
+(4, 'Trung tâm đăng kiểm thành phố Hồ Chí Minh 1', 'hcm1', '$2a$10$U6QY6LNxyz7F7Jythy8X1uKuw3KhL2haJ4YckDQqQZUFwbOCuxi9i', '0', 'hcm1@gmail.com', 'Số 151 đường D1, phường 25, quận Bình Thạnh, TP. Hồ Chí Minh.', '2023-05-31 05:27:08', '2023-05-31 05:27:08'),
+(5, 'Trung tâm đăng kiểm thành phố Đà nẵng', 'ttdkdn', '$2a$10$U6QY6LNxyz7F7Jythy8X1uV7cmibtz4hszIxQP2DXr9O8cbSpyrnK', '0', 'dn@gmail.com', 'Số 41-43 đường Duy Tân, quận Hải Châu, thành phố Đà Nẵng.', '2023-05-31 05:27:08', '2023-05-31 05:27:08'),
+(64, 'Trung tâm đăng kiểm Hà Nội 3', 'hanoi3', '$2a$10$DnL6PyzsT3zqxwZAdJ01SOfaQZTlV/2nxIjPINDyXEvZQh10JZle2', '0', 'hn3@gmail.com', 'hà nội', '2023-05-31 07:59:55', '2023-05-31 07:59:55');
 
 --
 -- Indexes for dumped tables
@@ -460,7 +462,7 @@ ALTER TABLE `registers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
