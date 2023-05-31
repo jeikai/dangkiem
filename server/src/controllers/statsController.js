@@ -66,7 +66,7 @@ function countAndSortOccurrencesByQuarterYear(data) {
     var year = registerDate.getFullYear();
 
     // Tạo chuỗi quý/năm
-    var quarterYear = 'Q' + quarter + '/' + year;
+    var quarterYear = "Q" + quarter + "/" + year;
 
     // Nếu quý/năm đã xuất hiện trước đó, tăng giá trị đếm lên 1
     if (counts[quarterYear]) {
@@ -82,11 +82,11 @@ function countAndSortOccurrencesByQuarterYear(data) {
   var countsArray = Object.entries(counts);
 
   // Sắp xếp mảng countsArray theo thời gian tăng dần
-  countsArray.sort(function(a, b) {
-    var quarterA = parseInt(a[0].split('/')[0].slice(1)); // Trích xuất quý từ chuỗi quý/năm
-    var yearA = parseInt(a[0].split('/')[1]); // Trích xuất năm từ chuỗi quý/năm
-    var quarterB = parseInt(b[0].split('/')[0].slice(1));
-    var yearB = parseInt(b[0].split('/')[1]);
+  countsArray.sort(function (a, b) {
+    var quarterA = parseInt(a[0].split("/")[0].slice(1)); // Trích xuất quý từ chuỗi quý/năm
+    var yearA = parseInt(a[0].split("/")[1]); // Trích xuất năm từ chuỗi quý/năm
+    var quarterB = parseInt(b[0].split("/")[0].slice(1));
+    var yearB = parseInt(b[0].split("/")[1]);
 
     // So sánh năm trước, nếu bằng nhau thì so sánh quý
     if (yearA === yearB) {
@@ -121,7 +121,7 @@ function countAndSortOccurrencesByYear(data) {
   var countsArray = Object.entries(counts);
 
   // Sắp xếp mảng countsArray theo năm tăng dần
-  countsArray.sort(function(a, b) {
+  countsArray.sort(function (a, b) {
     return parseInt(a[0]) - parseInt(b[0]);
   });
 
@@ -182,14 +182,50 @@ let handleStats = async (req, res) => {
   let occurrencesByYearMonth = countAndSortOccurrencesByYearMonth(data);
   let occurrencesByQuarterYear = countAndSortOccurrencesByQuarterYear(data);
   let occurrencesByYear = countAndSortOccurrencesByYear(data);
+  const dubao_saphethan = [];
+  //Set giá trị mảng 1 chiều cho biểu đồ dự báo và sắp hết hạn
+  for (let i = 0; i < 12; i++) {
+    dubao_saphethan.push({
+      name: "Tháng" + (i + 1),
+      "dự báo": forecast[i],
+      "Sắp hết hạn": month_expired[i],
+      amt: 2400,
+    });
+  }
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo tháng
+  const DK_thang = [];
+  for (let i = 0; i < occurrencesByYearMonth.length; i++) {
+    DK_thang.push({
+      name: occurrencesByYearMonth[i][0],
+      "Đã đăng ký": occurrencesByYearMonth[i][1],
+      amt: 2400,
+    });
+  }
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo quý
+  const DK_quy = [];
+  for (let i = 0; i < occurrencesByQuarterYear.length; i++) {
+    DK_quy.push({
+      name: occurrencesByQuarterYear[i][0],
+      "Đã đăng ký": occurrencesByQuarterYear[i][1],
+      amt: 2400,
+    });
+  }
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo năm
+  const dangkiem_nam = [];
+  for (let i = 0; i < occurrencesByYear.length; i++) {
+    dangkiem_nam.push({
+      name: occurrencesByYear[i][0],
+      value: occurrencesByYear[i][1],
+      amt: 2400,
+    });
+  }
   return res.status(200).json({
     errCode: 0,
     errMessage: "get data success",
-    month_expired: month_expired,
-    forecast: forecast,
-    registerByMonth: occurrencesByYearMonth,
-    registerByQuy: occurrencesByQuarterYear,
-    registerByYear: occurrencesByYear
+    dubao_saphethan: dubao_saphethan,
+    registerByMonth: DK_thang,
+    registerByQuy: DK_quy,
+    registerByYear: dangkiem_nam,
   });
 };
 //Trả về dữ liệu đăng kiểm sắp hết hạn
