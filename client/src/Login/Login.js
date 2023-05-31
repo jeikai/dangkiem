@@ -20,6 +20,7 @@ export default function Login() {
     username: "",
     password: ""
   })
+  // Cài đặt cho thông báo
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -28,10 +29,13 @@ export default function Login() {
     theme: "dark",
   };
   const navigate = useNavigate()
+
+  //Hàm thay đổi giá trị theo input từ bàn phím
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
     console.log(values)
   }
+  // Hàm validate người dùng
   const handleValidation = () => {
     const { username, password } = values
     if (!username || !password) {
@@ -40,6 +44,7 @@ export default function Login() {
     }
     return true
   }
+  // Hàm submit khi người dùng bấm đăng nhập
   const handleSubmit = async (event) => {
     event.preventDefault()
     if (handleValidation()) {
@@ -49,7 +54,7 @@ export default function Login() {
         password: password
       }
       const data = await axios.post(loginRoute, user)
-      // console.log(data.data)
+      // Nếu sai sẽ báo lỗi. Ngược lại thành công dữ liệu đó sẽ được lưu dưới dạng JWT vào localStorage
       if (data.data.status == false) {
         toast.error(data.data.message, toastOptions);
       } else {
@@ -63,6 +68,7 @@ export default function Login() {
     }
   }
 
+  // Mã giao diện
   return (
     <div className="flex h-screen w-full items-center mt-12" shadow={true}>
       <Card className="w-96 mx-auto flex justify-center align-center" >

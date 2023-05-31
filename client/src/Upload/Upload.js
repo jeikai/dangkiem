@@ -13,6 +13,7 @@ import axios from 'axios';
 import { uploadRoute } from "../utils/routes";
 
 const Upload = () => {
+  //Setting cho thông báo
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -20,12 +21,13 @@ const Upload = () => {
     draggable: true,
     theme: "dark",
   };
+  //Khởi tạo giá trị cho file là null
   const [file, setFile] = useState(null);
-
+  //Hàm thay đổi giá trị
   const handleFileInputChange = (e) => {
     setFile(e.target.files[0]);
   };
-
+  //Hàm submit khi người dùng ấn upload
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -41,13 +43,11 @@ const Upload = () => {
         toast.error(response.data.errMessage, toastOptions);
       }
 
-      
-      // Handle the response from the server
     } catch (error) {
       console.error(error);
     }
   };
-
+  //Mã giao diện
   return (
     <div className='max-w-7xl mx-auto'>
       <Typography variant="h1" className="text-white p-10">Upload file danh sách các xe đã đăng ký lên hệ thống</Typography>

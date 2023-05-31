@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createUser, userRoute } from '../utils/routes';
 export default function ({token}) {
   const [check, setCheck] = useState()
+
+  // Setting cài đặt dành cho toast thông báo khi bắt sự kiện
   const toastOptions = {
     position: 'bottom-right',
     autoClose: 5000,
@@ -21,16 +23,23 @@ export default function ({token}) {
     repass: '',
     address: '',
   });
+
+  //Hàm thay đổi giá trị mỗi khi có input từ bàn phím
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
     console.log(data);
   };
+
+  //Hàm check xem username đã tồn tại hay chưa
   const handleOnblur = async (e) => {
     e.preventDefault();
     let value = e.target.value;
+
+    //Call API
     let res = await axios.post(userRoute, {
       username: value
     })
+    //Nếu như username đã tồn tại sẽ thông báo lỗi cho người dùng. Ngược lại set check = true
     if (res.data.errCode == 1) {
       setCheck(false)
       toast.error("Tên đăng nhập đã tồn tại", toastOptions)
@@ -38,6 +47,8 @@ export default function ({token}) {
       setCheck(true)
     }
   }
+
+  //Hàm validate giá trị
   const handleValidation = () => {
     const { center, username, password, repass, address } = data
     if (!center || !username || !password || !repass || !address) {
@@ -53,6 +64,8 @@ export default function ({token}) {
     }
     return true
   }
+
+  //Hàm submit khi người dùng ấn tạo tài khoản
   const handleSubmit = async (e) => {
     e.preventDefault()
     const { center, username, password, address } = data
@@ -68,6 +81,8 @@ export default function ({token}) {
       });
     }
   };
+
+  //Mã giao diện
   return (
     <div className="account-register">
       <div className="register">

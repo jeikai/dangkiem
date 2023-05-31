@@ -27,6 +27,8 @@ let initWebRoutes = (app) => {
   router.get("/crud", homeController.getCRUD);
   router.post("/postCrud", homeController.postCRUD);
   router.get("/uploadfile", homeController.getUploadFilePage);
+
+  //Upload file
   router.post(
     "/api/postfile",
     upload.single("file"),
@@ -35,27 +37,38 @@ let initWebRoutes = (app) => {
 
   router.post("/post-rud", homeController.displayPostCRUD);
   router.get("/get-crud", homeController.displayGetCRUD);
-
+  
+  //Login
   router.post("/api/login", userController.handleLogin);
+  //Verify token
   router.post("/api/verify", userController.handleVerify);
+
   router.post("/api/form", userController.handleRegister);
   router.post("/api/user", userController.handleUser);
+  //Đăng kiểm xe
   router.post("/api/create-register", registerFormController.createRegister);
+  //Xoá đăng kiểm
   router.delete(
     "/api/delete-register/:id",
     registerFormController.deleteRegister
   );
+  //Update đăng kiểm
   router.put("/api/update-register/:id", registerFormController.updateRegister);
-
+  // DỮ liệu thống kê
   router.get("/api/stats/:id", statsController.handleStats);
+  // Hết hạn và chưa hết hạn cho trung tâm đăng kiểm
   router.get("/api/unexpired/:id", statsController.handleGetUnexpiredData);
   router.get("/api/expired/:id", statsController.handleGetExpiredData);
+  // Dữ liệu thống kê cho trang chủ trung tâm đăng kiểm
   router.get("/api/history/:id", registerFormController.handleGetRegister);
+  //Dữ liệu theo từng trung tâm cho cục
   router.get(
     "/api/historyCucdangkiem",
     registerFormController.handleGetRegisterCucDangKiem
   );
+  //Đăng ký trung tâm đăng kiểm
   router.post("/api/create-user", userController.createUser);
+  //DÙng cho chatbot
   router.get("/api/chatbot/:id", chatbotController.handleChat)
   return app.use("/", router);
 };

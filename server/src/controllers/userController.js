@@ -2,6 +2,8 @@ import loginService from "../services/loginService";
 import registerService from "../services/registerService"
 import createDB from "../services/createDB"
 import {createJWT, verifyToken} from '../middleware/JWTActions'
+
+//Hàm login và tạo JWT
 let handleLogin = async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
@@ -31,7 +33,7 @@ let handleLogin = async (req, res) => {
         });
     }
 }
-
+// Check xem biển số xe có tồn tại hay không
 let handleRegister = async (req, res) => {
     let plateNumber = req.body.plateNumber;
     let data = await registerService.handleRegister(plateNumber);
@@ -43,6 +45,7 @@ let handleUser = async (req, res) => {
     let data = await createDB.handleUser(username);
     return res.status(200).json(data);
 }
+//Đăng ký trung tâm đăng kiểm
 let createUser = async (req, res) => {
     let dulieu = {
         name: req.body.name,
@@ -55,7 +58,7 @@ let createUser = async (req, res) => {
     let data = await createDB.createUser(dulieu)
     return res.status(200).json({data, status: true});
 }
-
+//Hàm verify token
 let handleVerify = async (req, res) => {
     let data = req.body.data
     data = verifyToken(data)

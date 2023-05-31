@@ -16,10 +16,13 @@ import axios from 'axios';
 import { verifyRoute } from './utils/routes';
 import Chatbot from './Chatbot/Chatbot'
 function App() {
+  //Lấy ra token từ localStorage
   const [token, setToken] = useState({
     user: localStorage.getItem('user'),
   });
+  
   const location = useLocation();
+  //Decode token đó để lấy dữ liệu truyền cho các trang
   const [login, setLogin] = useState()
   useEffect(() => {
     async function Data() {
@@ -28,6 +31,7 @@ function App() {
     }
     Data()
   }, [token])
+  //Mã giao diện
   return (
     <>
       {login == null ? (

@@ -30,7 +30,6 @@ export default function HomeAdmin({ user }) {
       const regis = await axios.get(getHistoryDataCucDangKiem);
       console.log(regis.data.data);
       setData(regis.data.data);
-      // setTableData(regis.data.data[0].slice(1));
     }
     Data();
   }, []);
@@ -45,7 +44,7 @@ export default function HomeAdmin({ user }) {
   const [registerByMonth, setregisterByMonth] = useState([])
   const [registerByQuy, setregisterByQuy] = useState([])
   const [registerByYear, setregisterByYear] = useState([])
-  //----------------------------
+  //Hàm set giá trị cho biểu đồ của từng trung tâm
   const setSelectedItem = (value) => {
     setSelected(value);
     async function Data() {
@@ -58,7 +57,7 @@ export default function HomeAdmin({ user }) {
     }
     Data();
   }
-
+  //Set giá trị mảng 1 chiều cho biểu đồ dự báo
   const dubao_saphethan = [];
   for (let i = 0; i < 12; i++) {
     dubao_saphethan.push({
@@ -68,6 +67,7 @@ export default function HomeAdmin({ user }) {
       amt: 2400,
     });
   }
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo tháng
   const DK_thang = [];
   for (let i = 0; i < registerByMonth.length; i++) {
     DK_thang.push({
@@ -76,6 +76,7 @@ export default function HomeAdmin({ user }) {
       amt: 2400,
     });
   }
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo quý
   const DK_quy = [];
   for (let i = 0; i < registerByQuy.length; i++) {
     DK_quy.push({
@@ -84,6 +85,7 @@ export default function HomeAdmin({ user }) {
       amt: 2400,
     });
   }
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo năm
   const dangkiem_nam = [];
   for (let i = 0; i < registerByYear.length; i++) {
     dangkiem_nam.push({
@@ -95,10 +97,6 @@ export default function HomeAdmin({ user }) {
 
   const columns = React.useMemo(
     () => [
-      // {
-      //   Header: "ID",
-      //   accessor: "carId",
-      // },
       {
         Header: "Ngày đăng kiểm",
         accessor: "registerDate", // accessor is the "key" in the data
@@ -122,7 +120,7 @@ export default function HomeAdmin({ user }) {
     ],
     []
   )
-  console.log(chartData)
+  // Mã giao diện
   return (
     <div className="admin-home max-w-fit mx-auto">
 

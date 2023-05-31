@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default function Form({ user, token }) {
   const [check, setCheck] = useState();
+  // Setting cho thông báo
   const toastOptions = {
     position: 'bottom-right',
     autoClose: 5000,
@@ -22,6 +23,8 @@ export default function Form({ user, token }) {
     theme: 'light',
   };
   const componentPDF = useRef();
+
+  // Khởi tạo giá trị ban đầu cho Form nhập
   const [data, setData] = useState({
     plateNumber: '',
     owner: '',
@@ -34,10 +37,14 @@ export default function Form({ user, token }) {
     useage: '',
     inspectionPlace: '',
   });
+
+  // Hàm thay đổi theo input nhập từ bàn phím
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
     console.log(data);
   };
+
+  // Khi người dùng ấn tìm kiếm sẽ check xem biển số xe có tồn tại hay chưa và tự động điền
   let handleOnblur = async (e) => {
     e.preventDefault();
     let value = document.getElementById("plateNumber").value;
@@ -52,6 +59,7 @@ export default function Form({ user, token }) {
     }
 
     let formIfo = data.data.data;
+    // Nếu thành công sẽ tự động diền
     if (data.data.errCode === 0) {
       setData({
         plateNumber: value,
@@ -70,6 +78,8 @@ export default function Form({ user, token }) {
   const generatePDF = useReactToPrint({
     content: () => componentPDF.current,
   });
+
+  // Hàm validate khi người dùng submit
   const handleValidation = (
     owner,
     registrationDate,
@@ -100,10 +110,11 @@ export default function Form({ user, token }) {
     }
     return true;
   };
+
+  // Hàm submit
   let handleSubmit = async (e) => {
     e.preventDefault();
     let plateNumber = data.plateNumber;
-    // ten trung tam dang kiem
     let name = data.inspectionPlace;
     let registrationDate = data.registrationDate;
     let expirationDate = data.expirationDate;
@@ -137,6 +148,7 @@ export default function Form({ user, token }) {
     }
   };
 
+  //Mã giao diện
   return (
     <>
       <Card color="transparent" shadow={false} className="m-10">

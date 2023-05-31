@@ -12,11 +12,14 @@ import axios from 'axios';
 import { getChatbotData } from '../utils/routes';
 
 export default function Chatbot({ user }) {
+  // Khởi tạo nội dung tin nhắn
   const [message_steps, setMessage] = useState({
     message_dubao: '',
     message_car: '',
     message_registerByMonth: '',
   });
+
+  // Lấy nội dung tin nhắn từ database
   useEffect(() => {
     async function Data() {
       const data = await axios.get(`${getChatbotData}/${user.id}`);
@@ -28,6 +31,8 @@ export default function Chatbot({ user }) {
     }
     Data();
   }, [user]);
+
+  // Tập dữ liệu để training cho bot
   let data_traing = [
     ['hi'],
     ['tên', 'gì'],
@@ -55,6 +60,8 @@ export default function Chatbot({ user }) {
     ['mua', 'bảo', 'hiểm', 'trước', 'đăng', 'kiểm'],
     ['đăng', 'kiểm', 'giấy', 'tờ', 'tùy', 'thân'],
   ];
+
+  // Tập câu trả lời tương ứng với tập dữ liệu trên
   let data_answer = [
     'Chào bạn, chúc bạn ngày mới tốt lành. Tôi có thể giúp gì cho bạn?',
     'Tôi là Jeikai, liệu tôi có thể giúp gì cho bạn?',
@@ -83,6 +90,8 @@ export default function Chatbot({ user }) {
     'Khi đi đăng kiểm xe, bạn cần mang theo giấy tờ tùy thuộc như giấy đăng ký xe, giấy phép lái xe, giấy chứng nhận bảo hiểm và các giấy tờ liên quan',
   ];
   const scrollRef = useRef();
+
+  //Tin nhắn mở đầu
   const [messages, setMessages] = useState([
     {
       message: 'Xin chào, tôi là trợ lý của bạn. Tôi có thể giúp gì cho bạn?',
@@ -90,10 +99,16 @@ export default function Chatbot({ user }) {
       sender: 'ChatGPT',
     },
   ]);
+
+  //Khởi tạo nội dung người nhập
   const [input, setInput] = useState('');
+
+  //Hàm thay đổi theo nội dung nhập
   const handleChange = (e) => {
     setInput(e.target.value);
   };
+
+  //Hàm gửi kết quả lên khi người dùng nhấn Enter
   const handleSubmit = (e) => {
     e.preventDefault();
     handleSend(input);
@@ -101,6 +116,8 @@ export default function Chatbot({ user }) {
       setInput('');
     }
   };
+
+  //Hàm xử lí và trả về kết quả
   const handleSend = async (message) => {
     const newMessage = {
       message,
@@ -110,9 +127,10 @@ export default function Chatbot({ user }) {
     const newMessages = [...messages, newMessage];
 
     setMessages(newMessages);
-    // await processMessageToChatGPT(newMessages);
     await solveData(newMessages);
   };
+
+  // Hàm lưu lại kết quả và gán vào đoạn hội thoại đang có
   function setResult(data_before, data) {
     setMessages([
       ...data_before,
@@ -122,6 +140,8 @@ export default function Chatbot({ user }) {
       },
     ]);
   }
+
+  //Hàm training cho bot sẽ check xem có trùng khớp với tập dữ liệu trên hay không
   function Training(input, data_before, data) {
     let check = false;
     for (let i = 0; i < data.length; i++) {
@@ -135,6 +155,8 @@ export default function Chatbot({ user }) {
       return true;
     }
   }
+
+  // Hàm xử lí và trả về kết quả
   async function solveData(chatMessages) {
     let input = chatMessages[chatMessages.length - 1].message;
     input = input.toLowerCase();
@@ -153,8 +175,9 @@ export default function Chatbot({ user }) {
     }
   }
 
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
+  // Mã giao diện
   return (
     <div className="">
       <Transition.Root show={open} as={Fragment}>

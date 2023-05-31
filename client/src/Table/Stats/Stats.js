@@ -22,12 +22,12 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import axios from 'axios';
-import Table from '../Table/Table';
+import Table from '../Table';
 import {
   getStatsData,
   getUnexpiredData,
   getExpiredData,
-} from '../utils/routes';
+} from '../../utils/routes';
 
 export default function ({ user, token }) {
   const [month_expired, setExpired] = useState([]);
@@ -37,6 +37,8 @@ export default function ({ user, token }) {
   const [registerByYear, setregisterByYear] = useState([])
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
+
+  // Lấy ra dữ liệu sắp hết hạn
   useEffect(() => {
     async function Data() {
       const regis = await axios.get(`${getExpiredData}/${user.id}`);
@@ -44,6 +46,8 @@ export default function ({ user, token }) {
     }
     Data();
   }, [user]);
+
+  // Lấy ra dữ liệu chưa hết hạn
   useEffect(() => {
     async function Data() {
       const regis = await axios.get(`${getUnexpiredData}/${user.id}`);
@@ -51,6 +55,8 @@ export default function ({ user, token }) {
     }
     Data();
   }, [user]);
+
+  // Lấy dữ liệu thống kê cho biểu đồ
   useEffect(() => {
     async function Data() {
       const serverdata = await axios.get(`${getStatsData}/${user.id}`);
@@ -62,7 +68,7 @@ export default function ({ user, token }) {
     }
     Data();
   }, [user]);
-
+  //Set giá trị mảng 1 chiều cho biểu đồ dự báo và sắp hết hạn
   const dubao_saphethan = [];
   for (let i = 0; i < 12; i++) {
     dubao_saphethan.push({
@@ -72,6 +78,7 @@ export default function ({ user, token }) {
       amt: 2400,
     });
   }
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo tháng
   const DK_thang = [];
   for (let i = 0; i < registerByMonth.length; i++) {
     DK_thang.push({
@@ -80,6 +87,7 @@ export default function ({ user, token }) {
       amt: 2400,
     });
   }
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo quý
   const DK_quy = [];
   for (let i = 0; i < registerByQuy.length; i++) {
     DK_quy.push({
@@ -88,6 +96,7 @@ export default function ({ user, token }) {
       amt: 2400,
     });
   }
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo năm
   const dangkiem_nam = [];
   for (let i = 0; i < registerByYear.length; i++) {
     dangkiem_nam.push({
@@ -135,7 +144,7 @@ export default function ({ user, token }) {
     ],
     []
   );
-
+  // Mã giao diện
   return (
     <div className="p-1 md:p-10 flex flex-col items-center max-w-screen-xl mx-auto">
       <Carousel className="rounded-xl w-full h-96 bg-black/40 my-2">

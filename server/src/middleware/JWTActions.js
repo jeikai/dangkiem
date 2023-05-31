@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken"
 require("dotenv").config()
 
 let key = "jeikai"
+//Tạo ra JWT
 const createJWT = (data) => {
     let payload = data;
     let token = null;
@@ -13,7 +14,7 @@ const createJWT = (data) => {
     }
     return token;
 }
-
+//Hàm verify Token và decode chúng ra
 const verifyToken = (token) => {
     let data = null;
     try {
