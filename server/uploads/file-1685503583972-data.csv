@@ -1,0 +1,7 @@
+<<<<<<< HEAD
+driverId,plateNumber,manufacture,model,color,registerDate,registerCity,purpose
+14,JKL-9780,Toyota,RAV-5,red,1/14/2020,Ha Noi,personal
+=======
+driverId,plateNumber,manufacture,model,color,registerCity,purpose
+13,JKL-5678,Toyota,RAV-5,red,Ha Noi,personal
+>>>>>>> a758a3dcbc63b923ca4d37c8ecbd1e3e93cdd7ef

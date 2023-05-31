@@ -20,7 +20,7 @@ function App() {
   const [token, setToken] = useState({
     user: localStorage.getItem('user'),
   });
-  
+
   const location = useLocation();
   //Decode token đó để lấy dữ liệu truyền cho các trang
   const [login, setLogin] = useState()
@@ -41,7 +41,7 @@ function App() {
       ) : login != null && login.rolebit == 0 ? (
         <>
           <Navbar user={login} data={data_navbar[0]} />
-          <Chatbot user={login}/>
+          <Chatbot user={login} />
           <TransitionGroup>
             <CSSTransition
               key={location.key}

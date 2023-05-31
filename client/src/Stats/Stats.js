@@ -22,12 +22,12 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import axios from 'axios';
-import Table from '../Table';
+import Table from '../Table/Table';
 import {
   getStatsData,
   getUnexpiredData,
   getExpiredData,
-} from '../../utils/routes';
+} from '../utils/routes';
 
 export default function ({ user, token }) {
   const [month_expired, setExpired] = useState([]);
@@ -38,38 +38,70 @@ export default function ({ user, token }) {
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
 
-  // Lấy ra dữ liệu sắp hết hạn
-  useEffect(() => {
-    async function Data() {
-      const regis = await axios.get(`${getExpiredData}/${user.id}`);
-      setData3(regis.data.data);
-    }
-    Data();
-  }, [user]);
-
-  // Lấy ra dữ liệu chưa hết hạn
-  useEffect(() => {
-    async function Data() {
-      const regis = await axios.get(`${getUnexpiredData}/${user.id}`);
-      setData2(regis.data.data);
-    }
-    Data();
-  }, [user]);
-
-  // Lấy dữ liệu thống kê cho biểu đồ
-  useEffect(() => {
-    async function Data() {
-      const serverdata = await axios.get(`${getStatsData}/${user.id}`);
-      setregisterByMonth(serverdata.data.registerByMonth)
-      setregisterByQuy(serverdata.data.registerByQuy)
-      setregisterByYear(serverdata.data.registerByYear)
-      setForecast(serverdata.data.forecast);
-      setExpired(serverdata.data.month_expired);
-    }
-    Data();
-  }, [user]);
   //Set giá trị mảng 1 chiều cho biểu đồ dự báo và sắp hết hạn
   const dubao_saphethan = [];
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo tháng
+  const DK_thang = [];
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo quý
+  const DK_quy = [];
+  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo năm
+  const dangkiem_nam = [];
+
+
+  // Lấy ra dữ liệu từ server
+  const fetchData = async () => {
+    // Lấy ra dữ liệu sắp hết hạn và chưa hết hạn
+    const regis3 = await axios.get(`${getExpiredData}/${user.id}`);
+    setData3(regis3.data.data);
+    const regis2 = await axios.get(`${getUnexpiredData}/${user.id}`);
+    setData2(regis2.data.data);
+
+    // Lấy dữ liệu thống kê cho biểu đồ
+    const serverdata = await axios.get(`${getStatsData}/${user.id}`);
+    setregisterByMonth(serverdata.data.registerByMonth)
+    setregisterByQuy(serverdata.data.registerByQuy)
+    setregisterByYear(serverdata.data.registerByYear)
+    setForecast(serverdata.data.forecast);
+    setExpired(serverdata.data.month_expired);
+
+    //update dữ liệu cho biểu đồ
+    for (let i = 0; i < 12; i++) {
+      dubao_saphethan.push({
+        name: 'Tháng' + (i + 1),
+        'dự báo': forecast[i],
+        'Sắp hết hạn': month_expired[i],
+        amt: 2400,
+      });
+    }
+    for (let i = 0; i < registerByMonth.length; i++) {
+      DK_thang.push({
+        name: registerByMonth[i][0],
+        'Đã đăng ký': registerByMonth[i][1],
+        amt: 2400,
+      });
+    }
+    for (let i = 0; i < registerByQuy.length; i++) {
+      DK_quy.push({
+        name: registerByQuy[i][0],
+        'Đã đăng ký': registerByQuy[i][1],
+        amt: 2400,
+      });
+    }
+    for (let i = 0; i < registerByYear.length; i++) {
+      dangkiem_nam.push({
+        name: registerByYear[i][0],
+        value: registerByYear[i][1],
+        amt: 2400,
+      });
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [user]);
+
+
+  // Hàm update dữ liệu cho biểu đồ
   for (let i = 0; i < 12; i++) {
     dubao_saphethan.push({
       name: 'Tháng' + (i + 1),
@@ -78,8 +110,6 @@ export default function ({ user, token }) {
       amt: 2400,
     });
   }
-  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo tháng
-  const DK_thang = [];
   for (let i = 0; i < registerByMonth.length; i++) {
     DK_thang.push({
       name: registerByMonth[i][0],
@@ -87,8 +117,6 @@ export default function ({ user, token }) {
       amt: 2400,
     });
   }
-  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo quý
-  const DK_quy = [];
   for (let i = 0; i < registerByQuy.length; i++) {
     DK_quy.push({
       name: registerByQuy[i][0],
@@ -96,8 +124,6 @@ export default function ({ user, token }) {
       amt: 2400,
     });
   }
-  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo năm
-  const dangkiem_nam = [];
   for (let i = 0; i < registerByYear.length; i++) {
     dangkiem_nam.push({
       name: registerByYear[i][0],
@@ -105,6 +131,19 @@ export default function ({ user, token }) {
       amt: 2400,
     });
   }
+  // // Lấy dữ liệu thống kê cho biểu đồ
+  // useEffect(() => {
+  //   async function Data() {
+  //     const serverdata = await axios.get(`${getStatsData}/${user.id}`);
+  //     setregisterByMonth(serverdata.data.registerByMonth)
+  //     setregisterByQuy(serverdata.data.registerByQuy)
+  //     setregisterByYear(serverdata.data.registerByYear)
+  //     setForecast(serverdata.data.forecast);
+  //     setExpired(serverdata.data.month_expired);
+  //     chartDataUpdate();
+  //   }
+  //   Data();
+  // }, [user]);
   const data = [
     {
       label: 'Chưa hết hạn',
@@ -118,28 +157,32 @@ export default function ({ user, token }) {
     },
   ];
 
-
   const columns = React.useMemo(
     () => [
       {
         Header: 'Chủ sở hữu',
         accessor: 'driverName',
+        editable: false,
       },
       {
         Header: 'Số điện thoại',
         accessor: 'phoneNumber',
+        editable: false,
       },
       {
         Header: 'Biển số xe',
         accessor: 'plateNumber',
+        editable: false,
       },
       {
         Header: 'Ngày đăng kiểm',
         accessor: 'registerDate',
+        editable: true,
       },
       {
         Header: 'Ngày hết hạn',
         accessor: 'expireDate',
+        editable: true,
       },
     ],
     []
@@ -212,7 +255,7 @@ export default function ({ user, token }) {
       </Carousel>
 
 
-      <Tabs value="html" className='w-full max-w-fit'>
+      <Tabs value="html" className='w-full max-w-fit z-0'>
         <TabsHeader>
           {data.map(({ label, value }) => (
             <Tab key={value} value={value}>
@@ -230,7 +273,7 @@ export default function ({ user, token }) {
           {data.map(({ value, desc }) => {
             return (
               <TabPanel key={value} value={value}>
-                <Table columns={columns} propData={desc} token={token} />
+                <Table columns={columns} propData={desc} token={token} fetchData={fetchData} />
               </TabPanel>
             );
           })}

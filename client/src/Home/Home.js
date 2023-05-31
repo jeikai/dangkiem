@@ -18,6 +18,7 @@ export default function ({ user, token }) {
     sheet: 'regis-data'
   })
   const [data, setData] = useState([]);
+  //Hàm set giá trị cho table head và truy cập đến các giá trị trong bản ghi
   const fetchData = async () => {
     const regis = await axios.get(`${getHistoryData}/${user.id}`);
     console.log(regis.data.data);
@@ -26,7 +27,8 @@ export default function ({ user, token }) {
   useEffect(() => {
     fetchData();
   }, [user]);
-  //Hàm set giá trị cho table head và truy cập đến các giá trị trong bản ghi
+
+  // Định nghĩa các cột cho table
   const columns = React.useMemo(
     () => [
       {

@@ -74,6 +74,8 @@ export default function Form({ user, token }) {
       });
     }
   };
+
+  // hàm in ra đơn đăng kiểm
   const generatePDF = useReactToPrint({
     content: () => componentPDF.current,
   });
