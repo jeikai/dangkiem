@@ -7,7 +7,7 @@ import Login from './Login/Login';
 import Navbar from './Navbar/Navbar';
 import Home from './Home/Home';
 import HomeAdmin from './HomeAdmin/HomeAdmin';
-import Stats from './Table/Stats/Stats';
+import Stats from './Stats/Stats';
 import Form from './Form/Form';
 import AccountRegister from './AccountRegister/AccountRegister';
 import data_navbar from './data_navbar';

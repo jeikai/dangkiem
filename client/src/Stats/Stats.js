@@ -22,12 +22,12 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import axios from 'axios';
-import Table from '../Table';
+import Table from '../Table/Table';
 import {
   getStatsData,
   getUnexpiredData,
   getExpiredData,
-} from '../../utils/routes';
+} from '../utils/routes';
 
 export default function ({ user, token }) {
   const [month_expired, setExpired] = useState([]);
