@@ -18,7 +18,7 @@ let handleUploadFile = (req, res) => {
         'driverId',
         'plateNumber',
         'manufacture',
-        'model',
+        'model', 
         'color',
         'registerDate',
         'registerCity',
