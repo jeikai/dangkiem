@@ -30,7 +30,7 @@ import {
   getExpiredData,
 } from '../utils/routes';
 
-export default function({ user, token }) {
+export default function ({ user, token }) {
   const [dubaoSaphethan, setDubao_Saphethan] = useState([]);
   const [registerByMonth, setregisterByMonth] = useState([]);
   const [registerByQuy, setregisterByQuy] = useState([]);
@@ -38,26 +38,16 @@ export default function({ user, token }) {
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
 
-  // Lấy ra dữ liệu sắp hết hạn
-  useEffect(() => {
-    async function Data() {
-      const regis = await axios.get(`${getExpiredData}/${user.id}`);
-      setData3(regis.data.data);
-    }
-    Data();
-  }, [user]);
-
-  // Lấy ra dữ liệu chưa hết hạn
-  useEffect(() => {
-    async function Data() {
-      const regis = await axios.get(`${getUnexpiredData}/${user.id}`);
-      setData2(regis.data.data);
-    }
-    Data();
-  }, [user]);
-
-  // Lấy dữ liệu thống kê cho biểu đồ
   const fetchData = async () => {
+    // Lấy ra dữ liệu sắp hết hạn
+    const regis3 = await axios.get(`${getExpiredData}/${user.id}`);
+    setData3(regis3.data.data);
+
+    // Lấy ra dữ liệu chưa hết hạn
+    const regis2 = await axios.get(`${getUnexpiredData}/${user.id}`);
+    setData2(regis2.data.data);
+
+    // Lấy dữ liệu thống kê cho biểu đồ
     const serverdata = await axios.get(`${getStatsData}/${user.id}`);
     console.log(serverdata);
     setregisterByMonth(serverdata.data.registerByMonth);
@@ -197,7 +187,7 @@ export default function({ user, token }) {
           {data.map(({ value, desc }) => {
             return (
               <TabPanel key={value} value={value}>
-                <Table columns={columns} propData={desc} token={token} />
+                <Table columns={columns} propData={desc} token={token} fetchData={fetchData} />
               </TabPanel>
             );
           })}
