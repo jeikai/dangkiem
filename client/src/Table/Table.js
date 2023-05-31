@@ -10,7 +10,7 @@ import { deleteRegister, updateRegister } from '../utils/routes';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export default function Table({ columns, propData, admin = false, token }) {
+export default function Table({ columns, propData, admin = false, token, fetchData }) {
   const data = React.useMemo(() => propData);
   const toastOptions = {
     position: 'bottom-right',
@@ -96,11 +96,15 @@ export default function Table({ columns, propData, admin = false, token }) {
   const handleDelete = async (id) => {
     const data = await axios.delete(`${deleteRegister}/${id}`);
     toast.success('Xoá thành công', toastOptions);
+    fetchData();
+    setOpen(false);
   };
   const handleUpdate = async (id) => {
     if (handleValidation()) {
       const data = await axios.put(`${updateRegister}/${id}`, { selectedRegis, token: token });
       toast.success(data.data.errMessage, toastOptions);
+      fetchData();
+      setOpen(false);
     }
   };
   const handleValidation = () => {
@@ -163,9 +167,13 @@ export default function Table({ columns, propData, admin = false, token }) {
                           {columns.map((item) => {
                             const key = item.Header;
                             const value = item.accessor;
+                            const editable = item.editable;
                             return (
                               <Input
                                 label={key}
+                                readOnly={!editable}
+                                color={editable ? 'blue' : 'gray'}
+                                type={editable ? 'date' : 'text'}
                                 size="lg"
                                 name={value}
                                 defaultValue={selectedRegis[value]}

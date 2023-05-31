@@ -130,7 +130,7 @@ export default function HomeAdmin({ user }) {
 
         <div className="m-4 h-56 w-full">
           <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê số lượng xe đã được đăng kiểm theo từng trung tâm</Typography>
-          <div >
+          <div className='h-56'>
 
             <ResponsiveContainer width="100%" height="100%">
               <PieChart width="100%" height="100%">

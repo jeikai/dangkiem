@@ -16,13 +16,13 @@ export default function ({ user, token }) {
     sheet: 'regis-data'
   })
   const [data, setData] = useState([]);
+  const fetchData = async () => {
+    const regis = await axios.get(`${getHistoryData}/${user.id}`);
+    console.log(regis.data.data);
+    setData(regis.data.data);
+  }
   useEffect(() => {
-    async function Data() {
-      const regis = await axios.get(`${getHistoryData}/${user.id}`);
-      console.log(regis.data.data);
-      setData(regis.data.data);
-    }
-    Data();
+    fetchData();
   }, [user]);
 
   const columns = React.useMemo(
@@ -34,22 +34,27 @@ export default function ({ user, token }) {
       {
         Header: "Ngày đăng kiểm",
         accessor: "registerDate",
+        editable: true,
       },
       {
         Header: "Chủ sở hữu",
         accessor: "driverName",
+        editable: false,
       },
       {
         Header: "Số điện thoại",
         accessor: "phoneNumber",
+        editable: false,
       },
       {
         Header: "Biển số xe",
         accessor: "plateNumber",
+        editable: false,
       },
       {
         Header: "Ngày hết hạn",
         accessor: "expireDate",
+        editable: true,
       },
     ],
     []
@@ -69,7 +74,7 @@ export default function ({ user, token }) {
       </Button>
       <div className="table-container">
         <Print print={tableref} columns={columns} propData={data}></Print>
-        <Table columns={columns} propData={data} token={token} />
+        <Table columns={columns} propData={data} token={token} fetchData={fetchData} />
       </div>
     </div>
   );

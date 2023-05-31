@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import {
   Card,
   Input,
-  Textarea,
   Button,
   Typography,
 } from '@material-tailwind/react';
