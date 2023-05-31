@@ -34,7 +34,7 @@ CREATE TABLE `cars` (
   `manufacture` varchar(255) DEFAULT NULL,
   `model` varchar(255) DEFAULT NULL,
   `color` varchar(255) DEFAULT NULL,
-  `registerDate` datetime DEFAULT NULL,
+  `registerDate` date DEFAULT NULL,
   `registerCity` varchar(255) DEFAULT NULL,
   `purpose` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,

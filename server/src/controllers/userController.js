@@ -1,7 +1,7 @@
 import loginService from "../services/loginService";
 import registerService from "../services/registerService"
 import createDB from "../services/createDB"
-import {createJWT, verifyToken} from '../middleware/JWTActions'
+import { createJWT, verifyToken } from '../middleware/JWTActions'
 
 //Hàm login và tạo JWT
 let handleLogin = async (req, res) => {
@@ -12,8 +12,8 @@ let handleLogin = async (req, res) => {
         return res.status(200).json({
             errCode: 1,
             message: "missing username or password",
-            status: false 
-        }) 
+            status: false
+        })
     }
 
     let userData = await loginService.handleLogin(username, password);
@@ -52,11 +52,13 @@ let createUser = async (req, res) => {
         username: req.body.username,
         password: req.body.password,
         rolebit: req.body.rolebit,
+        email: req.body.email,
         address: req.body.address,
         token: req.body.token
     }
+
     let data = await createDB.createUser(dulieu)
-    return res.status(200).json({data, status: true});
+    return res.status(200).json({ data, status: true });
 }
 //Hàm verify token
 let handleVerify = async (req, res) => {

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createUser, userRoute } from '../utils/routes';
-export default function ({token}) {
+export default function ({ token }) {
   const [check, setCheck] = useState()
 
   // Setting cài đặt dành cho toast thông báo khi bắt sự kiện
@@ -21,6 +21,7 @@ export default function ({token}) {
     username: '',
     password: '',
     repass: '',
+    email: '',
     address: '',
   });
 
@@ -50,8 +51,8 @@ export default function ({token}) {
 
   //Hàm validate giá trị
   const handleValidation = () => {
-    const { center, username, password, repass, address } = data
-    if (!center || !username || !password || !repass || !address) {
+    const { center, username, password, repass, email, address } = data
+    if (!center || !username || !password || !repass || !email || !address) {
       toast.error("Không được để trống", toastOptions)
       return false;
     }
@@ -68,17 +69,27 @@ export default function ({token}) {
   //Hàm submit khi người dùng ấn tạo tài khoản
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const { center, username, password, address } = data
+    const { center, username, password, email, address } = data
     if (handleValidation()) {
-      toast.success("Đăng ký thành công", toastOptions)
+
       const regis = await axios.post(createUser, {
         name: center,
         username: username,
         password: password,
         rolebit: 0,
+        email: email,
         address: address,
         token: token
       });
+      console.log(regis.data.data.errCode);
+      if (regis.data.data.errCode === 1) {
+        toast.error(regis.data.data.errMessage, toastOptions)
+      } else if (regis.data.data.errCode === 2) {
+        toast.error(regis.data.data.errMessage, toastOptions)
+      } else {
+        toast.success("Đăng ký thành công", toastOptions)
+      }
+
     }
   };
 
@@ -128,6 +139,16 @@ export default function ({token}) {
                 type="password"
                 name="repass"
                 id="repass"
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+          </div>
+          <div className="inputbox">
+            <div className="w-full">
+              <Input
+                label="Email"
+                name="email"
+                id="email"
                 onChange={(e) => handleChange(e)}
               />
             </div>

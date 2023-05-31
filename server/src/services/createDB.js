@@ -28,16 +28,40 @@ let handleUser = async (username) => {
 let createUser = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let hashPasswordFromBcrypt = await hashUserPassword(data.password);
-      console.log(hashPasswordFromBcrypt);
-      verifyToken(data.token)
-      await db.User.create({
-        name: data.name,
-        username: data.username,
-        password: hashPasswordFromBcrypt,
-        rolebit: data.rolebit,
-        address: data.address,
-      });
+      let user = await findUser(data.username);
+      if (user) {
+        console.log(user);
+        resolve({
+          errCode: 1,
+          errMessage: "Tên đăng nhập đã tồn tại"
+        })
+      } else {
+        let email = await findEmail(data.email);
+        if (email) {
+          resolve({
+            errCode: 2,
+            errMessage: "Email đã tồn tại"
+          })
+        } else {
+          let hashPasswordFromBcrypt = await hashUserPassword(data.password);
+          console.log(hashPasswordFromBcrypt);
+          verifyToken(data.token)
+          await db.User.create({
+            name: data.name,
+            username: data.username,
+            password: hashPasswordFromBcrypt,
+            rolebit: data.rolebit,
+            email: data.email,
+            address: data.address,
+          });
+          resolve({
+            errCode: 0,
+            errMessage: "Đăng kí thành công"
+          })
+        }
+
+      }
+
     } catch (error) {
       reject(error);
     }
@@ -104,7 +128,31 @@ let findCar = (pNumber) => {
     }
   });
 };
+let findUser = (uname) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findOne({
+        where: { username: uname },
+      });
+      resolve(user);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 
+let findEmail = (email) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findOne({
+        where: { email: email },
+      });
+      resolve(user);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 let createRegisterForm = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
