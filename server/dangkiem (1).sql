@@ -230,8 +230,8 @@ CREATE TABLE `registers` (
   `id` int(11) NOT NULL,
   `userId` varchar(255) DEFAULT NULL,
   `carId` varchar(255) DEFAULT NULL,
-  `registerDate` varchar(255) DEFAULT NULL,
-  `expireDate` varchar(255) DEFAULT NULL,
+  `registerDate` date DEFAULT NULL,
+  `expireDate` date DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

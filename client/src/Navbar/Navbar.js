@@ -20,6 +20,7 @@ export default function Example({ user, data }) {
     );
   }, []);
 
+  // dữ liệu header được truyền xuống từ App.js
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
@@ -57,12 +58,12 @@ export default function Example({ user, data }) {
       </Typography>
     </ul>
   );
-
+  // Khi người dùng bấm đăng xuất sẽ xoá LocalStorage và quay lại trang login
   const logout = () => {
     localStorage.clear();
     window.location.replace("http://localhost:3000/");
   }
-
+  // Mã giao diện
   return (
     <>
       <Navbar className="sticky inset-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4">

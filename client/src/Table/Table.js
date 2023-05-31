@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default function Table({ columns, propData, admin = false, token, fetchData }) {
   const data = React.useMemo(() => propData);
+  //Cài đặt cho thông báo
   const toastOptions = {
     position: 'bottom-right',
     autoClose: 5000,
@@ -93,12 +94,14 @@ export default function Table({ columns, propData, admin = false, token, fetchDa
     setSelectedRegis(rowData);
     setOpen(true)
   };
+  //Hàm xoá đi bản ghi đăng kiểm
   const handleDelete = async (id) => {
     const data = await axios.delete(`${deleteRegister}/${id}`);
     toast.success('Xoá thành công', toastOptions);
     fetchData();
     setOpen(false);
   };
+  //Hàm cập nhập đăng kiểm
   const handleUpdate = async (id) => {
     if (handleValidation()) {
       const data = await axios.put(`${updateRegister}/${id}`, { selectedRegis, token: token });
@@ -107,6 +110,7 @@ export default function Table({ columns, propData, admin = false, token, fetchDa
       setOpen(false);
     }
   };
+  //Hàm validate không để trống giá trị nào
   const handleValidation = () => {
     if (
       !selectedRegis.id ||
@@ -121,6 +125,7 @@ export default function Table({ columns, propData, admin = false, token, fetchDa
     }
     return true;
   };
+  //Hàm thay đổi giá trị theo input nhập từ bàn phím
   const handleChange = (event) => {
     setSelectedRegis({
       ...selectedRegis,
@@ -128,7 +133,7 @@ export default function Table({ columns, propData, admin = false, token, fetchDa
     });
     console.log(selectedRegis.id);
   };
-
+  //Mã giao diện
   return (
     <div>
       <div className="w-500px">

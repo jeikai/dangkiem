@@ -1,6 +1,7 @@
 import React from 'react';
 
 function Print({ print, columns, propData }) {
+  //Mã giao diện
   return (
     <div style={{ display: 'none' }}>
       <table ref={print}>

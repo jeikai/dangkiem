@@ -4,6 +4,7 @@ import createDB from "../services/createDB"
 import { log } from "console"
 
 let handleUploadFile = (req, res) => {
+    //Check định dạng file
     if (req.file.originalname.split('.').pop() !== "csv") {
         return res.status(200).json({
             errCode: 1,
@@ -11,7 +12,6 @@ let handleUploadFile = (req, res) => {
         })
     }
     let path = req.file.path;
-    // console.log(path);
 
     let ok = true;
     let template = [
@@ -24,7 +24,7 @@ let handleUploadFile = (req, res) => {
         'registerCity',
         'purpose'
     ];
-
+    //Đọc dữ liệu trong file
     fs.readFile(path, function (err, data) {
 
         if (err) {
@@ -36,7 +36,7 @@ let handleUploadFile = (req, res) => {
 
         let arr = bufferString.split('\n');
         let obj = [];
-        // console.log(arr);
+
         for (let i = 0; i < arr.length - 1; i++) {
             obj[i] = arr[i].slice(0, arr[i].length - 1).split(',');
             console.log(obj[i]);
@@ -60,7 +60,7 @@ let handleUploadFile = (req, res) => {
                     color: obj[i][4],
                     registerDate: obj[i][5],
                     registerCity: obj[i][6],
-                    purpose: obj[i][7]
+                    purpose: obj[i][7] 
                 }
                 if (data.plateNumber !== "")
                     createDB.createCar(data);

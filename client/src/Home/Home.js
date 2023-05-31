@@ -10,6 +10,8 @@ import Print from '../Table/Export';
 import Table from '../Table/Table';
 export default function ({ user, token }) {
   const tableref = useRef(null)
+
+  // Khởi tạo file excel cho chức năng export data
   const { onDownload } = useDownloadExcel({
     currentTableRef: tableref.current,
     filename: 'regis-infor',
@@ -24,13 +26,9 @@ export default function ({ user, token }) {
   useEffect(() => {
     fetchData();
   }, [user]);
-
+  //Hàm set giá trị cho table head và truy cập đến các giá trị trong bản ghi
   const columns = React.useMemo(
     () => [
-      // {
-      //   Header: "ID",
-      //   accessor: "id",
-      // },
       {
         Header: "Ngày đăng kiểm",
         accessor: "registerDate",
@@ -59,6 +57,7 @@ export default function ({ user, token }) {
     ],
     []
   )
+  //Mã giao diện
   return (
     <div className="p-10 max-w-fit mx-auto">
       <Typography variant="h2" className="text-gray-100" textGradient>
