@@ -55,9 +55,12 @@ export default function ({ user, token }) {
     setregisterByYear(serverdata.data.registerByYear);
     setDubao_Saphethan(serverdata.data.dubao_saphethan);
   };
+  // chạy lấy dữ liệu lần đầu khi mới load trang
   useEffect(() => {
     fetchData();
   }, [user]);
+
+  // các cột của giao diện tab chưa 2 table chưa hết hạn và sắp hết hạn
   const data = [
     {
       label: 'Chưa hết hạn',
@@ -71,6 +74,7 @@ export default function ({ user, token }) {
     },
   ];
 
+  // các cột của dữ liệu table
   const columns = React.useMemo(
     () => [
       {
