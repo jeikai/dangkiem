@@ -3,9 +3,6 @@ import { Typography, Input } from "@material-tailwind/react";
 import { Button } from "@material-tailwind/react";
 import {
   CloudArrowUpIcon,
-  ArrowLongRightIcon,
-  ArrowPathIcon,
-  BookmarkIcon,
 } from "@heroicons/react/24/outline";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
