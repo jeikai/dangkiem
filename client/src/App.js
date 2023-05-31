@@ -15,6 +15,7 @@ import Upload from './Upload/Upload';
 import axios from 'axios';
 import { verifyRoute } from './utils/routes';
 import Chatbot from './Chatbot/Chatbot'
+import Repass from './Repass/Repass';
 function App() {
   //Lấy ra token từ localStorage
   const [token, setToken] = useState({
@@ -81,6 +82,7 @@ function App() {
                 />
                 <Route path="/signup" element={<AccountRegister token={token} />} />
                 <Route path="/upload" element={<Upload token={token} />} />
+                <Route path="/repass" element={<Repass token={token} />} />
               </Routes>
             </CSSTransition>
           </TransitionGroup>

@@ -24,7 +24,7 @@ let updateRegister = async (req, res) => {
     let data = req.body.selectedRegis;
     let token = req.body.token;
     let results = await registerService.updateRegister(id, data, token);
-    return res.status(200).json(results);
+    return res.status(200).json(results); 
 }
 
 //Hàm xoá đăng kiểm

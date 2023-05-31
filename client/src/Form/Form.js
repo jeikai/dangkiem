@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default function Form({ user, token }) {
   const [check, setCheck] = useState();
+  const formRef = useRef(null);
   // Setting cho thông báo
   const toastOptions = {
     position: 'bottom-right',
@@ -162,6 +163,7 @@ export default function Form({ user, token }) {
         <form
           onSubmit={(e) => handleSubmit(e)}
           className="mt-8 mb-2 w-full max-w-4xl mx-auto"
+          ref={formRef}
         >
           <div className=" mb-4 grid gap-10 grid-cols-1 md:grid-cols-2 w-full">
             <div className="relative flex w-full">

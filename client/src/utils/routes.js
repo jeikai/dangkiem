@@ -14,3 +14,4 @@ export const uploadRoute = `${host}/api/postfile`;
 export const deleteRegister = `${host}/api/delete-register`;
 export const updateRegister = `${host}/api/update-register`;
 export const getChatbotData = `${host}/api/chatbot`;
+export const updatePass = `${host}/api/update-pass`;

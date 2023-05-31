@@ -49,21 +49,57 @@ const Upload = () => {
   };
   //Mã giao diện
   return (
-    <div className='max-w-7xl mx-auto'>
-      <Typography variant="h1" className="text-white p-10">Upload file danh sách các xe đã đăng ký lên hệ thống</Typography>
-      <Typography className="px-10 text-gray-300">
-        File phải có định dạng csv
-      </Typography>
-      <form onSubmit={handleSubmit} className='flex flex-col justify-start p-10 w-80' encType='multipart/form-data'>
-        <input className="custom-file-input" type="file" onChange={handleFileInputChange} accept=".csv,.xlsx" />
-        {file && (
-          <Button variant="gradient" type="submit" className="flex items-center gap-3 mt-10">
-            <CloudArrowUpIcon strokeWidth={2} className="h-5 w-5" /> Upload Files
-          </Button>
-        )}
-        <ToastContainer />
-      </form>
-    </div>
+    <div className="max-w-7xl mx-auto">
+  <div className="p-10">
+    <h1 className="text-white text-4xl font-bold mb-6">
+      Upload danh sách các xe đã đăng ký lên hệ thống
+    </h1>
+    <p className="text-gray-300 text-lg mb-6">
+      Vui lòng chọn file có định dạng CSV.
+    </p>
+    <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <div className="flex items-center mb-6">
+        <label htmlFor="fileInput" className="text-gray-200 mr-4">
+          Chọn file:
+        </label>
+        <input
+          id="fileInput"
+          className="hidden"
+          type="file"
+          onChange={handleFileInputChange}
+          accept=".csv,.xlsx"
+        />
+        <label
+          htmlFor="fileInput"
+          className="bg-white text-purple-500 hover:text-purple-700 font-medium py-2 px-4 rounded-lg cursor-pointer shadow-md"
+        >
+          Chọn File
+        </label>
+      </div>
+      {file && (
+        <button
+          type="submit"
+          className="bg-indigo-500 text-white hover:bg-indigo-700 font-medium py-2 px-4 rounded-lg"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 inline-block mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M9 1a1 1 0 0 0-1 1v5.586L4.707 5.293A1 1 0 1 0 3.293 6.707l4 4a1 1 0 0 0 1.414 0l4-4A.997.997 0 0 0 13 5V2a1 1 0 0 0-1-1H9zM6 11a1 1 0 0 0 0 2h8a1 1 0 0 0 0-2H6z"
+            />
+          </svg>
+          Tải lên File
+        </button>
+      )}
+    </form>
+  </div>
+  <ToastContainer />
+</div>
+
   );
 };
 

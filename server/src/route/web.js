@@ -59,7 +59,9 @@ let initWebRoutes = (app) => {
   //Đăng ký trung tâm đăng kiểm
   router.post("/api/create-user", userController.createUser);
   //DÙng cho chatbot
-  router.get("/api/chatbot/:id", chatbotController.handleChat)
+  router.get("/api/chatbot/:id", chatbotController.handleChat);
+  //Dùng cho đổi mật khẩu
+  router.put("/api/update-pass", userController.handleUpdatePass);
   return app.use("/", router);
 };
 
