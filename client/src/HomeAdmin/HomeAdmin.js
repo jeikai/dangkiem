@@ -39,8 +39,7 @@ export default function HomeAdmin({ user }) {
     return { name: item[0].name, value: item.length - 1 }
   })
   // lay data cho bieu do cua tung trung tam
-  const [month_expired, setExpired] = useState([]);
-  const [forecast, setForecast] = useState([]);
+  const [dubaoSaphethan, setDubao_Saphethan] = useState([]);
   const [registerByMonth, setregisterByMonth] = useState([])
   const [registerByQuy, setregisterByQuy] = useState([])
   const [registerByYear, setregisterByYear] = useState([])
@@ -49,50 +48,12 @@ export default function HomeAdmin({ user }) {
     setSelected(value);
     async function Data() {
       const serverdata = await axios.get(`${getStatsData}/${data[value][0]["id"]}`);
-      setregisterByMonth(serverdata.data.registerByMonth)
-      setregisterByQuy(serverdata.data.registerByQuy)
-      setregisterByYear(serverdata.data.registerByYear)
-      setForecast(serverdata.data.forecast);
-      setExpired(serverdata.data.month_expired);
+      setregisterByMonth(serverdata.data.registerByMonth);
+      setregisterByQuy(serverdata.data.registerByQuy);
+      setregisterByYear(serverdata.data.registerByYear);
+      setDubao_Saphethan(serverdata.data.dubao_saphethan);
     }
     Data();
-  }
-  //Set giá trị mảng 1 chiều cho biểu đồ dự báo
-  const dubao_saphethan = [];
-  for (let i = 0; i < 12; i++) {
-    dubao_saphethan.push({
-      name: 'Tháng' + (i + 1),
-      'dự báo': forecast[i],
-      'Sắp hết hạn': month_expired[i],
-      amt: 2400,
-    });
-  }
-  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo tháng
-  const DK_thang = [];
-  for (let i = 0; i < registerByMonth.length; i++) {
-    DK_thang.push({
-      name: registerByMonth[i][0],
-      'Đã đăng ký': registerByMonth[i][1],
-      amt: 2400,
-    });
-  }
-  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo quý
-  const DK_quy = [];
-  for (let i = 0; i < registerByQuy.length; i++) {
-    DK_quy.push({
-      name: registerByQuy[i][0],
-      'Đã đăng ký': registerByQuy[i][1],
-      amt: 2400,
-    });
-  }
-  //Set giá trị mảng 1 chiều cho biểu đồ thống kê theo năm
-  const dangkiem_nam = [];
-  for (let i = 0; i < registerByYear.length; i++) {
-    dangkiem_nam.push({
-      name: registerByYear[i][0],
-      value: registerByYear[i][1],
-      amt: 2400,
-    });
   }
 
   const columns = React.useMemo(
@@ -177,7 +138,7 @@ export default function HomeAdmin({ user }) {
               <div className='p-1 flex flex-col justify-center items-center'>
                 <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo tháng</Typography>
                 <ResponsiveContainer width="100%" height={250}>
-                  <BarChart width="100%" height="100%" data={DK_thang}>
+                  <BarChart width="100%" height="100%" data={registerByMonth}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
@@ -190,7 +151,7 @@ export default function HomeAdmin({ user }) {
               <div className='p-1 flex flex-col justify-center items-center'>
                 <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe đã được đăng kiểm theo quý</Typography>
                 <ResponsiveContainer width="100%" height={250}>
-                  <BarChart width="100%" height="100%" data={DK_quy}>
+                  <BarChart width="100%" height="100%" data={registerByQuy}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
@@ -207,7 +168,7 @@ export default function HomeAdmin({ user }) {
                     <Pie
                       dataKey="value"
                       isAnimationActive={false}
-                      data={dangkiem_nam}
+                      data={registerByYear}
                       cx="50%"
                       cy="50%"
                       outerRadius={80}
@@ -222,7 +183,7 @@ export default function HomeAdmin({ user }) {
               <div className='p-1 flex flex-col justify-center items-center'>
                 <Typography className='p-2 text-center' color='white' variant="h5" >Thống kê xe sắp hết hạn và dự báo lượng xe đăng kiểm theo tháng năm {new Date().getFullYear()}</Typography>
                 <ResponsiveContainer width="100%" height={250} >
-                  <BarChart width="100%" height="100%" data={dubao_saphethan}>
+                  <BarChart width="100%" height="100%" data={dubaoSaphethan}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
